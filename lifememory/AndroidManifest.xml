@@ -78,9 +78,10 @@
             android:name=".activity.BillInputActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@android:style/Theme.Black.NoTitleBar" />
-        
-        
-        
+        <activity
+            android:name=".activity.CatagorySettingActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.Black.NoTitleBar" />
     </application>
 
 </manifest>

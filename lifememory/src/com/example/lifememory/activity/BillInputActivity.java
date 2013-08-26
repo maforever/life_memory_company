@@ -8,6 +8,7 @@ import com.example.lifememory.utils.AppAplication;
 import com.example.lifememory.utils.CopyFileFromData;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
@@ -99,6 +100,10 @@ public class BillInputActivity extends Activity {
 			showCalculator();
 			break;
 		case R.id.leixinglayout:
+			//点击转到类型设置界面
+			Intent intent = new Intent(BillInputActivity.this, CatagorySettingActivity.class);
+			startActivity(intent);
+			overridePendingTransition(R.anim.activity_up, R.anim.activity_steady);
 			break;
 		case R.id.zhanghulayout:
 			break;

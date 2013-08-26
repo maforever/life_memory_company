@@ -73,7 +73,7 @@ public class IndexActivity extends SlidingFragmentActivity {
 				Toast.makeText(this, "œ‘ æ", 0).show();
 			} else {
 				Toast.makeText(this, "≤ªœ‘ æ", 0).show();
-				CopyFileFromData.getInstance().copyDatabase(getBaseContext(), "pregnancy_diary");
+				CopyFileFromData.getInstance().copyDatabase(getBaseContext(), "pregnancy_diary.db");
 				IndexActivity.this.finish();
 			}
 			

@@ -26,7 +26,7 @@ public class CopyFileFromData {
 					File homeFile = new File(Environment.getExternalStorageDirectory().getAbsoluteFile() + File.separator + "µãµÎÒäÎÄ¼þ¼Ð");
 					if(!homeFile.exists()) 
 						{
-						homeFile.mkdirs();
+							homeFile.mkdirs();
 						}
 					else {
 						Log.i("a", "homeFile = " + homeFile.getPath());
