@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +35,7 @@ public class BillInputActivity extends Activity {
 	private AppAplication myApplication;
 	private String jie_txt;
 	private Bill bill = null;
+	private boolean isFloat = false;  //标记为，用于标记是否点击了计算器中的小数点
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -279,11 +281,13 @@ public class BillInputActivity extends Activity {
 				onClickNum(9);
 				break;
 			case R.id.cal_dot:
+				onClickDot();
 				break;
 			case R.id.cal_zero:
 				onClickNum(0);
 				break;
 			case R.id.cal_del:
+				onClickDel();
 				break;
 			}
 		}
@@ -299,19 +303,66 @@ public class BillInputActivity extends Activity {
 		shouruJine.setText(jie_txt);
 		zhuanzhangJine.setText(jie_txt);
 	}
-	
+	//点击了计算器上的数字键
 	private void onClickNum(int numStr) {
 		jineTv = (TextView) viewFlipper.getCurrentView().findViewById(R.id.jine);
-		Long num = Long.parseLong(jineTv.getText().toString());
-		if(num == 0) {
-			jie_txt = "" + numStr;
+		String jie_str = jineTv.getText().toString();
+		Float jie_float = 0f;
+		Long jie_long = 0l;
+		if(jie_str.contains(".")) {
+			//当前值是浮点型
+			if(jie_str.substring(jie_str.indexOf("."), jie_str.length()).length() < 3) {
+				//保存2位小数位
+				jie_float = Float.parseFloat(jie_str);
+				jie_txt = jie_float + "" + numStr; 
+			}
 		}else {
-			jie_txt = jineTv.getText().toString() + numStr;
+			//当前值是整数
+			jie_long = Long.parseLong(jie_str);
+			if(isFloat) {
+				//点击了小数点
+				if(jie_long == 0) {
+					jie_txt = "0." + numStr;
+				}else {
+					jie_txt = jie_str + "." + numStr;
+				}
+			}else {
+				//未点击小数点
+				if(jie_str.length() < 7) {
+					//整数位保留到百万
+					if(jie_long == 0) {
+						jie_txt = "" + numStr;
+					}else {
+						jie_txt = jineTv.getText().toString() + numStr;
+					}
+				}
+			}
 		}
 		jineTv.setText(jie_txt);
 		bill.setJine(jie_txt);
 	}
-	
+	//点击了计算器上的小数点
+	private void onClickDot() {
+		isFloat = true;
+	}
+	//点击了计算器上的删除
+	private void onClickDel() {
+		jineTv = (TextView) viewFlipper.getCurrentView().findViewById(R.id.jine);
+		String jie_str = jineTv.getText().toString();
+		Log.i("a", "jine length = " + jie_str.length());
+		if(jie_str.length() > 1) {
+			jie_txt = jie_str.substring(0, jie_str.length() - 1); //去掉最后一个字符
+			if(jie_txt.endsWith(".")) {
+				//如果以小数点结尾
+				jie_txt = jie_txt.substring(0, jie_txt.length() - 1);
+				isFloat = false;
+			}
+		}else {
+			jie_txt = "0";
+		}
+		jineTv.setText(jie_txt);
+		bill.setJine(jie_txt);
+	}
 }
 
 

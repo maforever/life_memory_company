@@ -35,12 +35,13 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="20dp"
                 android:background="#990033"
+                android:ellipsize="end"
+                android:gravity="right"
+                android:paddingRight="5dp"
+                android:singleLine="true"
                 android:text="0"
                 android:textColor="#ffffff"
-                android:ellipsize="end"
-                android:textSize="20dp"
-                android:gravity="right"
-                 />
+                android:textSize="20dp" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -100,8 +101,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="40dp"
                 android:gravity="center"
-                android:textColor="#000000"
                 android:text="转入"
+                android:textColor="#000000"
                 android:textSize="18dp" />
 
             <TextView
@@ -195,10 +196,10 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="5dp"
                 android:layout_toLeftOf="@+id/leixingarrow"
-                android:gravity="center"
-                android:text="备注信息dfsdfsfsfwerwrewr"
-                android:singleLine="true"
                 android:ellipsize="end"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="备注信息dfsdfsfsfwerwrewr"
                 android:textColor="#000000"
                 android:textSize="18dp" />
 
