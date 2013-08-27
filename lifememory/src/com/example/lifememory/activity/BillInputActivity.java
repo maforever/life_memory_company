@@ -101,7 +101,7 @@ public class BillInputActivity extends Activity {
 			break;
 		case R.id.leixinglayout:
 			//点击转到类型设置界面
-			Intent intent = new Intent(BillInputActivity.this, CatagorySettingActivity.class);
+			Intent intent = new Intent(BillInputActivity.this, BillCatagorySettingActivity.class);
 			startActivity(intent);
 			overridePendingTransition(R.anim.activity_up, R.anim.activity_steady);
 			break;

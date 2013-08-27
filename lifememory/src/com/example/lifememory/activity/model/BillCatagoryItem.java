@@ -2,12 +2,13 @@ package com.example.lifememory.activity.model;
 
 
 public class BillCatagoryItem {
-
+	
+	private int idx;
 	private String name;
 	private int imageId;
 	private int parentId; 
 	
-	
+	public BillCatagoryItem() {};
 	
 	public BillCatagoryItem(String name, int imageId, int parentId) {
 		super();
@@ -15,6 +16,15 @@ public class BillCatagoryItem {
 		this.imageId = imageId;
 		this.parentId = parentId;
 	}
+	
+	public int getIdx() {
+		return idx;
+	}
+
+	public void setIdx(int idx) {
+		this.idx = idx;
+	}
+
 	public String getName() {
 		return name;
 	}

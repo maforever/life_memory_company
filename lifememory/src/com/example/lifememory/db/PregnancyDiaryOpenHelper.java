@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class PregnancyDiaryOpenHelper extends SQLiteOpenHelper {
 
@@ -16,38 +17,31 @@ public class PregnancyDiaryOpenHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		/**
-		 * diary_jishiben 孕期记事本数据库
-		 * diary_luyin    孕期录音数据库
+		 * diary_jishiben 孕期记事本数据库 diary_luyin 孕期录音数据库
 		 */
-		db.execSQL("create table if not exists diary_jishiben(idx integer primary key autoincrement, " +
-				"title text, content text, textcolorindex integer, textsizeindex integer, createdate text, updatedate text, createymd text, updateymd text, createym text, updateym text, ismodyfied integer, imageid int" +
-				")");
-		
-		db.execSQL("create table if not exists diary_luyin(" +
-				"idx integer primary key autoincrement, title text, audiopath text, createdate text, createymd, createym" +
-				")");
+		db.execSQL("create table if not exists diary_jishiben(idx integer primary key autoincrement, "
+				+ "title text, content text, textcolorindex integer, textsizeindex integer, createdate text, updatedate text, createymd text, updateymd text, createym text, updateym text, ismodyfied integer, imageid int"
+				+ ")");
+
+		db.execSQL("create table if not exists diary_luyin("
+				+ "idx integer primary key autoincrement, title text, audiopath text, createdate text, createymd, createym"
+				+ ")");
 		/**
-		 * baby_jishiben   宝宝记事本数据库
-		 * baby_luyin	          宝宝录音数据库
+		 * baby_jishiben 宝宝记事本数据库 baby_luyin 宝宝录音数据库
 		 */
-		db.execSQL("create table if not exists baby_jishiben(idx integer primary key autoincrement, " +
-				"title text, content text, textcolorindex integer, textsizeindex integer, createdate text, updatedate text, createymd text, updateymd text, createym text, updateym text, ismodyfied integer, imageid int" +
-				")");
-		
-		db.execSQL("create table if not exists baby_luyin(" +
-				"idx integer primary key autoincrement, title text, audiopath text, createdate text, createymd, createym" +
-				")");
-		
-		db.execSQL("create table if not exists bill_catagory(idx integer primary key autoincrement, name text, imageid integer parentid integer)");
-		
-		new BillCatagoryCreator().initFirstLevel(db);
-		
-		
-		
-		
-		
-		
-		
+		db.execSQL("create table if not exists baby_jishiben(idx integer primary key autoincrement, "
+				+ "title text, content text, textcolorindex integer, textsizeindex integer, createdate text, updatedate text, createymd text, updateymd text, createym text, updateym text, ismodyfied integer, imageid int"
+				+ ")");
+
+		db.execSQL("create table if not exists baby_luyin("
+				+ "idx integer primary key autoincrement, title text, audiopath text, createdate text, createymd, createym"
+				+ ")");
+
+		db.execSQL("create table if not exists bill_catagory(idx integer primary key autoincrement, name text, imageid integer, parentid integer)");
+		//这个地方如果使用线程会报错 database is locked
+		BillCatagoryCreator creator = new BillCatagoryCreator();
+		creator.initCatagoryDatas(db);
+		Log.i("a", "db onCreate");
 	}
 
 	@Override
