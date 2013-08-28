@@ -1,5 +1,6 @@
 package com.example.lifememory.db;
 
+import com.example.lifememory.utils.BillAccountCreator;
 import com.example.lifememory.utils.BillCatagoryCreator;
 
 import android.content.Context;
@@ -37,10 +38,28 @@ public class PregnancyDiaryOpenHelper extends SQLiteOpenHelper {
 				+ "idx integer primary key autoincrement, title text, audiopath text, createdate text, createymd, createym"
 				+ ")");
 
+		/**
+		 * bill_catagory  记账类别数据库
+		 * bill_account   记账账户数据库
+		 * catagoryname 类别名称 现金，信用卡，储蓄，网上支付   1,2,3,4
+		 * bizhong     币种
+		 * dangqianyue   当前余额
+		 * isNotice   是否设置警戒线
+		 * noticeValue  警戒线金额
+		 */
 		db.execSQL("create table if not exists bill_catagory(idx integer primary key autoincrement, name text, imageid integer, parentid integer)");
+		db.execSQL("create table if not exists bill_account(idx integer primary key autoincrement, catagoryname text ,name text, bizhong text, dangqianyue text, isnotice text, noticevalue text, imageid integer)");
+		
+		
+		
+		
 		//这个地方如果使用线程会报错 database is locked
 		BillCatagoryCreator creator = new BillCatagoryCreator();
 		creator.initCatagoryDatas(db);
+		
+		BillAccountCreator accountCreator = new BillAccountCreator();
+		accountCreator.initAccountDatas(db);
+		
 		Log.i("a", "db onCreate");
 	}
 

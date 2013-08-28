@@ -82,13 +82,14 @@
             android:name=".activity.BillCatagorySettingActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@android:style/Theme.Black.NoTitleBar" />
-        
         <activity
             android:name=".activity.BillCatatoryAddActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@android:style/Theme.Black.NoTitleBar" />
-        
-        
+        <activity
+            android:name=".activity.BillAccountSettingActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.Black.NoTitleBar" />
     </application>
 
 </manifest>

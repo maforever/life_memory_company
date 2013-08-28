@@ -40,7 +40,7 @@ public class BillCatatoryAddActivity extends Activity {
 		R.drawable.icon_bbyp_ykxm, R.drawable.icon_jjwy_wygl, R.drawable.icon_jjwy_yxby, R.drawable.icon_lyyp_hwzb,
 		R.drawable.icon_qtzx_ywds, R.drawable.icon_transfer_in, R.drawable.icon_transfer_out, R.drawable.icon_yfsp,
 		R.drawable.icon_yfsp_xmbb, R.drawable.icon_yfsp_yfkz, R.drawable.icon_ylbj_bjf, R.drawable.icon_ylbj_zlf,
-		R.drawable.icon_zysr_jjsr, R.drawable.icon_zysr_jzsr
+		R.drawable.icon_zysr_jjsr, R.drawable.icon_zysr_jzsr, R.drawable.xianjin
 	};
 	private GridView gridView;
 	private BillCatagoryGridViewAdapter adapter;

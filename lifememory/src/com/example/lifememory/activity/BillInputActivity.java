@@ -51,9 +51,14 @@ public class BillInputActivity extends Activity {
 	private int catagoryChildId = 0;	 //用于记录级类别列表选中的数据的数据库id
 	private BillCatagoryService dbService = null;
 	private String catagoryStr;          //用于保存界面上显示的类别内容
+	private String accountStr;           //用于保存界面上显示的账户内容
 	private TextView currentCatagoryTextView = null;    //用于指向当前viewflipper显示的界面上的显示类别内容的textView
+	private TextView currentAccountTextView = null;     //用于指向当前viewflipper显示的界面上的显示账户内容的textView
 	private int catagorySelectedId = 0;                 //用于记录一级类别列表选中的索引数
 	private int catagorySelectedChildId = 0;			//用于记录二级类别列表选中的索引数
+	private int accountGroupSelectedIndex = 0;			//用于记录账户expandablelistview中组的索引
+	private int accountChildSelectedIndex = 0;  		//用于记录账户expandablelistview中子的索引
+	private Intent intent;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,28 +70,13 @@ public class BillInputActivity extends Activity {
 		
 		bill = new Bill();
 		bill.setLeixing("常用-打的");
-		
+		bill.setZhanghu("现金");
 		findViews();
 		initViews();
 		initCalculator();
 		
 //		Log.i("a", "BillInputActivity onCreate catagorySelectedId = " + catagorySelectedId + " catagorySelectedChildId = " + catagorySelectedChildId);
 	}
-	
-//	@Override
-//	protected void onResume() {
-//		super.onResume();
-//		catagoryId = this.getIntent().getIntExtra("catagoryid", 0);
-//		catagoryChildId = this.getIntent().getIntExtra("catagorychildid", 0);
-//		if(dbService != null) {
-//			//不是第一次打开过,因为第一次打开没必要读取数据
-//			catagoryStr = dbService.getCatagoryStr(catagoryChildId);
-//			bill.setLeixing(catagoryStr);
-//			currentCatagoryTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.leixing);
-//			currentCatagoryTextView.setText(catagoryStr);
-//		}
-//	}
-	
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -101,6 +91,14 @@ public class BillInputActivity extends Activity {
 			bill.setLeixing(catagoryStr);
 			currentCatagoryTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.leixing);
 			currentCatagoryTextView.setText(catagoryStr);
+		}else if(resultCode == 98) {
+			//由BillAccountSettingActivity返回
+			accountGroupSelectedIndex = data.getIntExtra("accountGroupSelectedIndex", 0);
+			accountChildSelectedIndex = data.getIntExtra("accountChildSelectedIndex", 0);
+			accountStr = data.getStringExtra("accountStr");
+			bill.setZhanghu(accountStr);
+			currentAccountTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.zhanghu);
+			currentAccountTextView.setText(accountStr);
 		}
 	}
 
@@ -148,7 +146,7 @@ public class BillInputActivity extends Activity {
 			break;
 		case R.id.leixinglayout:
 			//点击转到类型设置界面
-			Intent intent = new Intent(BillInputActivity.this, BillCatagorySettingActivity.class);
+		    intent = new Intent(BillInputActivity.this, BillCatagorySettingActivity.class);
 			intent.putExtra("parentId", parentId);
 			intent.putExtra("catagorySelectedId", catagorySelectedId);
 			intent.putExtra("catagorySelectedChildId", catagorySelectedChildId);
@@ -158,6 +156,13 @@ public class BillInputActivity extends Activity {
 			
 			break;
 		case R.id.zhanghulayout:
+			
+			intent = new Intent(BillInputActivity.this, BillAccountSettingActivity.class);
+			intent.putExtra("accountGroupSelectedIndex", accountGroupSelectedIndex);
+			intent.putExtra("accountChildSelectedIndex", accountChildSelectedIndex);
+			this.startActivityForResult(intent, 100);
+			overridePendingTransition(R.anim.activity_up, R.anim.activity_steady);
+			
 			break;
 		case R.id.riqilayout:
 			break;
