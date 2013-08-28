@@ -9,6 +9,7 @@ import com.example.lifememory.R;
 import com.example.lifememory.activity.model.BillCatagoryItem;
 import com.example.lifememory.adapter.BillCatagoryGridViewAdapter;
 import com.example.lifememory.adapter.BillCatatoryListAdapter;
+import com.example.lifememory.adapter.BillCatatorySecondaryListAdapter;
 import com.example.lifememory.db.service.BillCatagoryService;
 
 import android.app.Activity;
@@ -31,10 +32,13 @@ public class BillCatagorySettingActivity extends Activity {
 	private BillCatagoryService dbService = null;
 	private List<BillCatagoryItem> firstLevelItems = null;
 	private List<BillCatagoryItem> secondaryLevelItems = null;
-	private BillCatatoryListAdapter firstLevelAdapter, secondaryLevelAdapter;
+	private BillCatatoryListAdapter firstLevelAdapter;
+	private BillCatatorySecondaryListAdapter secondaryLevelAdapter;
 	private BillCatagoryItem addItem;    //添加按钮
 	private int parentId = 1;         //记录一级类别信息的id作为二级类别的parentid
-	private int currentSelectedFirstLevel = 0;   //记录一级类别列表的选择标号
+	private int catagorySelectedId = 0;
+	private int catagorySelectedChildId = 0;
+	private int currentSatagorySelectedId = 0;
 	private Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
@@ -56,7 +60,10 @@ public class BillCatagorySettingActivity extends Activity {
 		this.setContentView(R.layout.bill_catagoryselect_layout);
 
 		dbService = new BillCatagoryService(this);
-
+		catagorySelectedId = this.getIntent().getIntExtra("catagorySelectedId", 0);
+		currentSatagorySelectedId = catagorySelectedId;
+		catagorySelectedChildId = this.getIntent().getIntExtra("catagorySelectedChildId", 0);
+		parentId = this.getIntent().getIntExtra("parentId", 1);
 		findViews();
 		initDatas();
 		setListeners();
@@ -65,9 +72,10 @@ public class BillCatagorySettingActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+//		Log.i("a", "BillCatagorySettingActivity onResume catagorySelectedId = " + catagorySelectedId + " catagorySelectedChildId = " + catagorySelectedChildId);
 		if(dbService != null) {
 			initDatas();
-			new LoadDatasByParentIdThread(parentId).start();
+//			new LoadDatasByParentIdThread(parentId).start();
 		}
 	}
 
@@ -89,12 +97,15 @@ public class BillCatagorySettingActivity extends Activity {
 		firstLevelAdapter = new BillCatatoryListAdapter(
 				BillCatagorySettingActivity.this,
 				BillCatagorySettingActivity.this.firstLevelItems);
-		firstLevelAdapter.setSelected(currentSelectedFirstLevel);
-		secondaryLevelAdapter = new BillCatatoryListAdapter(
+		secondaryLevelAdapter = new BillCatatorySecondaryListAdapter(
 				BillCatagorySettingActivity.this,
 				BillCatagorySettingActivity.this.secondaryLevelItems);
+		
 		firstListView.setAdapter(firstLevelAdapter);
 		secondaryListView.setAdapter(secondaryLevelAdapter);
+		
+		firstLevelAdapter.setSelected(catagorySelectedId);
+		secondaryLevelAdapter.setSelected(catagorySelectedChildId);
 
 	}
 
@@ -109,7 +120,14 @@ public class BillCatagorySettingActivity extends Activity {
 					parentId = firstLevelItems.get(position).getIdx();
 					new LoadDatasByParentIdThread(parentId).start();
 					firstLevelAdapter.setSelected(position);
-					currentSelectedFirstLevel = position;
+					
+					if(currentSatagorySelectedId != position) {
+						secondaryLevelAdapter.setSelected(-1);
+					}else {
+						secondaryLevelAdapter.setSelected(catagorySelectedChildId);
+					}
+					catagorySelectedId = position;
+					
 				}else {
 					Intent intent = new Intent(BillCatagorySettingActivity.this, BillCatatoryAddActivity.class);
 					intent.putExtra("title", "添加一级类别");
@@ -125,7 +143,18 @@ public class BillCatagorySettingActivity extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				if(position != secondaryLevelItems.size() - 1) {
-					Toast.makeText(BillCatagorySettingActivity.this, secondaryLevelItems.get(position).getName(), 0).show();
+//					secondaryLevelAdapter.setSelected(position);
+					catagorySelectedChildId = position;
+					Intent intent = new Intent();
+					intent.putExtra("parentId", parentId);
+					intent.putExtra("catagorychildid", secondaryLevelItems.get(position).getIdx());
+					intent.putExtra("catagorySelectedId", catagorySelectedId);
+					intent.putExtra("catagorySelectedChildId", catagorySelectedChildId);
+//					Log.i("a", "BillCatagorySettingActivity onItemClick catagorySelectedId = " + catagorySelectedId + " catagorySelectedChildId = " + catagorySelectedChildId);
+					BillCatagorySettingActivity.this.setResult(99, intent);
+					BillCatagorySettingActivity.this.finish();
+					overridePendingTransition(R.anim.activity_steady, R.anim.activity_down);
+//					Toast.makeText(BillCatagorySettingActivity.this, secondaryLevelItems.get(position).getName(), 0).show();
 				}else {
 					Intent intent = new Intent(BillCatagorySettingActivity.this, BillCatatoryAddActivity.class);
 					intent.putExtra("title", "添加二级类别");
@@ -152,7 +181,8 @@ public class BillCatagorySettingActivity extends Activity {
 		public void run() {
 			firstLevelItems = dbService.findFirstLevel();
 			firstLevelItems.add(addItem);
-			secondaryLevelItems = dbService.findSecondaryLevelByParentId(1);
+//			Log.i("a", "catagoryId = " + firstLevelItems.get(catagorySelectedId).getIdx());
+			secondaryLevelItems = dbService.findSecondaryLevelByParentId(firstLevelItems.get(catagorySelectedId).getIdx());
 			secondaryLevelItems.add(addItem);
 			handler.sendEmptyMessage(0);
 		}

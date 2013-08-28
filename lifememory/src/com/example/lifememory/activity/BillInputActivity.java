@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 
 import com.example.lifememory.R;
 import com.example.lifememory.activity.model.Bill;
+import com.example.lifememory.db.service.BillCatagoryService;
 import com.example.lifememory.utils.AppAplication;
 import com.example.lifememory.utils.CopyFileFromData;
 
@@ -46,17 +47,61 @@ public class BillInputActivity extends Activity {
 										// /)temp2Str
 	private boolean isClickFlag = false; // 标记是否点击了加减乘除按钮
 	private int flagId; // 0加1减2乘3除
+	private int parentId = 1;		     //用于记录一级类别列表选中的数据的数据库id
+	private int catagoryChildId = 0;	 //用于记录级类别列表选中的数据的数据库id
+	private BillCatagoryService dbService = null;
+	private String catagoryStr;          //用于保存界面上显示的类别内容
+	private TextView currentCatagoryTextView = null;    //用于指向当前viewflipper显示的界面上的显示类别内容的textView
+	private int catagorySelectedId = 0;                 //用于记录一级类别列表选中的索引数
+	private int catagorySelectedChildId = 0;			//用于记录二级类别列表选中的索引数
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.bill_input_layout);
-
+		
+		dbService = new BillCatagoryService(this);
 		inflater = LayoutInflater.from(this);
+		
 		bill = new Bill();
+		bill.setLeixing("常用-打的");
+		
 		findViews();
 		initViews();
 		initCalculator();
+		
+//		Log.i("a", "BillInputActivity onCreate catagorySelectedId = " + catagorySelectedId + " catagorySelectedChildId = " + catagorySelectedChildId);
+	}
+	
+//	@Override
+//	protected void onResume() {
+//		super.onResume();
+//		catagoryId = this.getIntent().getIntExtra("catagoryid", 0);
+//		catagoryChildId = this.getIntent().getIntExtra("catagorychildid", 0);
+//		if(dbService != null) {
+//			//不是第一次打开过,因为第一次打开没必要读取数据
+//			catagoryStr = dbService.getCatagoryStr(catagoryChildId);
+//			bill.setLeixing(catagoryStr);
+//			currentCatagoryTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.leixing);
+//			currentCatagoryTextView.setText(catagoryStr);
+//		}
+//	}
+	
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if(resultCode == 99) {
+			//有BillCatagorySettingActivity返回
+			parentId = data.getIntExtra("parentId", 0);
+			catagoryChildId = data.getIntExtra("catagorychildid", 0);
+			catagorySelectedId = data.getIntExtra("catagorySelectedId", 0);
+			catagorySelectedChildId = data.getIntExtra("catagorySelectedChildId", 0);
+			catagoryStr = dbService.getCatagoryStr(catagoryChildId);
+//			Log.i("a", "BillInputActivity onActivityResult catagorySelectedId = " + catagorySelectedId + " catagorySelectedChildId = " + catagorySelectedChildId);
+			bill.setLeixing(catagoryStr);
+			currentCatagoryTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.leixing);
+			currentCatagoryTextView.setText(catagoryStr);
+		}
 	}
 
 	private void findViews() {
@@ -78,6 +123,8 @@ public class BillInputActivity extends Activity {
 	private void initViews() {
 		zhichuBtn.setBackgroundResource(R.drawable.exit_demo_mode_btn_pressed);
 		zhichuBtn.setTextColor(Color.WHITE);
+		currentCatagoryTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.leixing);
+		currentCatagoryTextView.setText(bill.getLeixing());
 
 	}
 
@@ -102,8 +149,13 @@ public class BillInputActivity extends Activity {
 		case R.id.leixinglayout:
 			//点击转到类型设置界面
 			Intent intent = new Intent(BillInputActivity.this, BillCatagorySettingActivity.class);
-			startActivity(intent);
+			intent.putExtra("parentId", parentId);
+			intent.putExtra("catagorySelectedId", catagorySelectedId);
+			intent.putExtra("catagorySelectedChildId", catagorySelectedChildId);
+			this.startActivityForResult(intent, 100);
 			overridePendingTransition(R.anim.activity_up, R.anim.activity_steady);
+			
+			
 			break;
 		case R.id.zhanghulayout:
 			break;
@@ -198,6 +250,7 @@ public class BillInputActivity extends Activity {
 			break;
 		}
 		refreshJinETextView();
+		refreshCatagoryTextView();
 	}
 
 	LinearLayout cal_equal;
@@ -342,6 +395,16 @@ public class BillInputActivity extends Activity {
 		shouruJine.setText(jie_txt);
 		zhuanzhangJine.setText(jie_txt);
 	}
+	
+	private void refreshCatagoryTextView() {
+		
+		currentCatagoryTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.leixing);
+		
+		currentCatagoryTextView.setText(bill.getLeixing());
+//		zhichuJine.setText(bill.getLeixing());
+//		shouruJine.setText(bill.getLeixing());
+//		zhuanzhangJine.setText(bill.getLeixing());
+	}
 
 	// 点击了计算器上的数字键
 	private void onClickNum(int numStr) {
@@ -394,7 +457,7 @@ public class BillInputActivity extends Activity {
 		jineTv = (TextView) viewFlipper.getCurrentView()
 				.findViewById(R.id.jine);
 		String jie_str = jineTv.getText().toString();
-		Log.i("a", "jine length = " + jie_str.length());
+//		Log.i("a", "jine length = " + jie_str.length());
 		if (jie_str.length() > 1) {
 			jie_txt = jie_str.substring(0, jie_str.length() - 1); // 去掉最后一个字符
 			if (jie_txt.endsWith(".")) {
@@ -449,7 +512,7 @@ public class BillInputActivity extends Activity {
 				resultFloat = temp1Float + temp2Float;
 				resultStr = resultStrDeleteZero(df.format(resultFloat));
 				jineTv.setText(resultStr);
-				Log.i("a", "temp1Float = " + temp1Float + "   temp2Float = " + temp2Float + "   result = " + resultFloat);
+//				Log.i("a", "temp1Float = " + temp1Float + "   temp2Float = " + temp2Float + "   result = " + resultFloat);
 				bill.setJine(resultStr);
 
 				break;
@@ -460,7 +523,7 @@ public class BillInputActivity extends Activity {
 				resultFloat = temp1Float - temp2Float;
 				resultStr = resultStrDeleteZero(df.format(resultFloat));
 				jineTv.setText(resultStr);
-				Log.i("a", "temp1Float = " + temp1Float + "   temp2Float = " + temp2Float + "   result = " + resultFloat);
+//				Log.i("a", "temp1Float = " + temp1Float + "   temp2Float = " + temp2Float + "   result = " + resultFloat);
 				bill.setJine(resultStr);
 				break;
 			case 2:
@@ -470,7 +533,7 @@ public class BillInputActivity extends Activity {
 				resultFloat = temp1Float * temp2Float;
 				resultStr = resultStrDeleteZero(df.format(resultFloat));
 				jineTv.setText(resultStr);
-				Log.i("a", "temp1Float = " + temp1Float + "   temp2Float = " + temp2Float + "   result = " + resultFloat);
+//				Log.i("a", "temp1Float = " + temp1Float + "   temp2Float = " + temp2Float + "   result = " + resultFloat);
 				bill.setJine(resultStr);
 				break;
 			case 3:
@@ -480,7 +543,7 @@ public class BillInputActivity extends Activity {
 				resultFloat = temp1Float / temp2Float;
 				resultStr = resultStrDeleteZero(df.format(resultFloat));
 				jineTv.setText(resultStr);
-				Log.i("a", "temp1Float = " + temp1Float + "   temp2Float = " + temp2Float + "   result = " + resultFloat);
+//				Log.i("a", "temp1Float = " + temp1Float + "   temp2Float = " + temp2Float + "   result = " + resultFloat);
 				bill.setJine(resultStr);
 				break;
 			}
@@ -513,21 +576,20 @@ public class BillInputActivity extends Activity {
 		return resultStr;
 	}
 	
-//	@Override
-//	public boolean onKeyUp(int keyCode, KeyEvent event) {
-//		switch (keyCode) {
-//		case KeyEvent.KEYCODE_BACK:
-//
-//			Toast.makeText(getBaseContext(), "back", 0).show();
-//			
-//			if(calculator.isShowing()) {
-//				calculator.dismiss();
-//			}
-//			break;
-//		}
-//		return true;
-//	}
+	private class LoadCatagoryInfo extends Thread {
+		@Override
+		public void run() {
+			
+		}
+	}
 	
+
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		dbService.closeDB();
+	}
 }
 
 

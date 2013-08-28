@@ -72,7 +72,7 @@ public class BillCatagoryCreator {
 		items.add(item);
 		item = new BillCatagoryItem("夜宵", R.drawable.yexiao, 2);
 		items.add(item);
-		item = new BillCatagoryItem("饮料水果", R.drawable.yinliaoshuiguo, 2);
+		item = new BillCatagoryItem("饮料水果", R.drawable.yanjiu, 2);
 		items.add(item);
 		item = new BillCatagoryItem("零食", R.drawable.lingshi, 2);
 		items.add(item);

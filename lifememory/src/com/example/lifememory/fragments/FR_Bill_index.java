@@ -55,6 +55,8 @@ public class FR_Bill_index extends Fragment {
 		super.onCreate(savedInstanceState);
 		
 	}
+	
+	public FR_Bill_index() {};
 
 	public FR_Bill_index(IndexActivity indexActivity) {
 		this.indexActivity = indexActivity;

@@ -59,6 +59,21 @@ public class BillCatagoryService {
 	}
 	
 	
+	//根据二级类别id查找类别信息     一级类比-二级类比 如  常用-打车
+	public String getCatagoryStr(int childid) {
+		StringBuffer sb = new StringBuffer();
+		
+		Cursor cursor = db.rawQuery("select * from bill_catagory where idx = ?", new String[]{String.valueOf(childid)});
+		cursor.moveToFirst();
+		String childName = cursor.getString(cursor.getColumnIndex("name"));
+		int parentid = cursor.getInt(cursor.getColumnIndex("parentid"));
+		cursor = db.rawQuery("select name from bill_catagory where idx = ?", new String[]{String.valueOf(parentid)});
+		cursor.moveToFirst();
+		String parentName = cursor.getString(0);
+		sb.append(parentName).append("-").append(childName);
+		return sb.toString();
+	}
+	
 }
 
 
