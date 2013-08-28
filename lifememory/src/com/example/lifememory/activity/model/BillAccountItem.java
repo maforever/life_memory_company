@@ -15,6 +15,7 @@ public class BillAccountItem {
 	private boolean isNotice;		//ÊÇ·ñ¾¯½ä
 	private double noticeValue;     //¾¯½äÏß½ð¶î
 	private int imageId;
+	private String beizhu;
 	
 	public BillAccountItem(){}
 
@@ -97,6 +98,18 @@ public class BillAccountItem {
 
 	public void setImageId(int imageId) {
 		this.imageId = imageId;
+	}
+
+
+
+	public String getBeizhu() {
+		return beizhu;
+	}
+
+
+
+	public void setBeizhu(String beizhu) {
+		this.beizhu = beizhu;
 	}
 
 	

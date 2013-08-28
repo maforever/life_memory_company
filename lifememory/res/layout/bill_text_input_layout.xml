@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/bill_title_bar_bg" >
+
+        
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="账户添加"
+            android:textColor="#ffffff"
+            android:textSize="20dp" />
+
+        
+    </RelativeLayout>
+
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/bill_bg_src"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        >
+        
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" 
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                >
+                <TextView
+                    android:text="你还可以输入"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18dp"
+                    android:textColor="#ffffff" 
+                    />
+                <TextView
+                    android:id="@+id/textNum"
+                    android:text="20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18dp"
+                    android:textColor="#ffffff" 
+                    />
+                <TextView
+                    android:text="字"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18dp"
+                    android:textColor="#ffffff" 
+                    />
+            </LinearLayout>
+        </RelativeLayout>
+        
+        
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+			<EditText
+			    android:id="@+id/bz"
+			    android:layout_width="match_parent"
+			    android:layout_height="match_parent"
+			    android:layout_margin="10dp"
+			    android:background="@drawable/bill_catagory_name_input"
+			    />            
+        </LinearLayout>
+        
+        
+    </LinearLayout>
+    
+	<RelativeLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:background="@drawable/pregnancydiary_top_bg" 
+	    >
+	    
+	    <ImageView
+	        android:id="@+id/back"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:background="@drawable/metro_btn_back"
+	        android:layout_centerVertical="true"
+	        android:layout_alignParentLeft="true"
+	        android:layout_marginLeft="10dp" 
+	        android:onClick="btnClick"
+	        />
+	    
+	    
+	    <ImageView
+	         android:id="@+id/ok"
+	         android:layout_width="wrap_content"
+	         android:layout_height="wrap_content"
+	         android:background="@drawable/metro_btn_ok"
+	         android:layout_centerVertical="true"
+	         android:layout_marginRight="10dp"
+	         android:layout_alignParentRight="true"
+	         android:onClick="btnClick"
+	        />
+	    
+	</RelativeLayout>        
+    
+
+</LinearLayout>

@@ -34,6 +34,7 @@ public class BillAccountSettingActivity extends Activity {
 	private BillAccountExpandableListAdapter adapter = null;
 	private int accountGroupSelectedIndex = 0;			//用于记录账户expandablelistview中组的索引
 	private int accountChildSelectedIndex = 0;  		//用于记录账户expandablelistview中子的索引
+	private Intent intent;
 	private Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			if(msg.what == 0) {
@@ -64,7 +65,7 @@ public class BillAccountSettingActivity extends Activity {
 			public boolean onChildClick(ExpandableListView parent, View v,
 					int groupPosition, int childPosition, long id) {
 				String name = expandableItems.get(groupPosition).getAccountItems().get(childPosition).getName();
-				Intent intent = new Intent();
+				intent = new Intent();
 				intent.putExtra("accountGroupSelectedIndex", groupPosition);
 				intent.putExtra("accountChildSelectedIndex", childPosition);
 				intent.putExtra("accountStr", name);
@@ -83,7 +84,9 @@ public class BillAccountSettingActivity extends Activity {
 			overridePendingTransition(R.anim.activity_steady, R.anim.activity_down);
 			break;
 		case R.id.add:
-			
+			intent = new Intent(BillAccountSettingActivity.this, BillAccountAddActivity.class);
+			startActivity(intent);
+			overridePendingTransition(R.anim.activity_up, R.anim.activity_steady);
 			break;
 		}
 	}

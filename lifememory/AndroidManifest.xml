@@ -90,6 +90,14 @@
             android:name=".activity.BillAccountSettingActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@android:style/Theme.Black.NoTitleBar" />
+        <activity
+            android:name=".activity.BillAccountAddActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.Black.NoTitleBar" />
+        <activity
+            android:name=".activity.BillTextInputActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.Black.NoTitleBar" />
     </application>
 
 </manifest>
