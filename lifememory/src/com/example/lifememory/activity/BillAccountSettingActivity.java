@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
@@ -80,8 +81,7 @@ public class BillAccountSettingActivity extends Activity {
 	public void btnClick(View view) {
 		switch (view.getId()) {
 		case R.id.back:
-			BillAccountSettingActivity.this.finish();
-			overridePendingTransition(R.anim.activity_steady, R.anim.activity_down);
+			back();
 			break;
 		case R.id.add:
 			intent = new Intent(BillAccountSettingActivity.this, BillAccountAddActivity.class);
@@ -152,6 +152,21 @@ public class BillAccountSettingActivity extends Activity {
 	protected void onDestroy() {
 		super.onDestroy();
 		dbService.closeDB();
+	}
+	
+	private void back() {
+		BillAccountSettingActivity.this.finish();
+		overridePendingTransition(R.anim.activity_steady, R.anim.activity_down);
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		switch (keyCode) {
+		case KeyEvent.KEYCODE_BACK:
+			back();
+			break;
+		}
+		return true;
 	}
 }
 

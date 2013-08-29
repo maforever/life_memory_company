@@ -8,6 +8,7 @@ import com.example.lifememory.db.service.BillCatagoryService;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -111,8 +112,7 @@ public class BillCatatoryAddActivity extends Activity {
 	public void btnClick(View view) {
 		switch (view.getId()) {
 		case R.id.back:
-			BillCatatoryAddActivity.this.finish();
-			overridePendingTransition(R.anim.activity_up, R.anim.activity_steady);
+			back();
 			break;
 		case R.id.save:
 			
@@ -147,5 +147,18 @@ public class BillCatatoryAddActivity extends Activity {
 		dbService.closeDB();
 	}
 	
+	private void back() {
+		BillCatatoryAddActivity.this.finish();
+		overridePendingTransition(R.anim.activity_steady, R.anim.activity_down);
+	}
 	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		switch (keyCode) {
+		case KeyEvent.KEYCODE_BACK:
+			back();
+			break;
+		}
+		return true;
+	}
 }

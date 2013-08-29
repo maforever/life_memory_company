@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -133,6 +134,7 @@ public class BillCatagorySettingActivity extends Activity {
 					intent.putExtra("title", "添加一级类别");
 					intent.putExtra("parentId", 0);
 					startActivity(intent);
+					overridePendingTransition(R.anim.activity_up, R.anim.activity_steady);
 				}
 			}
 		});
@@ -160,6 +162,7 @@ public class BillCatagorySettingActivity extends Activity {
 					intent.putExtra("title", "添加二级类别");
 					intent.putExtra("parentId", parentId);
 					startActivity(intent);
+					overridePendingTransition(R.anim.activity_up, R.anim.activity_steady);
 				}
 			}
 		});
@@ -168,9 +171,7 @@ public class BillCatagorySettingActivity extends Activity {
 	public void btnClick(View view) {
 		switch (view.getId()) {
 		case R.id.back:
-			BillCatagorySettingActivity.this.finish();
-			overridePendingTransition(R.anim.activity_steady,
-					R.anim.activity_down);
+			back();
 			break;
 		}
 	}
@@ -207,4 +208,20 @@ public class BillCatagorySettingActivity extends Activity {
 		dbService.closeDB();
 	}
 
+	
+	private void back() {
+		BillCatagorySettingActivity.this.finish();
+		overridePendingTransition(R.anim.activity_steady,
+				R.anim.activity_down);
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		switch (keyCode) {
+		case KeyEvent.KEYCODE_BACK:
+			back();
+			break;
+		}
+		return true;
+	}
 }

@@ -98,6 +98,21 @@
             android:name=".activity.BillTextInputActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@android:style/Theme.Black.NoTitleBar" />
+        <activity
+            android:name=".activity.BillAccountBiZhongSettingActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.Black.NoTitleBar" />
+        <activity
+            android:name=".activity.BillAccountCatagoryNameSelectActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.Black.NoTitleBar" />
+        <activity
+            android:name=".activity.BillCalculatorActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/dialog" />
+        
+        
+        
     </application>
 
 </manifest>

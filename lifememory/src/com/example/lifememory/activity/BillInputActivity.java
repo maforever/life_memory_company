@@ -59,7 +59,14 @@ public class BillInputActivity extends Activity {
 	private int accountGroupSelectedIndex = 0;			//用于记录账户expandablelistview中组的索引
 	private int accountChildSelectedIndex = 0;  		//用于记录账户expandablelistview中子的索引
 	private Intent intent;
-
+	/*
+	 * 用于纪录等号按钮是否点击了,当每次点击的+,-,*,/按钮后，将isEqualBtnClick=false
+	 * 这样每当点击popwindow之外的或点击back关闭popwindow的时候，就判断如果isEqualBtnClick=false，就将textview
+	 * 的结果设为点击+，-,*,/之前的值
+	 */
+	private boolean isEqualBtnClick = true;                
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -178,9 +185,7 @@ public class BillInputActivity extends Activity {
 			}
 			break;
 		case R.id.back:
-			BillInputActivity.this.finish();
-			overridePendingTransition(R.anim.activity_steady,
-					R.anim.activity_down);
+			back();
 			break;
 		case R.id.save:
 			break;
@@ -316,8 +321,15 @@ public class BillInputActivity extends Activity {
 			
 			@Override
 			public void onDismiss() {
-				BillInputActivity.this.isClickFlag = false;   //当每次关闭计算器时，让是否点击符号复位
-				BillInputActivity.this.isFloat = false;       //当每次关闭计算器时，让是否是浮点数复位
+				if(!isEqualBtnClick) {
+					BillInputActivity.this.isClickFlag = false;   //当每次关闭计算器时，让是否点击符号复位
+					BillInputActivity.this.isFloat = false;       //当每次关闭计算器时，让是否是浮点数复位
+					jineTv = (TextView) viewFlipper.getCurrentView().findViewById(
+							R.id.jine);
+					jineTv.setText(temp1Str);
+					cal_equal.setVisibility(ViewGroup.GONE);
+					cal_sure.setVisibility(ViewGroup.VISIBLE);
+				}
 			}
 		});
 	}
@@ -331,15 +343,19 @@ public class BillInputActivity extends Activity {
 		public void onClick(View v) {
 			switch (v.getId()) {
 			case R.id.cal_add:
+				isEqualBtnClick = false;
 				onClickFlag(0);
 				break;
 			case R.id.cal_minus:
+				isEqualBtnClick = false;
 				onClickFlag(1);
 				break;
 			case R.id.cal_multiply:
+				isEqualBtnClick = false;
 				onClickFlag(2);
 				break;
 			case R.id.cal_divide:
+				isEqualBtnClick = false;
 				onClickFlag(3);
 				break;
 			case R.id.cal_sure:
@@ -348,6 +364,7 @@ public class BillInputActivity extends Activity {
 				}
 				break;
 			case R.id.cal_equal:
+				isEqualBtnClick = true;
 				onClickEqual();
 				break;
 			case R.id.cal_one:
@@ -594,6 +611,23 @@ public class BillInputActivity extends Activity {
 	protected void onDestroy() {
 		super.onDestroy();
 		dbService.closeDB();
+	}
+	
+	
+	private void back() {
+		BillInputActivity.this.finish();
+		overridePendingTransition(R.anim.activity_steady,
+				R.anim.activity_down);
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		switch (keyCode) {
+		case KeyEvent.KEYCODE_BACK:
+			back();
+			break;
+		}
+		return true;
 	}
 }
 
