@@ -1,11 +1,13 @@
 package com.example.lifememory.activity.model;
 
+import java.io.Serializable;
+
 /**
  * 记账中的账户
  * @author Administrator
  *
  */
-public class BillAccountItem {
+public class BillAccountItem  {
 
 	private int idx;
 	private int catagoryname;    //类别名称   现金 1， 信用卡 2， 储蓄 3， 网上银行 4
@@ -110,6 +112,17 @@ public class BillAccountItem {
 
 	public void setBeizhu(String beizhu) {
 		this.beizhu = beizhu;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "BillAccountItem [idx=" + idx + ", catagoryname=" + catagoryname
+				+ ", name=" + name + ", bizhong=" + bizhong + ", dangqianyue="
+				+ dangqianyue + ", isNotice=" + isNotice + ", noticeValue="
+				+ noticeValue + ", imageId=" + imageId + ", beizhu=" + beizhu
+				+ "]";
 	}
 
 	

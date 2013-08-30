@@ -261,6 +261,7 @@ public class BillInputActivity extends Activity {
 		}
 		refreshJinETextView();
 		refreshCatagoryTextView();
+		refreshAccountTextView();
 	}
 
 	LinearLayout cal_equal;
@@ -423,9 +424,11 @@ public class BillInputActivity extends Activity {
 		currentCatagoryTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.leixing);
 		
 		currentCatagoryTextView.setText(bill.getLeixing());
-//		zhichuJine.setText(bill.getLeixing());
-//		shouruJine.setText(bill.getLeixing());
-//		zhuanzhangJine.setText(bill.getLeixing());
+	}
+	
+	private void refreshAccountTextView() {
+		currentAccountTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.zhanghu);
+		currentAccountTextView.setText(bill.getZhanghu());
 	}
 
 	// 点击了计算器上的数字键

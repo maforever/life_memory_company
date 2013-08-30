@@ -24,13 +24,15 @@ public class BillAccountCatagoryNameSelectActivity extends Activity{
 //	private final static int EDIT_CATAGORYNAMEFINISHED = 95;       
 	private int catagorynameCurrentSelectedIndex = 0;
 	private String catagoryName;
+	private String type;    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.bill_account_catagoryname_select_layout);
 		
-		findViews();
+		
 		initDatas();
+		findViews();
 		listAdapter();
 		setListeners();
 	}

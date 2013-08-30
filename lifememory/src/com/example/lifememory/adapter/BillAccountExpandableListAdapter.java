@@ -8,18 +8,22 @@ import com.example.lifememory.activity.model.BillAccountExpandableListViewItem;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class BillAccountExpandableListAdapter extends BaseExpandableListAdapter {
 	private LayoutInflater inflater;
 	private List<BillAccountExpandableListViewItem> expandableItems;
 	private int currentGroupId = -1;
 	private int currentChildId = -1;
+	private Context context;
 	public BillAccountExpandableListAdapter(Context context, List<BillAccountExpandableListViewItem> expandableItems) {
 		inflater = LayoutInflater.from(context);
+		this.context = context;
 		this.expandableItems = expandableItems;
 	}
 	
@@ -67,18 +71,31 @@ public class BillAccountExpandableListAdapter extends BaseExpandableListAdapter 
 	@Override
 	public View getGroupView(int groupPosition, boolean isExpanded,
 			View convertView, ViewGroup parent) {
+		ImageView imageView;
 		TextView title;
 		ImageView indicator;
+		ViewHolder vh;
 		if(convertView == null) {
 			convertView = inflater.inflate(R.layout.bill_account_expandablelist_parentitem, null);
+			imageView = (ImageView) convertView.findViewById(R.id.imageView);
 			title = (TextView) convertView.findViewById(R.id.title);
 			indicator = (ImageView) convertView.findViewById(R.id.indicator);
+			vh = new ViewHolder();
+			vh.imageView = imageView;
+			vh.title = title;
+			vh.indicator = indicator;
+			convertView.setTag(vh);
 		}else {
-			title = (TextView) convertView.findViewById(R.id.title);
-			indicator = (ImageView) convertView.findViewById(R.id.indicator);
+			vh = (ViewHolder) convertView.getTag();
+			imageView = vh.imageView;
+			title = vh.title;
+			indicator = vh.indicator;
+//			imageView = (ImageView) convertView.findViewById(R.id.imageView);
+//			title = (TextView) convertView.findViewById(R.id.title);
+//			indicator = (ImageView) convertView.findViewById(R.id.indicator);
 		}
 		title.setText(this.expandableItems.get(groupPosition).getTitle());
-		
+		imageView.setImageResource(this.expandableItems.get(groupPosition).getImageId());
 		if(isExpanded) {
 			indicator.setImageResource(R.drawable.bill_account_indicator_down);
 		}else {
@@ -91,20 +108,24 @@ public class BillAccountExpandableListAdapter extends BaseExpandableListAdapter 
 	@Override
 	public View getChildView(int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
-		ImageView imageView;
 		ImageView selectedTag;
 		TextView name;
+		ViewHolder vh;
 		if(convertView == null) {
 			convertView = inflater.inflate(R.layout.bill_account_listview_item, null);
-			imageView = (ImageView) convertView.findViewById(R.id.imageView);
 			selectedTag = (ImageView) convertView.findViewById(R.id.selectedTag);
 			name = (TextView) convertView.findViewById(R.id.name);
+			vh = new ViewHolder();
+			vh.selectedTag = selectedTag;
+			vh.name = name;
+			convertView.setTag(vh);
 		}else {
-			imageView = (ImageView) convertView.findViewById(R.id.imageView);
-			selectedTag = (ImageView) convertView.findViewById(R.id.selectedTag);
-			name = (TextView) convertView.findViewById(R.id.name);
+			vh = (ViewHolder) convertView.getTag();
+			selectedTag = vh.selectedTag;
+			name = vh.name;
+//			selectedTag = (ImageView) convertView.findViewById(R.id.selectedTag);
+//			name = (TextView) convertView.findViewById(R.id.name);
 		}
-		imageView.setImageResource(this.expandableItems.get(groupPosition).getAccountItems().get(childPosition).getImageId());
 		name.setText(this.expandableItems.get(groupPosition).getAccountItems().get(childPosition).getName());
 		selectedTag.setVisibility(ViewGroup.GONE);
 		
@@ -120,4 +141,15 @@ public class BillAccountExpandableListAdapter extends BaseExpandableListAdapter 
 		return true;
 	}
 
+	static class ViewHolder {
+		ImageView imageView;
+		ImageView indicator;
+		ImageView selectedTag;
+		TextView title;
+		TextView name;
+	}
+	
+	
+	
+	
 }

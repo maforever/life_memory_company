@@ -110,9 +110,10 @@
             android:name=".activity.BillCalculatorActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/dialog" />
-        
-        
-        
+        <activity
+            android:name=".activity.BillAccountUpdateActivity"
+            android:configChanges="orientation|keyboardHidden"
+             />
     </application>
 
 </manifest>

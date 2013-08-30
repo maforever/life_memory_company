@@ -1,13 +1,17 @@
 package com.example.lifememory.activity;
 
+import java.util.Currency;
+
 import com.example.lifememory.R;
 import com.example.lifememory.activity.model.BillAccountItem;
 import com.example.lifememory.db.service.BillAccountService;
 import com.example.lifememory.utils.ConstantUtil;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.ClipData.Item;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +24,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class BillAccountAddActivity extends Activity {
+public class BillAccountUpdateActivity extends Activity {
 	private Intent intent;
 	private BillAccountItem accountItem;
 	private CheckBox noticeCb;
@@ -43,10 +47,14 @@ public class BillAccountAddActivity extends Activity {
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case 0:
-				//添加账户信息完成
-				Toast.makeText(BillAccountAddActivity.this, "账户信息添加完成!", 0).show();
-				BillAccountAddActivity.this.finish();
+				//修改账户信息完成
+				Toast.makeText(BillAccountUpdateActivity.this, "账户信息修改成功!", 0).show();
+				BillAccountUpdateActivity.this.finish();
 				overridePendingTransition(R.anim.activity_steady, R.anim.activity_down);
+				break;
+			case 1:
+				//初始化数据完成
+				initViews();
 				break;
 			}
 		};
@@ -54,9 +62,13 @@ public class BillAccountAddActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.setContentView(R.layout.bill_account_add_layout);
+		this.setContentView(R.layout.bill_account_update_layout);
 		dbService = new BillAccountService(this);
+		
+		
+		
 		findViews();
+		new InitDatasThread().start();
 		setListeners();
 	}
 	
@@ -72,6 +84,57 @@ public class BillAccountAddActivity extends Activity {
 		accountBeiZhuTv = (TextView) this.findViewById(R.id.beizhu);
 	}
 	
+	private class InitDatasThread extends Thread {
+		@Override
+		public void run() {
+			int idx = BillAccountUpdateActivity.this.getIntent().getIntExtra("accountId", 0);
+			accountItem = dbService.findItemDetailById(idx);
+			Log.i("a", accountItem.toString());
+			handler.sendEmptyMessage(1);
+		}
+	}
+	
+	private void initViews() {
+
+		int accountCatagoryId = accountItem.getCatagoryname();
+		switch (accountCatagoryId) {
+		case 1:
+			accountcatagorynameTv.setText("现金");
+			
+			break;
+		case 2:
+			accountcatagorynameTv.setText("信用卡");
+			break;
+		case 3:
+			accountcatagorynameTv.setText("储蓄");
+			break;
+		case 4:
+			accountcatagorynameTv.setText("网上支付");
+			break;
+		}
+		catagorynameCurrentSelectedIndex = accountCatagoryId - 1;
+		String bizhongStr = accountItem.getBizhong().substring(0, accountItem.getBizhong().lastIndexOf("-"));
+		bizhongCurrentSelectedIndex = getBizhongCurrentSelectedIndex(bizhongStr);
+		
+		accountNameTv.setText(accountItem.getName());
+		accountBiZhongTv.setText(accountItem.getBizhong());
+//		accountyueTv.setText(accountItem.getDangqianyue() + "");
+		
+		accountyueTv.setText(accountItem.getDangqianyue() == 0 ? "0" : accountItem.getDangqianyue() + "");
+		boolean isNotice = accountItem.isNotice();
+//		accountNoticeValueTv.setText(accountItem.getNoticeValue() + "");
+		accountNoticeValueTv.setText(accountItem.getNoticeValue() == 0 ? "0" : accountItem.getNoticeValue() + "");
+		if(isNotice) {
+			accountNoticeValueLayout.setVisibility(ViewGroup.VISIBLE);
+			noticeCb.setChecked(true);
+		}else {
+			accountNoticeValueLayout.setVisibility(ViewGroup.GONE);
+			noticeCb.setChecked(false);
+		}
+		accountBeiZhuTv.setText(accountItem.getBeizhu());
+		
+	}
+	
 	private void setListeners() {
 		noticeCb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
@@ -80,7 +143,7 @@ public class BillAccountAddActivity extends Activity {
 					accountNoticeValueLayout.setVisibility(ViewGroup.VISIBLE);
 				}else {
 					accountNoticeValueLayout.setVisibility(ViewGroup.GONE);
-					accountNoticeValueTv.setText("0");
+//					accountNoticeValueTv.setText("0");
 				}
 			}
 		});
@@ -91,10 +154,9 @@ public class BillAccountAddActivity extends Activity {
 		case R.id.back:
 			back();
 			break;
-		case R.id.save:
+		case R.id.update:
 			
 			if(validateDatas()) {
-				accountItem = new BillAccountItem();
 				int catagoryNameId = 0;
 				if(catagoryName.equals("现金")) {
 					catagoryNameId = 1;
@@ -116,7 +178,7 @@ public class BillAccountAddActivity extends Activity {
 				new Thread(new Runnable() {
 					@Override
 					public void run() {
-						dbService.addAccount(accountItem);	
+						dbService.updateItem(accountItem);
 						handler.sendEmptyMessage(0);
 					}
 				}).start();
@@ -127,13 +189,13 @@ public class BillAccountAddActivity extends Activity {
 			
 			break;
 		case R.id.accountCatagoryLayout:
-			intent = new Intent(BillAccountAddActivity.this, BillAccountCatagoryNameSelectActivity.class);
+			intent = new Intent(BillAccountUpdateActivity.this, BillAccountCatagoryNameSelectActivity.class);
 			intent.putExtra("catagorynameCurrentSelectedIndex", catagorynameCurrentSelectedIndex);
 			startActivityForResult(intent, 100);
 			overridePendingTransition(R.anim.activity_up, R.anim.activity_steady);
 			break;
 		case R.id.accountNameLayout:
-			intent = new Intent(BillAccountAddActivity.this, BillTextInputActivity.class);
+			intent = new Intent(BillAccountUpdateActivity.this, BillTextInputActivity.class);
 			title = "编辑账户名称";
 			editNum = 10;
 			intent.putExtra("title", title);
@@ -144,13 +206,13 @@ public class BillAccountAddActivity extends Activity {
 			overridePendingTransition(R.anim.activity_up, R.anim.activity_steady);
 			break;
 		case R.id.accountBizhongLayout:
-			intent = new Intent(BillAccountAddActivity.this, BillAccountBiZhongSettingActivity.class);
+			intent = new Intent(BillAccountUpdateActivity.this, BillAccountBiZhongSettingActivity.class);
 			intent.putExtra("currentSelectedIndex", bizhongCurrentSelectedIndex);
 			startActivityForResult(intent, 100);
 			overridePendingTransition(R.anim.activity_up, R.anim.activity_steady);
 			break;
 		case R.id.accountyueLayout:
-			intent = new Intent(BillAccountAddActivity.this, BillCalculatorActivity.class);
+			intent = new Intent(BillAccountUpdateActivity.this, BillCalculatorActivity.class);
 			intent.putExtra("num", accountyueTv.getText().toString());
 			intent.putExtra("resultCode", ConstantUtil.EDIT_YUEFINISHED);
 			startActivityForResult(intent, 100);
@@ -160,20 +222,20 @@ public class BillAccountAddActivity extends Activity {
 			if(noticeCb.isChecked()) {
 				noticeCb.setChecked(false);
 				accountNoticeValueLayout.setVisibility(ViewGroup.GONE);
-				accountNoticeValueTv.setText("0");
+//				accountNoticeValueTv.setText("0");
 			}else {
 				noticeCb.setChecked(true);
 				accountNoticeValueLayout.setVisibility(ViewGroup.VISIBLE);
 			}
 			break;
 		case R.id.accountNoticeValueLayout:
-			intent = new Intent(BillAccountAddActivity.this, BillCalculatorActivity.class);
+			intent = new Intent(BillAccountUpdateActivity.this, BillCalculatorActivity.class);
 			intent.putExtra("num", accountNoticeValueTv.getText().toString());
 			intent.putExtra("resultCode", ConstantUtil.EDIT_NOTICEVALUEFINISHED);
 			startActivityForResult(intent, 100);
 			break;
 		case R.id.beizhu:
-			intent = new Intent(BillAccountAddActivity.this, BillTextInputActivity.class);
+			intent = new Intent(BillAccountUpdateActivity.this, BillTextInputActivity.class);
 			title = "编辑账户备注";
 			editNum = 100;
 			intent.putExtra("title", title);
@@ -218,7 +280,7 @@ public class BillAccountAddActivity extends Activity {
 	}
 	
 	private void back() {
-		BillAccountAddActivity.this.finish();
+		BillAccountUpdateActivity.this.finish();
 		overridePendingTransition(R.anim.activity_steady, R.anim.activity_down);
 	}
 	
@@ -239,29 +301,29 @@ public class BillAccountAddActivity extends Activity {
 		accountYue = accountyueTv.getText().toString();
 		accountBeiZhu = accountBeiZhuTv.getText().toString();
 		if(catagoryName == null || "".equals(catagoryName)) {
-			Toast.makeText(BillAccountAddActivity.this, "请选择类别名称!", 0).show();
+			Toast.makeText(BillAccountUpdateActivity.this, "请选择类别名称!", 0).show();
 			return false;
 		}
 		
 		if(accountName == null || "".equals(accountName)) {
-			Toast.makeText(BillAccountAddActivity.this, "请填写账户名称!", 0).show();
+			Toast.makeText(BillAccountUpdateActivity.this, "请填写账户名称!", 0).show();
 			return false;
 		}
 		
 		if(accountYue == null || "".equals(accountYue)) {
-			Toast.makeText(BillAccountAddActivity.this, "请填写账户余额!", 0).show();
+			Toast.makeText(BillAccountUpdateActivity.this, "请填写账户余额!", 0).show();
 			return false;
 		}
 		
 		if(accountBiZhong == null || "".equals(accountBiZhong)) {
-			Toast.makeText(BillAccountAddActivity.this, "请选择账户币种!", 0).show();
+			Toast.makeText(BillAccountUpdateActivity.this, "请选择账户币种!", 0).show();
 			return false;
 		}
 		
 		if(noticeCb.isChecked()) {
 			accountNoticeValue = accountNoticeValueTv.getText().toString();
 			if(accountNoticeValue == null || "".equals(accountNoticeValue)) {
-				Toast.makeText(BillAccountAddActivity.this, "请填写警戒线金额!", 0).show();
+				Toast.makeText(BillAccountUpdateActivity.this, "请填写警戒线金额!", 0).show();
 				return false;
 			}
 		}
@@ -269,7 +331,14 @@ public class BillAccountAddActivity extends Activity {
 		return true;
 	}
 	
-	
+	private int getBizhongCurrentSelectedIndex(String _bizhongStr) {
+		for(int i=0; i<ConstantUtil.BILL_ACCOUNT_BIZHONG_NAMES1.length; i++) {
+			if(_bizhongStr.equals(ConstantUtil.BILL_ACCOUNT_BIZHONG_NAMES1[i])) {
+				return i;
+			}
+		}
+		return 0;
+	}
 	
 	
 	

@@ -8,23 +8,35 @@ import com.example.lifememory.activity.model.BillAccountExpandableListViewItem;
 import com.example.lifememory.activity.model.BillAccountItem;
 import com.example.lifememory.adapter.BillAccountExpandableListAdapter;
 import com.example.lifememory.db.service.BillAccountService;
+import com.example.lifememory.db.service.BillInfoService;
+import com.example.lifememory.dialog.DialogAlertBill;
+import com.example.lifememory.dialog.DialogAlertListener;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.View.OnLongClickListener;
+import android.widget.CheckBox;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
+import android.widget.CompoundButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class BillAccountSettingActivity extends Activity {
 	private ExpandableListView listView = null;
+	private CheckBox updateCb, deleteCb;
 	private BillAccountService dbService;
+	private BillInfoService infoService;
 	private List<BillAccountItem> accountItems;
 	private List<BillAccountItem> accountItems1 = new ArrayList<BillAccountItem>();  //存放现金数据
 	private List<BillAccountItem> accountItems2 = new ArrayList<BillAccountItem>();	 //存放信用卡数据
@@ -35,11 +47,22 @@ public class BillAccountSettingActivity extends Activity {
 	private BillAccountExpandableListAdapter adapter = null;
 	private int accountGroupSelectedIndex = 0;			//用于记录账户expandablelistview中组的索引
 	private int accountChildSelectedIndex = 0;  		//用于记录账户expandablelistview中子的索引
+	private int groupLocation, childLocation;
 	private Intent intent;
 	private Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
-			if(msg.what == 0) {
+			switch (msg.what) {
+			case 0:
 				listAdapter();
+				break;
+			case 1:
+				//删除失败
+				Toast.makeText(BillAccountSettingActivity.this, "当前账户信息已被使用，无法删除!", 0).show();
+				break;
+			case 2:
+				//删除成功
+				new InitDatasThread().start();
+				break;
 			}
 		}
 	};
@@ -49,7 +72,7 @@ public class BillAccountSettingActivity extends Activity {
 		this.setContentView(R.layout.bill_account_setting_layout);
 		
 		dbService = new BillAccountService(this);
-		
+		infoService = new BillInfoService(this);
 		this.accountGroupSelectedIndex = this.getIntent().getIntExtra("accountGroupSelectedIndex", 0);
 		this.accountChildSelectedIndex = this.getIntent().getIntExtra("accountChildSelectedIndex", 0);
 		
@@ -59,41 +82,145 @@ public class BillAccountSettingActivity extends Activity {
 	
 
 	private void findViews() {
+		updateCb = (CheckBox) this.findViewById(R.id.updateCb);
+		deleteCb = (CheckBox) this.findViewById(R.id.deleteCb);
+		
+		updateCb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				if(isChecked) {
+					deleteCb.setChecked(false);
+				}
+			}
+		});
+		
+		deleteCb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				if(isChecked) {
+					updateCb.setChecked(false);
+				}
+			}
+		});
+		
 		listView = (ExpandableListView) this.findViewById(R.id.listView);
 		listView.setOnChildClickListener(new OnChildClickListener() {
 				 
 			@Override
 			public boolean onChildClick(ExpandableListView parent, View v,
 					int groupPosition, int childPosition, long id) {
-				String name = expandableItems.get(groupPosition).getAccountItems().get(childPosition).getName();
-				intent = new Intent();
-				intent.putExtra("accountGroupSelectedIndex", groupPosition);
-				intent.putExtra("accountChildSelectedIndex", childPosition);
-				intent.putExtra("accountStr", name);
-				BillAccountSettingActivity.this.setResult(98, intent);
-				BillAccountSettingActivity.this.finish();
-				overridePendingTransition(R.anim.activity_steady, R.anim.activity_down);
+				groupLocation = groupPosition;
+				childLocation = childPosition;
+				if(!updateCb.isChecked() && !deleteCb.isChecked()) {
+					String name = expandableItems.get(groupPosition).getAccountItems().get(childPosition).getName();
+					intent = new Intent();
+					intent.putExtra("accountGroupSelectedIndex", groupPosition);
+					intent.putExtra("accountChildSelectedIndex", childPosition);
+					intent.putExtra("accountStr", name);
+					BillAccountSettingActivity.this.setResult(98, intent);
+					BillAccountSettingActivity.this.finish();
+					overridePendingTransition(R.anim.activity_steady, R.anim.activity_down);
+				}else if(updateCb.isChecked()) {
+					//修改
+					intent = new Intent(BillAccountSettingActivity.this, BillAccountUpdateActivity.class);
+					intent.putExtra("accountId", expandableItems.get(groupPosition).getAccountItems().get(childPosition).getIdx());
+					startActivity(intent);
+					overridePendingTransition(R.anim.activity_up, R.anim.activity_steady);
+				}else if(deleteCb.isChecked()) {
+					//删除
+					new DialogAlertBill(BillAccountSettingActivity.this, listener, "确定删除该账户信息吗?").show();
+				}
 				return false;
 			}
 		});
+		
 	}
+	
+	private DialogAlertListener listener = new DialogAlertListener() {
+		
+		@Override
+		public void onDialogUnSave(Dialog dlg, Object param) {
+			
+		}
+		
+		@Override
+		public void onDialogSave(Dialog dlg, Object param) {
+			
+		}
+		
+		@Override
+		public void onDialogOk(Dialog dlg, Object param) {
+			new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					if(infoService.isRelatedWithAccount(expandableItems.get(groupLocation).getAccountItems().get(childLocation).getIdx())) {
+						handler.sendEmptyMessage(1);
+					}else {
+						dbService.deleteItemById(expandableItems.get(groupLocation).getAccountItems().get(childLocation).getIdx());
+						handler.sendEmptyMessage(2);
+					}
+				}
+			}).start();
+		}
+		
+		@Override
+		public void onDialogCreate(Dialog dlg, Object param) {
+			
+		}
+		
+		@Override
+		public void onDialogCancel(Dialog dlg, Object param) {
+			
+		}
+	};
 	
 	public void btnClick(View view) {
 		switch (view.getId()) {
-		case R.id.back:
-			back();
-			break;
+//		case R.id.back:
+//			back();
+//			break;
 		case R.id.add:
 			intent = new Intent(BillAccountSettingActivity.this, BillAccountAddActivity.class);
 			startActivity(intent);
 			overridePendingTransition(R.anim.activity_up, R.anim.activity_steady);
 			break;
+		case R.id.updateBtn:
+			if(updateCb.isChecked()) {
+				updateCb.setChecked(false);
+			}else {
+				updateCb.setChecked(true);
+				deleteCb.setChecked(false);
+			}
+			break;
+		case R.id.deleteBtn:
+			if(deleteCb.isChecked()) {
+				deleteCb.setChecked(false);
+			}else {
+				deleteCb.setChecked(true);
+				updateCb.setChecked(false);
+			}
+			break;
+		}
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if(dbService != null) {
+			new InitDatasThread().start();
 		}
 	}
 	
 	private class InitDatasThread extends Thread {
 		@Override
 		public void run() {
+			accountItems1 = new ArrayList<BillAccountItem>();  
+			accountItems2 = new ArrayList<BillAccountItem>();	
+			accountItems3 = new ArrayList<BillAccountItem>(); 
+			accountItems4 = new ArrayList<BillAccountItem>();  
+			expandableItems = new ArrayList<BillAccountExpandableListViewItem>();
 			accountItems = dbService.getAllAccounts();
 			for(BillAccountItem item : accountItems) {
 				switch (item.getCatagoryname()) {
@@ -115,21 +242,25 @@ public class BillAccountSettingActivity extends Activity {
 			expandableItem = new BillAccountExpandableListViewItem();
 			expandableItem.setTitle("现金");
 			expandableItem.setAccountItems(accountItems1);
+			expandableItem.setImageId(R.drawable.xianjin);
 			expandableItems.add(expandableItem);
 			
 			expandableItem = new BillAccountExpandableListViewItem();
 			expandableItem.setTitle("信用卡");
 			expandableItem.setAccountItems(accountItems2);
+			expandableItem.setImageId(R.drawable.icon_yhsr);
 			expandableItems.add(expandableItem);
 			
 			expandableItem = new BillAccountExpandableListViewItem();
 			expandableItem.setTitle("储蓄");
 			expandableItem.setAccountItems(accountItems3);
+			expandableItem.setImageId(R.drawable.waihui);
 			expandableItems.add(expandableItem);
 			
 			expandableItem = new BillAccountExpandableListViewItem();
 			expandableItem.setTitle("网上支付");
 			expandableItem.setAccountItems(accountItems4);
+			expandableItem.setImageId(R.drawable.shuifei);
 			expandableItems.add(expandableItem);
 			
 			handler.sendEmptyMessage(0);
@@ -146,6 +277,7 @@ public class BillAccountSettingActivity extends Activity {
 		for (int i = 0; i < groupCount; i++) {
 			listView.expandGroup(i);
 		}
+		listView.setSelectedChild(accountGroupSelectedIndex, accountChildSelectedIndex, true);
 	};
 	
 	@Override

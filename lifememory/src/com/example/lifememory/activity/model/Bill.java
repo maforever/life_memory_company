@@ -4,15 +4,23 @@ public class Bill {
 	
 	private int idx;
 	private String jine;
-	private String leixing;
-	private String zhanghu;
+	private String leixing;   //catagoryname
+	private String zhanghu;   //accountname
+	private String chengyuan; //memebername
+	
+	/*
+	 * 以下属性与数据库关联
+	 */
+	private int catagoryid;
+	private int accountid;
+	private int memberid;
 	private String riqi;
-	private String chengyuan;
 	private String beizhu;
 	private boolean isCanBaoXiao;
 	private boolean isBaoxiaoed;
-	private String zhuanru;
-	private String zhuanchu;
+	private int billType;    //1 支出 2 收入 3 转账
+	
+	
 	public int getIdx() {
 		return idx;
 	}
@@ -67,25 +75,29 @@ public class Bill {
 	public void setBaoxiaoed(boolean isBaoxiaoed) {
 		this.isBaoxiaoed = isBaoxiaoed;
 	}
-	public String getZhuanru() {
-		return zhuanru;
+	public int getCatagoryid() {
+		return catagoryid;
 	}
-	public void setZhuanru(String zhuanru) {
-		this.zhuanru = zhuanru;
+	public void setCatagoryid(int catagoryid) {
+		this.catagoryid = catagoryid;
 	}
-	public String getZhuanchu() {
-		return zhuanchu;
+	public int getAccountid() {
+		return accountid;
 	}
-	public void setZhuanchu(String zhuanchu) {
-		this.zhuanchu = zhuanchu;
+	public void setAccountid(int accountid) {
+		this.accountid = accountid;
 	}
-	@Override
-	public String toString() {
-		return "Bill [idx=" + idx + ", jine=" + jine + ", leixing=" + leixing
-				+ ", zhanghu=" + zhanghu + ", riqi=" + riqi + ", chengyuan="
-				+ chengyuan + ", beizhu=" + beizhu + ", isCanBaoXiao="
-				+ isCanBaoXiao + ", isBaoxiaoed=" + isBaoxiaoed + ", zhuanru="
-				+ zhuanru + ", zhuanchu=" + zhuanchu + "]";
+	public int getMemberid() {
+		return memberid;
+	}
+	public void setMemberid(int memberid) {
+		this.memberid = memberid;
+	}
+	public int getBillType() {
+		return billType;
+	}
+	public void setBillType(int billType) {
+		this.billType = billType;
 	}
 	
 	

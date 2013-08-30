@@ -77,13 +77,16 @@ public class BillTextInputActivity extends Activity {
 		title = this.getIntent().getStringExtra("title");
 		currentFenLei = this.getIntent().getIntExtra("fenlei", 0);
 		editNum = this.getIntent().getIntExtra("editNum", 0);
+		content = this.getIntent().getStringExtra("content");
 	}
 
 	private void initViews() {
 		titleTv.setText(title);
-		editNumTv.setText(editNum + "");
+		contentEt.setText(content);
+		int contentLength = content.length();
+		Log.i("a", "contentLength = " + contentLength);
+		editNumTv.setText((editNum - contentLength) + "");
 		
-
 		InputFilter[] filters = new InputFilter[1];
 		filters[0] = new InputFilter.LengthFilter(editNum); 
 		contentEt.setFilters(filters);

@@ -38,7 +38,7 @@
             android:textSize="20dp" />
 
         <TextView
-            android:id="@+id/save"
+            android:id="@+id/update"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -48,7 +48,7 @@
             android:clickable="true"
             android:gravity="center"
             android:onClick="btnClick"
-            android:text="保存"
+            android:text="修改"
             android:textColor="#ffffff"
             android:textSize="20dp" />
     </RelativeLayout>

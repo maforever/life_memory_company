@@ -5,6 +5,7 @@ import java.util.List;
 public class BillAccountExpandableListViewItem {
 
 	private String title;
+	private int imageId;
 	private List<BillAccountItem> accountItems;
 	public String getTitle() {
 		return title;
@@ -17,6 +18,12 @@ public class BillAccountExpandableListViewItem {
 	}
 	public void setAccountItems(List<BillAccountItem> accountItems) {
 		this.accountItems = accountItems;
+	}
+	public int getImageId() {
+		return imageId;
+	}
+	public void setImageId(int imageId) {
+		this.imageId = imageId;
 	}
 	
 	

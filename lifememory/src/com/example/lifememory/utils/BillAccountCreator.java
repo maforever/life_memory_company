@@ -17,13 +17,13 @@ public class BillAccountCreator {
 
 	public synchronized void initAccountDatas(SQLiteDatabase db) {
 		List<BillAccountItem> items = new ArrayList<BillAccountItem>();
-		item = new BillAccountItem(1, "现金", "人民币", 0.0,false, 0.0, R.drawable.xianjin);
+		item = new BillAccountItem(1, "现金", "人民币-CNY", 0.0,false, 0.0, R.drawable.xianjin);
 		items.add(item);
-		item = new BillAccountItem(2, "信用卡", "人民币",  0.0,false, 0.0, R.drawable.icon_yhsr);
+		item = new BillAccountItem(2, "信用卡", "人民币-CNY",  0.0,false, 0.0, R.drawable.icon_yhsr);
 		items.add(item);
-		item = new BillAccountItem(3, "储蓄", "人民币",  0.0,false, 0.0, R.drawable.waihui);
+		item = new BillAccountItem(3, "储蓄", "人民币-CNY",  0.0,false, 0.0, R.drawable.waihui);
 		items.add(item);
-		item = new BillAccountItem(4, "网上支付", "人民币",  0.0,false, 0.0, R.drawable.shuifei);
+		item = new BillAccountItem(4, "网上支付", "人民币-CNY",  0.0,false, 0.0, R.drawable.shuifei);
 		items.add(item);
 
 		for (BillAccountItem bcItem : items) {

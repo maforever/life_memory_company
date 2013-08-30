@@ -47,8 +47,9 @@ public class PregnancyDiaryOpenHelper extends SQLiteOpenHelper {
 		 * isNotice   是否设置警戒线
 		 * noticeValue  警戒线金额
 		 */
+		db.execSQL("create table if not exists bill_info(idx integer primary key autoincrement, jine text, catagoryid integer, accountid integer, data text, memberid integer, beizhu text, isBaoxiao text)");
 		db.execSQL("create table if not exists bill_catagory(idx integer primary key autoincrement, name text, imageid integer, parentid integer)");
-		db.execSQL("create table if not exists bill_account(idx integer primary key autoincrement, catagoryname text ,name text, bizhong text, dangqianyue text, isnotice text, noticevalue text, imageid integer)");
+		db.execSQL("create table if not exists bill_account(idx integer primary key autoincrement, catagoryname text ,name text, bizhong text, dangqianyue text, isnotice text, noticevalue text, imageid integer, beizhu text)");
 		
 		
 		
