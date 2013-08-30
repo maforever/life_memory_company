@@ -7,7 +7,7 @@ public class Bill {
 	private String leixing;   //catagoryname
 	private String zhanghu;   //accountname
 	private String chengyuan; //memebername
-	
+	private String member;    //成员
 	/*
 	 * 以下属性与数据库关联
 	 */
@@ -98,6 +98,12 @@ public class Bill {
 	}
 	public void setBillType(int billType) {
 		this.billType = billType;
+	}
+	public String getMember() {
+		return member;
+	}
+	public void setMember(String member) {
+		this.member = member;
 	}
 	
 	

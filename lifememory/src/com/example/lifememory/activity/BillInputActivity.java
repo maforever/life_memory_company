@@ -6,6 +6,7 @@ import com.example.lifememory.R;
 import com.example.lifememory.activity.model.Bill;
 import com.example.lifememory.db.service.BillCatagoryService;
 import com.example.lifememory.utils.AppAplication;
+import com.example.lifememory.utils.ConstantUtil;
 import com.example.lifememory.utils.CopyFileFromData;
 
 import android.app.Activity;
@@ -52,12 +53,15 @@ public class BillInputActivity extends Activity {
 	private BillCatagoryService dbService = null;
 	private String catagoryStr;          //用于保存界面上显示的类别内容
 	private String accountStr;           //用于保存界面上显示的账户内容
+	private String memberStr;            //用于保存界面上显示的成员内容
 	private TextView currentCatagoryTextView = null;    //用于指向当前viewflipper显示的界面上的显示类别内容的textView
 	private TextView currentAccountTextView = null;     //用于指向当前viewflipper显示的界面上的显示账户内容的textView
+	private TextView currentMemberTextView = null;     //用于指向当前viewflipper显示的界面上的显示成员内容的textView
 	private int catagorySelectedId = 0;                 //用于记录一级类别列表选中的索引数
 	private int catagorySelectedChildId = 0;			//用于记录二级类别列表选中的索引数
 	private int accountGroupSelectedIndex = 0;			//用于记录账户expandablelistview中组的索引
 	private int accountChildSelectedIndex = 0;  		//用于记录账户expandablelistview中子的索引
+	private int memberSelectedIndex = 0;					//用于记录成员列别中的listview选中索引
 	private Intent intent;
 	/*
 	 * 用于纪录等号按钮是否点击了,当每次点击的+,-,*,/按钮后，将isEqualBtnClick=false
@@ -106,6 +110,13 @@ public class BillInputActivity extends Activity {
 			bill.setZhanghu(accountStr);
 			currentAccountTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.zhanghu);
 			currentAccountTextView.setText(accountStr);
+		}else if(ConstantUtil.SELECT_MEMEBER_FINISHED == resultCode) {
+			//由BillMemberSelect返回
+			memberSelectedIndex = data.getIntExtra("currentSelectedIndex", 0);
+			memberStr = data.getStringExtra("member");
+			bill.setMember(memberStr);
+			currentMemberTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.chengyuan);
+			currentMemberTextView.setText(memberStr);
 		}
 	}
 
@@ -174,6 +185,10 @@ public class BillInputActivity extends Activity {
 		case R.id.riqilayout:
 			break;
 		case R.id.chengyuanlayout:
+			intent = new Intent(BillInputActivity.this, BillMemberSelectActivity.class);
+			intent.putExtra("currentSelectedIndex", memberSelectedIndex);
+			startActivityForResult(intent, 100);
+			overridePendingTransition(R.anim.activity_up, R.anim.activity_steady);
 			break;
 		case R.id.beizhulayout:
 			break;
@@ -262,7 +277,10 @@ public class BillInputActivity extends Activity {
 		refreshJinETextView();
 		refreshCatagoryTextView();
 		refreshAccountTextView();
+		refreshMemberTextView();
 	}
+
+
 
 	LinearLayout cal_equal;
 	LinearLayout cal_del;
@@ -429,6 +447,11 @@ public class BillInputActivity extends Activity {
 	private void refreshAccountTextView() {
 		currentAccountTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.zhanghu);
 		currentAccountTextView.setText(bill.getZhanghu());
+	}
+	
+	private void refreshMemberTextView() {
+		currentMemberTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.chengyuan);
+		currentMemberTextView.setText(bill.getMember());
 	}
 
 	// 点击了计算器上的数字键

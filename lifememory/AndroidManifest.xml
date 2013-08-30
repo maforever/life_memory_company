@@ -114,6 +114,15 @@
             android:name=".activity.BillAccountUpdateActivity"
             android:configChanges="orientation|keyboardHidden"
              />
+        
+        <activity
+            android:name=".activity.BillMemberSelectActivity"
+            android:configChanges="orientation|keyboardHidden"
+             />
+        
+        
+        
+        
     </application>
 
 </manifest>

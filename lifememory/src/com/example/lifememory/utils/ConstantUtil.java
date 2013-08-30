@@ -16,6 +16,7 @@ public class ConstantUtil {
 	public final static int EDIT_CATAGORYNAMEFINISHED = 95; // 类别名称选择完成
 	public final static int EDIT_NOTICEVALUEFINISHED = 94; // 警戒线金额设置完成
 	public final static int EDIT_YUEFINISHED = 93; // 当月余额设置完成
+	public final static int SELECT_MEMEBER_FINISHED = 92; //成员选择完成
 	public final static int EDIT_NOCHANGE_BACK = 10; // 直接点击back不保存信息
 
 	/**

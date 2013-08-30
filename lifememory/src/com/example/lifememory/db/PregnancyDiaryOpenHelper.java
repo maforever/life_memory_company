@@ -2,6 +2,7 @@ package com.example.lifememory.db;
 
 import com.example.lifememory.utils.BillAccountCreator;
 import com.example.lifememory.utils.BillCatagoryCreator;
+import com.example.lifememory.utils.BillMemberCreator;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -39,8 +40,10 @@ public class PregnancyDiaryOpenHelper extends SQLiteOpenHelper {
 				+ ")");
 
 		/**
+		 * bill_info      账单信息数据库
 		 * bill_catagory  记账类别数据库
 		 * bill_account   记账账户数据库
+		 * bill_member    记账成员数据库
 		 * catagoryname 类别名称 现金，信用卡，储蓄，网上支付   1,2,3,4
 		 * bizhong     币种
 		 * dangqianyue   当前余额
@@ -50,7 +53,7 @@ public class PregnancyDiaryOpenHelper extends SQLiteOpenHelper {
 		db.execSQL("create table if not exists bill_info(idx integer primary key autoincrement, jine text, catagoryid integer, accountid integer, data text, memberid integer, beizhu text, isBaoxiao text)");
 		db.execSQL("create table if not exists bill_catagory(idx integer primary key autoincrement, name text, imageid integer, parentid integer)");
 		db.execSQL("create table if not exists bill_account(idx integer primary key autoincrement, catagoryname text ,name text, bizhong text, dangqianyue text, isnotice text, noticevalue text, imageid integer, beizhu text)");
-		
+		db.execSQL("create table if not exists bill_member(idx integer primary key autoincrement, name text)");
 		
 		
 		
@@ -60,6 +63,9 @@ public class PregnancyDiaryOpenHelper extends SQLiteOpenHelper {
 		
 		BillAccountCreator accountCreator = new BillAccountCreator();
 		accountCreator.initAccountDatas(db);
+		
+		BillMemberCreator memberCreator = new BillMemberCreator();
+		memberCreator.initMember(db);
 		
 		Log.i("a", "db onCreate");
 	}
