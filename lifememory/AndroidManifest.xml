@@ -113,11 +113,13 @@
         <activity
             android:name=".activity.BillAccountUpdateActivity"
             android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.Black.NoTitleBar"
              />
         
         <activity
             android:name=".activity.BillMemberSelectActivity"
             android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.Black.NoTitleBar"
              />
         
         

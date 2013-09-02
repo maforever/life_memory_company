@@ -61,7 +61,7 @@ public class BillInputActivity extends Activity {
 	private int catagorySelectedChildId = 0;			//用于记录二级类别列表选中的索引数
 	private int accountGroupSelectedIndex = 0;			//用于记录账户expandablelistview中组的索引
 	private int accountChildSelectedIndex = 0;  		//用于记录账户expandablelistview中子的索引
-	private int memberSelectedIndex = 0;					//用于记录成员列别中的listview选中索引
+	private int memberSelectedIndex = 1;					//用于记录成员列别中的listview选中索引
 	private Intent intent;
 	/*
 	 * 用于纪录等号按钮是否点击了,当每次点击的+,-,*,/按钮后，将isEqualBtnClick=false

@@ -32,7 +32,7 @@ public class BillMemberService {
 	}
 	//根据idx删除
 	public void deleteItemByIdx(int idx) {
-		db.execSQL("delete bill_member where idx = ?", new String[]{String.valueOf(idx)});
+		db.execSQL("delete from bill_member where idx = ?", new String[]{String.valueOf(idx)});
 	}
 	
 	//添加member信息

@@ -12,11 +12,17 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class BillMemberSelectActivity extends Activity {
 	private ListView listView;
@@ -25,6 +31,7 @@ public class BillMemberSelectActivity extends Activity {
 	private BillMemberService memberService;
 	private int currentSelectedIndex = 0;
 	private BillMemberListViewAdapter adapter;
+	private int currentLongClickIndex = 0;
 	private Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
@@ -47,6 +54,14 @@ public class BillMemberSelectActivity extends Activity {
 	}
 	
 	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if(memberService != null) {
+			new InitDatasThread().start();
+		}
+	}
+	
 	private class InitDatasThread extends Thread {
 		@Override
 		public void run() {
@@ -60,7 +75,7 @@ public class BillMemberSelectActivity extends Activity {
 	}
 	
 	private void initViews() {
-		adapter = new BillMemberListViewAdapter(BillMemberSelectActivity.this, members);
+		adapter = new BillMemberListViewAdapter(BillMemberSelectActivity.this, members, memberService);
 		listView.setAdapter(adapter);
 		adapter.setSelected(currentSelectedIndex);
 	}
@@ -79,6 +94,21 @@ public class BillMemberSelectActivity extends Activity {
 				overridePendingTransition(R.anim.activity_steady, R.anim.activity_down);
 			}
 		});
+		
+		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				TextView deleteTag = (TextView) view.findViewById(R.id.deleteTag);
+				if(deleteTag.getVisibility() == ViewGroup.VISIBLE) {
+					deleteTag.setVisibility(ViewGroup.GONE);
+				}else {
+					adapter.setShowDeleteTag(position);
+				}
+				return true;
+			}
+		});
 	}
 	
 	public void btnClick(View view) {
@@ -87,9 +117,16 @@ public class BillMemberSelectActivity extends Activity {
 			back();
 			break;
 		case R.id.add:
+			intent = new Intent(BillMemberSelectActivity.this, BillTextInputActivity.class);
+			intent.putExtra("title", "≥…‘±…Ë÷√");
+			intent.putExtra("fenlei", ConstantUtil.EDIT_MEMBER_FINISHED);
+			intent.putExtra("editNum", 50);
+			startActivity(intent);
+			overridePendingTransition(R.anim.activity_steady, R.anim.activity_down);
 			break;
 		}
 	}
+	
 	
 	private void back() {
 		intent = new Intent();
