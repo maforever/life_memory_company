@@ -114,7 +114,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_toLeftOf="@+id/leixingarrow"
                 android:gravity="center"
-                android:text="信用卡"
+                android:text="现金"
                 android:textColor="#000000"
                 android:textSize="18dp" />
 
@@ -240,8 +240,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="5dp"
                 android:layout_toLeftOf="@+id/leixingarrow"
-                android:gravity="center"
-                android:text="备注信息dfsdfsfsfwerwrewr"
+                android:gravity="right"
                 android:singleLine="true"
                 android:ellipsize="end"
                 android:textColor="#000000"

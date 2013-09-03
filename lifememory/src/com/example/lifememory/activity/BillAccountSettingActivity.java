@@ -37,7 +37,7 @@ public class BillAccountSettingActivity extends Activity {
 	private CheckBox updateCb, deleteCb;
 	private BillAccountService dbService;
 	private BillInfoService infoService;
-	private List<BillAccountItem> accountItems;
+	private List<BillAccountItem> accountItems =  new ArrayList<BillAccountItem>();
 	private List<BillAccountItem> accountItems1 = new ArrayList<BillAccountItem>();  //存放现金数据
 	private List<BillAccountItem> accountItems2 = new ArrayList<BillAccountItem>();	 //存放信用卡数据
 	private List<BillAccountItem> accountItems3 = new ArrayList<BillAccountItem>();  //存放储蓄数据
@@ -45,10 +45,11 @@ public class BillAccountSettingActivity extends Activity {
 	private BillAccountExpandableListViewItem expandableItem;
 	private List<BillAccountExpandableListViewItem> expandableItems = new ArrayList<BillAccountExpandableListViewItem>();
 	private BillAccountExpandableListAdapter adapter = null;
-	private int accountGroupSelectedIndex = 0;			//用于记录账户expandablelistview中组的索引
-	private int accountChildSelectedIndex = 0;  		//用于记录账户expandablelistview中子的索引
+	private int currentGroupSelectedIndex = 0;			//用于记录账户expandablelistview中组的索引
+	private int currentChildSelectedIndex = 0;  		//用于记录账户expandablelistview中子的索引
 	private int groupLocation, childLocation;
 	private Intent intent;
+	private String accountFlag;
 	private Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
@@ -73,9 +74,9 @@ public class BillAccountSettingActivity extends Activity {
 		
 		dbService = new BillAccountService(this);
 		infoService = new BillInfoService(this);
-		this.accountGroupSelectedIndex = this.getIntent().getIntExtra("accountGroupSelectedIndex", 0);
-		this.accountChildSelectedIndex = this.getIntent().getIntExtra("accountChildSelectedIndex", 0);
-		
+		this.currentGroupSelectedIndex = this.getIntent().getIntExtra("currentGroupSelectedIndex", 0);
+		this.currentChildSelectedIndex = this.getIntent().getIntExtra("currentChildSelectedIndex", 0);
+		accountFlag = this.getIntent().getStringExtra("accountFlag");
 		findViews();
 		new InitDatasThread().start();
 	}
@@ -115,9 +116,10 @@ public class BillAccountSettingActivity extends Activity {
 				if(!updateCb.isChecked() && !deleteCb.isChecked()) {
 					String name = expandableItems.get(groupPosition).getAccountItems().get(childPosition).getName();
 					intent = new Intent();
-					intent.putExtra("accountGroupSelectedIndex", groupPosition);
-					intent.putExtra("accountChildSelectedIndex", childPosition);
+					intent.putExtra("currentGroupSelectedIndex", groupPosition);
+					intent.putExtra("currentChildSelectedIndex", childPosition);
 					intent.putExtra("accountStr", name);
+					intent.putExtra("accountFlag", accountFlag);
 					BillAccountSettingActivity.this.setResult(98, intent);
 					BillAccountSettingActivity.this.finish();
 					overridePendingTransition(R.anim.activity_steady, R.anim.activity_down);
@@ -271,19 +273,20 @@ public class BillAccountSettingActivity extends Activity {
 	private void listAdapter() {
 		adapter = new BillAccountExpandableListAdapter(BillAccountSettingActivity.this, expandableItems);
 		listView.setAdapter(adapter);
-		adapter.setSelected(accountGroupSelectedIndex, accountChildSelectedIndex);
-		Log.i("a", accountGroupSelectedIndex + "-------" + accountGroupSelectedIndex);
+		adapter.setSelected(currentGroupSelectedIndex, currentChildSelectedIndex);
+//		Log.i("a", currentGroupSelectedIndex + "-------" + currentChildSelectedIndex);
 		int groupCount = adapter.getGroupCount();
 		for (int i = 0; i < groupCount; i++) {
 			listView.expandGroup(i);
 		}
-		listView.setSelectedChild(accountGroupSelectedIndex, accountChildSelectedIndex, true);
+		listView.setSelectedChild(currentGroupSelectedIndex, currentChildSelectedIndex, true);
 	};
 	
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 		dbService.closeDB();
+		dbService = null;
 	}
 	
 	private void back() {

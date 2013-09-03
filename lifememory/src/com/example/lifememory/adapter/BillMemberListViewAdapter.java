@@ -93,7 +93,6 @@ public class BillMemberListViewAdapter extends BaseAdapter {
 		deleteTag.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				dbService.deleteItemByIdx(idx);
 				if(currentSelectedIndex == currentLongClickIndex) {
 					Toast.makeText(context, "当前成员选项正被使用无法删除!", 0).show();
 					deleteTag.setVisibility(ViewGroup.GONE);

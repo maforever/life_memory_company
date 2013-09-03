@@ -18,8 +18,26 @@ public class ConstantUtil {
 	public final static int EDIT_YUEFINISHED = 93; // 当月余额设置完成
 	public final static int SELECT_MEMEBER_FINISHED = 92; //成员选择完成
 	public final static int EDIT_MEMBER_FINISHED = 91;     //成员编辑完成
+	public final static int SELECTED_DATE_FINISHED = 90;   //选择日期完成
+	public final static int SELECTED_INCATAGORY_FINISHED = 89;  //选择收入类别完成
+	public final static int EDIT_INCATAGORY_FINISHED = 88;      //编辑收入类别完成
 	public final static int EDIT_NOCHANGE_BACK = 10; // 直接点击back不保存信息
 
+	/**
+	 * 因为BillInputActivity这个界面是由viewflipper构成的，里面有三个子视图，然后在这三个子视图中有三个地方需要用到同一个BillAccountSettingActivity，
+	 * 用到的地方有zhanghulayout, zhuanchulayout, zhuanrulayout.所以用accountFlag作为参数传递过去，返回的时候在onactivityforresult中
+	 * 根据accountFlag进行分别处理
+	 * common   zhanghulayout
+	 * transferOut    zhuanchulayout
+	 * transferIn     zhuanrulayout
+	 */
+	public final static String ACCOUNT_COMMON = "COMMON";     
+	public final static String ACCOUNT_TRANSFER_IN = "TRANSFERIN";
+	public final static String ACCOUNT_TRANSFER_OUT = "TRANSFEROUT";		
+	
+	
+	
+	
 	/**
 	 * BillAccountBiZhongSettingActivity 记账账户币种
 	 */

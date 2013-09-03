@@ -4,23 +4,17 @@ public class Bill {
 	
 	private int idx;
 	private String jine;
-	private String leixing;   //catagoryname
-	private String zhanghu;   //accountname
-	private String chengyuan; //memebername
-	private String member;    //成员
-	/*
-	 * 以下属性与数据库关联
-	 */
-	private int catagoryid;
-	private int accountid;
-	private int memberid;
-	private String riqi;
+	private String outCatagory;   //支出类型catagoryname
+	private String inCatagory;    //收入类型catagoryname;
+	private String account;   //accountname
+	private String member; //memebername
+	private String date;
 	private String beizhu;
 	private boolean isCanBaoXiao;
 	private boolean isBaoxiaoed;
+	private String TransferIn;     //转入     现金
+	private String TransferOut;    //转出   银行卡
 	private int billType;    //1 支出 2 收入 3 转账
-	
-	
 	public int getIdx() {
 		return idx;
 	}
@@ -33,29 +27,35 @@ public class Bill {
 	public void setJine(String jine) {
 		this.jine = jine;
 	}
-	public String getLeixing() {
-		return leixing;
+	public String getOutCatagory() {
+		return outCatagory;
 	}
-	public void setLeixing(String leixing) {
-		this.leixing = leixing;
+	public void setOutCatagory(String outCatagory) {
+		this.outCatagory = outCatagory;
 	}
-	public String getZhanghu() {
-		return zhanghu;
+	public String getInCatagory() {
+		return inCatagory;
 	}
-	public void setZhanghu(String zhanghu) {
-		this.zhanghu = zhanghu;
+	public void setInCatagory(String inCatagory) {
+		this.inCatagory = inCatagory;
 	}
-	public String getRiqi() {
-		return riqi;
+	public String getAccount() {
+		return account;
 	}
-	public void setRiqi(String riqi) {
-		this.riqi = riqi;
+	public void setAccount(String account) {
+		this.account = account;
 	}
-	public String getChengyuan() {
-		return chengyuan;
+	public String getMember() {
+		return member;
 	}
-	public void setChengyuan(String chengyuan) {
-		this.chengyuan = chengyuan;
+	public void setMember(String member) {
+		this.member = member;
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
 	}
 	public String getBeizhu() {
 		return beizhu;
@@ -75,23 +75,17 @@ public class Bill {
 	public void setBaoxiaoed(boolean isBaoxiaoed) {
 		this.isBaoxiaoed = isBaoxiaoed;
 	}
-	public int getCatagoryid() {
-		return catagoryid;
+	public String getTransferIn() {
+		return TransferIn;
 	}
-	public void setCatagoryid(int catagoryid) {
-		this.catagoryid = catagoryid;
+	public void setTransferIn(String transferIn) {
+		TransferIn = transferIn;
 	}
-	public int getAccountid() {
-		return accountid;
+	public String getTransferOut() {
+		return TransferOut;
 	}
-	public void setAccountid(int accountid) {
-		this.accountid = accountid;
-	}
-	public int getMemberid() {
-		return memberid;
-	}
-	public void setMemberid(int memberid) {
-		this.memberid = memberid;
+	public void setTransferOut(String transferOut) {
+		TransferOut = transferOut;
 	}
 	public int getBillType() {
 		return billType;
@@ -99,12 +93,20 @@ public class Bill {
 	public void setBillType(int billType) {
 		this.billType = billType;
 	}
-	public String getMember() {
-		return member;
+	@Override
+	public String toString() {
+		return "Bill [idx=" + idx + ", jine=" + jine + ", outCatagory="
+				+ outCatagory + ", inCatagory=" + inCatagory + ", account="
+				+ account + ", member=" + member + ", date=" + date
+				+ ", beizhu=" + beizhu + ", isCanBaoXiao=" + isCanBaoXiao
+				+ ", isBaoxiaoed=" + isBaoxiaoed + ", TransferIn=" + TransferIn
+				+ ", TransferOut=" + TransferOut + ", billType=" + billType
+				+ "]";
 	}
-	public void setMember(String member) {
-		this.member = member;
-	}
+	
+	
+	
+	
 	
 	
 	

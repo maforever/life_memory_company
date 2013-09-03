@@ -64,14 +64,14 @@
                 android:textSize="18dp" />
 
             <TextView
-                android:id="@+id/leixing"
+                android:id="@+id/zhuanchu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="5dp"
                 android:layout_toLeftOf="@+id/leixingarrow"
                 android:gravity="center"
-                android:text="购物>衣服鞋帽"
+                android:text="储蓄"
                 android:textColor="#000000"
                 android:textSize="18dp" />
 
@@ -94,7 +94,6 @@
             android:onClick="btnClick" >
 
             <TextView
-                android:id="@+id/jine"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -106,14 +105,14 @@
                 android:textSize="18dp" />
 
             <TextView
-                android:id="@+id/zhanghu"
+                android:id="@+id/zhuanru"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="5dp"
                 android:layout_toLeftOf="@+id/leixingarrow"
                 android:gravity="center"
-                android:text="信用卡"
+                android:text="现金"
                 android:textColor="#000000"
                 android:textSize="18dp" />
 
@@ -136,7 +135,6 @@
             android:onClick="btnClick" >
 
             <TextView
-                android:id="@+id/jine"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -197,9 +195,8 @@
                 android:layout_marginRight="5dp"
                 android:layout_toLeftOf="@+id/leixingarrow"
                 android:ellipsize="end"
-                android:gravity="center"
+                android:gravity="right"
                 android:singleLine="true"
-                android:text="备注信息dfsdfsfsfwerwrewr"
                 android:textColor="#000000"
                 android:textSize="18dp" />
 

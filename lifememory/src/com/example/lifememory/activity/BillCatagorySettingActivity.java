@@ -149,7 +149,7 @@ public class BillCatagorySettingActivity extends Activity {
 					catagorySelectedChildId = position;
 					Intent intent = new Intent();
 					intent.putExtra("parentId", parentId);
-					intent.putExtra("catagorychildid", secondaryLevelItems.get(position).getIdx());
+					intent.putExtra("catagoryid", secondaryLevelItems.get(position).getIdx());
 					intent.putExtra("catagorySelectedId", catagorySelectedId);
 					intent.putExtra("catagorySelectedChildId", catagorySelectedChildId);
 //					Log.i("a", "BillCatagorySettingActivity onItemClick catagorySelectedId = " + catagorySelectedId + " catagorySelectedChildId = " + catagorySelectedChildId);

@@ -1,7 +1,9 @@
 package com.example.lifememory.activity;
 
 import com.example.lifememory.R;
+import com.example.lifememory.activity.model.BillInCatagory;
 import com.example.lifememory.activity.model.BillMember;
+import com.example.lifememory.db.service.BillInCatagoryService;
 import com.example.lifememory.db.service.BillMemberService;
 import com.example.lifememory.utils.ConstantUtil;
 
@@ -27,20 +29,27 @@ public class BillTextInputActivity extends Activity {
 	private EditText contentEt;
 	private String title;
 	private BillMemberService dbService;
+	private BillInCatagoryService inCatagoryService;
 	private int currentFenLei = 0;
 	private int editNum = 0; // 可编辑的文本字数
 	private String content; // 输入的文本内容
 	private BillMember member;
+	private BillInCatagory ic;
 	private Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case 0:
-				//添加
+				//添加成员
 				Toast.makeText(BillTextInputActivity.this, "成员添加成功!", 0).show();
-				BillTextInputActivity.this.finish();
-				overridePendingTransition(R.anim.activity_steady, R.anim.activity_down);
 				break;
+			case 1:
+				//添加收入类别
+				Toast.makeText(BillTextInputActivity.this, "成员类别成功!", 0).show();
+				break;
+				
 			}
+			BillTextInputActivity.this.finish();
+			overridePendingTransition(R.anim.activity_steady, R.anim.activity_down);
 		};
 	};
 	@Override
@@ -134,7 +143,18 @@ public class BillTextInputActivity extends Activity {
 					}
 				}).start();
 				
-			} else {
+			}else if(currentFenLei == ConstantUtil.EDIT_INCATAGORY_FINISHED) {
+				inCatagoryService = new BillInCatagoryService(this);
+				ic = new BillInCatagory();
+				ic.setName(content);
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						inCatagoryService.addItem(ic);
+						handler.sendEmptyMessage(1);
+					}
+				}).start();
+			}else {
 				switch (currentFenLei) {
 				case ConstantUtil.EDIT_NAME_FINISHED:
 					resultCode = ConstantUtil.EDIT_NAME_FINISHED;

@@ -113,18 +113,19 @@
         <activity
             android:name=".activity.BillAccountUpdateActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:theme="@android:style/Theme.Black.NoTitleBar"
-             />
-        
+            android:theme="@android:style/Theme.Black.NoTitleBar" />
         <activity
             android:name=".activity.BillMemberSelectActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:theme="@android:style/Theme.Black.NoTitleBar"
-             />
-        
-        
-        
-        
+            android:theme="@android:style/Theme.Black.NoTitleBar" />
+        <activity
+            android:name=".activity.BillDataWheelPickerActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/dialog" />
+        <activity
+            android:name=".activity.BillInCatagorySettingActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.Black.NoTitleBar" />
     </application>
 
 </manifest>

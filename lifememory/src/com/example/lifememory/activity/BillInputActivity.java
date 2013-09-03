@@ -1,6 +1,8 @@
 package com.example.lifememory.activity;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import com.example.lifememory.R;
 import com.example.lifememory.activity.model.Bill;
@@ -54,15 +56,27 @@ public class BillInputActivity extends Activity {
 	private String catagoryStr;          //用于保存界面上显示的类别内容
 	private String accountStr;           //用于保存界面上显示的账户内容
 	private String memberStr;            //用于保存界面上显示的成员内容
-	private TextView currentCatagoryTextView = null;    //用于指向当前viewflipper显示的界面上的显示类别内容的textView
+	private TextView currentJinETextView = null;		//用于指向当前viewflipper显示的界面上的显示金额内容的textView
+	private TextView inCatagoryTextView = null;    //用于指向当前viewflipper显示的界面上的显示支出类别内容的textView
+	private TextView outCatagoryTextView = null;   //用于指向当前viewflipper显示的界面上的显示收入类别内容的textView
 	private TextView currentAccountTextView = null;     //用于指向当前viewflipper显示的界面上的显示账户内容的textView
 	private TextView currentMemberTextView = null;     //用于指向当前viewflipper显示的界面上的显示成员内容的textView
-	private int catagorySelectedId = 0;                 //用于记录一级类别列表选中的索引数
-	private int catagorySelectedChildId = 0;			//用于记录二级类别列表选中的索引数
+	private TextView currentDateTextView = null;		//用于指向当前viewflipper显示的界面上的显示日期内容的textView
+	private TextView currentBeizhuTextView = null;     //用于指向当前viewflipper显示的界面上的显示备注内容的textView
+	private TextView transferInTextView = null;			//存放转入账号的名称
+	private TextView transferOutTextView = null;		//存放转出账号的名称
+	private int outCatagorySelectedId = 0;                 //用于记录一级类别列表选中的索引数
+	private int outCatagorySelectedChildId = 0;			//用于记录二级类别列表选中的索引数
 	private int accountGroupSelectedIndex = 0;			//用于记录账户expandablelistview中组的索引
 	private int accountChildSelectedIndex = 0;  		//用于记录账户expandablelistview中子的索引
+	private int transferOutGroupSelectedIndex = 2;		//用于记录转出expandablelistview中组的索引
+	private int transferOutChildSelectedIndex = 0;		//用于记录转出expandablelistview中子的索引
+	private int transferInGroupSelectedIndex = 0;		//用于记录转入expandablelistview中组的索引
+	private int transferInChildSelectedIndex = 0;		//用于记录转入expandablelistview中子的索引
 	private int memberSelectedIndex = 1;					//用于记录成员列别中的listview选中索引
+	private int inCatagorySelectedIndex = 0;             //用于记录输入类别的数据索引
 	private Intent intent;
+
 	/*
 	 * 用于纪录等号按钮是否点击了,当每次点击的+,-,*,/按钮后，将isEqualBtnClick=false
 	 * 这样每当点击popwindow之外的或点击back关闭popwindow的时候，就判断如果isEqualBtnClick=false，就将textview
@@ -80,8 +94,16 @@ public class BillInputActivity extends Activity {
 		inflater = LayoutInflater.from(this);
 		
 		bill = new Bill();
-		bill.setLeixing("常用-打的");
-		bill.setZhanghu("现金");
+		bill.setOutCatagory("常用-打的");
+		bill.setAccount("现金");
+		bill.setMember("自己");
+		bill.setInCatagory("工资");
+		
+		Date d = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		bill.setDate(sdf.format(d));
+		
+		
 		findViews();
 		initViews();
 		initCalculator();
@@ -94,22 +116,40 @@ public class BillInputActivity extends Activity {
 		if(resultCode == 99) {
 			//有BillCatagorySettingActivity返回
 			parentId = data.getIntExtra("parentId", 0);
-			catagoryChildId = data.getIntExtra("catagorychildid", 0);
-			catagorySelectedId = data.getIntExtra("catagorySelectedId", 0);
-			catagorySelectedChildId = data.getIntExtra("catagorySelectedChildId", 0);
+			catagoryChildId = data.getIntExtra("catagoryid", 0);
+			outCatagorySelectedId = data.getIntExtra("catagorySelectedId", 0);
+			outCatagorySelectedChildId = data.getIntExtra("catagorySelectedChildId", 0);
 			catagoryStr = dbService.getCatagoryStr(catagoryChildId);
 //			Log.i("a", "BillInputActivity onActivityResult catagorySelectedId = " + catagorySelectedId + " catagorySelectedChildId = " + catagorySelectedChildId);
-			bill.setLeixing(catagoryStr);
-			currentCatagoryTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.leixing);
-			currentCatagoryTextView.setText(catagoryStr);
+			bill.setOutCatagory(catagoryStr);
+			outCatagoryTextView.setText(catagoryStr);
 		}else if(resultCode == 98) {
 			//由BillAccountSettingActivity返回
-			accountGroupSelectedIndex = data.getIntExtra("accountGroupSelectedIndex", 0);
-			accountChildSelectedIndex = data.getIntExtra("accountChildSelectedIndex", 0);
+			String accountFlag = data.getStringExtra("accountFlag");
 			accountStr = data.getStringExtra("accountStr");
-			bill.setZhanghu(accountStr);
-			currentAccountTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.zhanghu);
-			currentAccountTextView.setText(accountStr);
+			if(accountFlag.equals(ConstantUtil.ACCOUNT_COMMON)) {
+				accountGroupSelectedIndex = data.getIntExtra("currentGroupSelectedIndex", 0);
+				accountChildSelectedIndex = data.getIntExtra("currentChildSelectedIndex", 0);
+				bill.setAccount(accountStr);
+				currentAccountTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.zhanghu);
+				currentAccountTextView.setText(accountStr);
+			}else if(accountFlag.equals(ConstantUtil.ACCOUNT_TRANSFER_OUT)) {
+				transferOutGroupSelectedIndex = data.getIntExtra("currentGroupSelectedIndex", 0);
+				transferOutChildSelectedIndex = data.getIntExtra("currentChildSelectedIndex", 0);
+				bill.setTransferOut(accountStr);
+				transferOutTextView.setText(accountStr);
+			}else if(accountFlag.equals(ConstantUtil.ACCOUNT_TRANSFER_IN)) {
+				transferInGroupSelectedIndex = data.getIntExtra("currentGroupSelectedIndex", 0);
+				transferInChildSelectedIndex = data.getIntExtra("currentChildSelectedIndex", 0);
+				bill.setTransferIn(accountStr);
+				transferInTextView.setText(accountStr);
+			}
+//			accountGroupSelectedIndex = data.getIntExtra("currentGroupSelectedIndex", 0);
+//			accountChildSelectedIndex = data.getIntExtra("currentChildSelectedIndex", 0);
+//			accountStr = data.getStringExtra("accountStr");
+//			bill.setAccount(accountStr);
+//			currentAccountTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.zhanghu);
+//			currentAccountTextView.setText(accountStr);
 		}else if(ConstantUtil.SELECT_MEMEBER_FINISHED == resultCode) {
 			//由BillMemberSelect返回
 			memberSelectedIndex = data.getIntExtra("currentSelectedIndex", 0);
@@ -117,6 +157,22 @@ public class BillInputActivity extends Activity {
 			bill.setMember(memberStr);
 			currentMemberTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.chengyuan);
 			currentMemberTextView.setText(memberStr);
+		}else if(ConstantUtil.SELECTED_DATE_FINISHED == resultCode) {
+			//选择日期完成
+			String dateStr = data.getStringExtra("date");
+			bill.setDate(dateStr);
+			currentDateTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.date);
+			currentDateTextView.setText(dateStr);
+		}else if(ConstantUtil.EDIT_BEIZHU == resultCode) {
+			String beizhuStr = data.getStringExtra("content");
+			bill.setBeizhu(beizhuStr);
+			currentBeizhuTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.beizhu);
+			currentBeizhuTextView.setText(beizhuStr);
+		}else if(ConstantUtil.SELECTED_INCATAGORY_FINISHED == resultCode) {
+			String inCatagoryName = data.getStringExtra("catagoryname");
+			inCatagorySelectedIndex = data.getIntExtra("currentSelectedIndex", 0);
+			bill.setInCatagory(inCatagoryName);
+			inCatagoryTextView.setText(inCatagoryName);
 		}
 	}
 
@@ -132,15 +188,24 @@ public class BillInputActivity extends Activity {
 		zhichuJine = (TextView) childView1.findViewById(R.id.jine);
 		shouruJine = (TextView) childView2.findViewById(R.id.jine);
 		zhuanzhangJine = (TextView) childView3.findViewById(R.id.jine);
-
+		currentBeizhuTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.beizhu);
+		outCatagoryTextView = (TextView) childView1.findViewById(R.id.leixing);
+		inCatagoryTextView = (TextView) childView2.findViewById(R.id.leixing);
+		inCatagoryTextView.setText(bill.getInCatagory());
+		outCatagoryTextView.setText(bill.getOutCatagory());
+		transferInTextView = (TextView) childView3.findViewById(R.id.zhuanru);
+		transferOutTextView = (TextView) childView3.findViewById(R.id.zhuanchu);
+		
+		
+		
 		popWinParentView = this.findViewById(R.id.popWinParent);
 	}
 
 	private void initViews() {
 		zhichuBtn.setBackgroundResource(R.drawable.exit_demo_mode_btn_pressed);
 		zhichuBtn.setTextColor(Color.WHITE);
-		currentCatagoryTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.leixing);
-		currentCatagoryTextView.setText(bill.getLeixing());
+		currentDateTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.date);
+		currentDateTextView.setText(bill.getDate());
 
 	}
 
@@ -164,25 +229,36 @@ public class BillInputActivity extends Activity {
 			break;
 		case R.id.leixinglayout:
 			//点击转到类型设置界面
-		    intent = new Intent(BillInputActivity.this, BillCatagorySettingActivity.class);
-			intent.putExtra("parentId", parentId);
-			intent.putExtra("catagorySelectedId", catagorySelectedId);
-			intent.putExtra("catagorySelectedChildId", catagorySelectedChildId);
-			this.startActivityForResult(intent, 100);
-			overridePendingTransition(R.anim.activity_up, R.anim.activity_steady);
+			if(viewFlipper.getDisplayedChild() == 1) {
+				//点击收入界面的类型
+				intent = new Intent(BillInputActivity.this, BillInCatagorySettingActivity.class);
+				intent.putExtra("currentSelectedIndex", inCatagorySelectedIndex);
+				this.startActivityForResult(intent, 100);
+				overridePendingTransition(R.anim.activity_up, R.anim.activity_steady);
+			}else {
+				//点击支出界面的类型
+			    intent = new Intent(BillInputActivity.this, BillCatagorySettingActivity.class);
+				intent.putExtra("parentId", parentId);
+				intent.putExtra("catagorySelectedId", outCatagorySelectedId);
+				intent.putExtra("catagorySelectedChildId", outCatagorySelectedChildId);
+				this.startActivityForResult(intent, 100);
+				overridePendingTransition(R.anim.activity_up, R.anim.activity_steady);
+			}
 			
 			
 			break;
 		case R.id.zhanghulayout:
-			
 			intent = new Intent(BillInputActivity.this, BillAccountSettingActivity.class);
-			intent.putExtra("accountGroupSelectedIndex", accountGroupSelectedIndex);
-			intent.putExtra("accountChildSelectedIndex", accountChildSelectedIndex);
+			intent.putExtra("currentGroupSelectedIndex", accountGroupSelectedIndex);
+			intent.putExtra("currentChildSelectedIndex", accountChildSelectedIndex);
+			intent.putExtra("accountFlag", ConstantUtil.ACCOUNT_COMMON);
 			this.startActivityForResult(intent, 100);
 			overridePendingTransition(R.anim.activity_up, R.anim.activity_steady);
 			
 			break;
 		case R.id.riqilayout:
+			intent = new Intent(BillInputActivity.this, BillDataWheelPickerActivity.class);
+			startActivityForResult(intent, 100);
 			break;
 		case R.id.chengyuanlayout:
 			intent = new Intent(BillInputActivity.this, BillMemberSelectActivity.class);
@@ -191,6 +267,12 @@ public class BillInputActivity extends Activity {
 			overridePendingTransition(R.anim.activity_up, R.anim.activity_steady);
 			break;
 		case R.id.beizhulayout:
+			intent = new Intent(BillInputActivity.this, BillTextInputActivity.class);
+			intent.putExtra("title", "账单备注");
+			intent.putExtra("fenlei", ConstantUtil.EDIT_BEIZHU);
+			intent.putExtra("editNum", 100);
+			intent.putExtra("content", currentBeizhuTextView.getText().toString());
+			startActivityForResult(intent, 100);
 			break;
 		case R.id.baoxiaolayout:
 			if (baoxiaoCb.isChecked()) {
@@ -199,10 +281,69 @@ public class BillInputActivity extends Activity {
 				baoxiaoCb.setChecked(true);
 			}
 			break;
+			
+		case R.id.zhuanchulayout:
+			
+			intent = new Intent(BillInputActivity.this, BillAccountSettingActivity.class);
+			intent.putExtra("currentGroupSelectedIndex", transferOutGroupSelectedIndex);
+			intent.putExtra("currentChildSelectedIndex", transferOutChildSelectedIndex);
+			intent.putExtra("accountFlag", ConstantUtil.ACCOUNT_TRANSFER_OUT);
+			this.startActivityForResult(intent, 100);
+			overridePendingTransition(R.anim.activity_up, R.anim.activity_steady);
+			
+			break;
+		case R.id.zhuanrulayout:
+			
+			intent = new Intent(BillInputActivity.this, BillAccountSettingActivity.class);
+			intent.putExtra("currentGroupSelectedIndex", transferInGroupSelectedIndex);
+			intent.putExtra("currentChildSelectedIndex", transferInChildSelectedIndex);
+			intent.putExtra("accountFlag", ConstantUtil.ACCOUNT_TRANSFER_IN);
+			this.startActivityForResult(intent, 100);
+			overridePendingTransition(R.anim.activity_up, R.anim.activity_steady);
+			
+			break;
 		case R.id.back:
 			back();
 			break;
 		case R.id.save:
+			
+			currentJinETextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.jine);
+			if(currentJinETextView.getText().toString() == null || "".equals(currentJinETextView.getText().toString()) || "0".equals(currentJinETextView.getText().toString())) {
+				Toast.makeText(BillInputActivity.this, "请输入金额!", 0).show();
+			}else {
+				currentBeizhuTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.beizhu);
+				bill.setBeizhu(currentBeizhuTextView.getText().toString());
+				bill.setJine(currentJinETextView.getText().toString());
+				bill.setBaoxiaoed(false);
+				if(baoxiaoCb.isChecked()) {
+					bill.setCanBaoXiao(true);
+				}else {
+					bill.setCanBaoXiao(false);
+				}
+				
+				switch (viewFlipper.getDisplayedChild()) {
+				case 0:
+					//支出
+					bill.setBillType(1);
+					break;
+				case 1:
+					bill.setBillType(2);
+					//收入
+					break;
+				case 2:
+					bill.setBillType(3);
+					//转账
+					break;
+				}
+
+				Log.i("a", bill.toString());
+				
+				
+			}
+			
+			
+						
+			
 			break;
 		}
 	}
@@ -276,8 +417,12 @@ public class BillInputActivity extends Activity {
 		}
 		refreshJinETextView();
 		refreshCatagoryTextView();
-		refreshAccountTextView();
-		refreshMemberTextView();
+		refreshDateTextView();
+		refreshBeizhuTextView();
+		if(viewFlipper.getDisplayedChild() != 2) {
+			refreshMemberTextView();
+			refreshAccountTextView();
+		}
 	}
 
 
@@ -438,22 +583,30 @@ public class BillInputActivity extends Activity {
 	}
 	
 	private void refreshCatagoryTextView() {
-		
-		currentCatagoryTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.leixing);
-		
-		currentCatagoryTextView.setText(bill.getLeixing());
+		outCatagoryTextView.setText(bill.getOutCatagory());
+		inCatagoryTextView.setText(bill.getInCatagory());
 	}
 	
 	private void refreshAccountTextView() {
 		currentAccountTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.zhanghu);
-		currentAccountTextView.setText(bill.getZhanghu());
+		currentAccountTextView.setText(bill.getAccount());
 	}
 	
 	private void refreshMemberTextView() {
 		currentMemberTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.chengyuan);
 		currentMemberTextView.setText(bill.getMember());
 	}
-
+	
+	private void refreshDateTextView() {
+		currentDateTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.date);
+		currentDateTextView.setText(bill.getDate());
+	}
+	
+	private void refreshBeizhuTextView() {
+		currentBeizhuTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.beizhu);
+		currentBeizhuTextView.setText(bill.getBeizhu());
+	}
+	
 	// 点击了计算器上的数字键
 	private void onClickNum(int numStr) {
 		jineTv = (TextView) viewFlipper.getCurrentView()
@@ -624,12 +777,6 @@ public class BillInputActivity extends Activity {
 		return resultStr;
 	}
 	
-	private class LoadCatagoryInfo extends Thread {
-		@Override
-		public void run() {
-			
-		}
-	}
 	
 
 	
@@ -655,6 +802,7 @@ public class BillInputActivity extends Activity {
 		}
 		return true;
 	}
+	
 }
 
 
