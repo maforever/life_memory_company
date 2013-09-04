@@ -7,6 +7,7 @@ import java.util.Date;
 import com.example.lifememory.R;
 import com.example.lifememory.activity.model.Bill;
 import com.example.lifememory.db.service.BillCatagoryService;
+import com.example.lifememory.db.service.BillInfoService;
 import com.example.lifememory.utils.AppAplication;
 import com.example.lifememory.utils.ConstantUtil;
 import com.example.lifememory.utils.CopyFileFromData;
@@ -35,6 +36,7 @@ import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 public class BillInputActivity extends Activity {
+	private BillInfoService billService;
 	private TextView zhichuBtn, shouruBtn, zhuanzhangBtn;
 	private CheckBox baoxiaoCb = null;
 	private ViewFlipper viewFlipper = null;
@@ -90,6 +92,7 @@ public class BillInputActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.bill_input_layout);
 		
+		billService = new BillInfoService(this);
 		dbService = new BillCatagoryService(this);
 		inflater = LayoutInflater.from(this);
 		
@@ -98,6 +101,8 @@ public class BillInputActivity extends Activity {
 		bill.setAccount("现金");
 		bill.setMember("自己");
 		bill.setInCatagory("工资");
+		bill.setTransferOut("储蓄");
+		bill.setTransferIn("现金");
 		
 		Date d = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -325,22 +330,26 @@ public class BillInputActivity extends Activity {
 				case 0:
 					//支出
 					bill.setBillType(1);
+					billService.addOutBill(bill);
 					break;
 				case 1:
-					bill.setBillType(2);
 					//收入
+					bill.setBillType(2);
+					billService.addInBill(bill);
 					break;
 				case 2:
-					bill.setBillType(3);
 					//转账
+					bill.setBillType(3);
+					billService.addTransferBill(bill);
 					break;
 				}
 
-				Log.i("a", bill.toString());
+//				Log.i("a", bill.toString());
 				
-				
+				Toast.makeText(BillInputActivity.this, "账单信息保存成功!", 0).show();
+				BillInputActivity.this.finish();
+				overridePendingTransition(R.anim.activity_steady, R.anim.activity_down);
 			}
-			
 			
 						
 			
@@ -784,6 +793,9 @@ public class BillInputActivity extends Activity {
 	protected void onDestroy() {
 		super.onDestroy();
 		dbService.closeDB();
+		billService.closeDB();
+		dbService = null;
+		billService = null;
 	}
 	
 	

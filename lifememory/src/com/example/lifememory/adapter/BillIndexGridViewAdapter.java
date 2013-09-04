@@ -50,11 +50,11 @@ public class BillIndexGridViewAdapter extends BaseAdapter {
 				View view = inflater.inflate(
 						R.layout.gridview_item_bill_index_today, null);
 				TextView todayAccount = (TextView) view
-						.findViewById(R.id.benriAccount);
-				TextView monthAccount = (TextView) view
-						.findViewById(R.id.benyueAccount);
-				TextView shengyuAccount = (TextView) view
-						.findViewById(R.id.shengyuAccount);
+						.findViewById(R.id.benriaccount);
+				TextView monthSpend = (TextView) view
+						.findViewById(R.id.benyuespendaccount);
+				TextView monthIncome = (TextView) view
+						.findViewById(R.id.benyueincomeaccount);
 				return view;
 			}
 		}
