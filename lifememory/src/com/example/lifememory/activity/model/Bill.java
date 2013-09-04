@@ -9,6 +9,7 @@ public class Bill {
 	private String account;   //accountname
 	private String member; //memebername
 	private String date;
+	private String dateYMD;   //yyyy-MM-dd
 	private String beizhu;
 	private boolean isCanBaoXiao;
 	private boolean isBaoxiaoed;
@@ -93,16 +94,33 @@ public class Bill {
 	public void setBillType(int billType) {
 		this.billType = billType;
 	}
+	public String getDateYMD() {
+		return dateYMD;
+	}
+	public void setDateYMD(String dateYMD) {
+		this.dateYMD = dateYMD;
+	}
 	@Override
 	public String toString() {
 		return "Bill [idx=" + idx + ", jine=" + jine + ", outCatagory="
 				+ outCatagory + ", inCatagory=" + inCatagory + ", account="
 				+ account + ", member=" + member + ", date=" + date
-				+ ", beizhu=" + beizhu + ", isCanBaoXiao=" + isCanBaoXiao
-				+ ", isBaoxiaoed=" + isBaoxiaoed + ", TransferIn=" + TransferIn
-				+ ", TransferOut=" + TransferOut + ", billType=" + billType
-				+ "]";
+				+ ", dateYMD=" + dateYMD + ", beizhu=" + beizhu
+				+ ", isCanBaoXiao=" + isCanBaoXiao + ", isBaoxiaoed="
+				+ isBaoxiaoed + ", TransferIn=" + TransferIn + ", TransferOut="
+				+ TransferOut + ", billType=" + billType + ", getIdx()="
+				+ getIdx() + ", getJine()=" + getJine() + ", getOutCatagory()="
+				+ getOutCatagory() + ", getInCatagory()=" + getInCatagory()
+				+ ", getAccount()=" + getAccount() + ", getMember()="
+				+ getMember() + ", getDate()=" + getDate() + ", getBeizhu()="
+				+ getBeizhu() + ", isCanBaoXiao()=" + isCanBaoXiao()
+				+ ", isBaoxiaoed()=" + isBaoxiaoed() + ", getTransferIn()="
+				+ getTransferIn() + ", getTransferOut()=" + getTransferOut()
+				+ ", getBillType()=" + getBillType() + ", getDateYMD()="
+				+ getDateYMD() + ", getClass()=" + getClass() + ", hashCode()="
+				+ hashCode() + ", toString()=" + super.toString() + "]";
 	}
+	
 	
 	
 	

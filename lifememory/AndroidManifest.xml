@@ -126,6 +126,12 @@
             android:name=".activity.BillInCatagorySettingActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@android:style/Theme.Black.NoTitleBar" />
+        <activity
+            android:name=".activity.BillMonthDetailsActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.Black.NoTitleBar" />
+        
+        
     </application>
 
 </manifest>

@@ -80,8 +80,10 @@ public class BillDataWheelPickerActivity extends Activity {
 			public void onClick(View v) {
 				Calendar c = getSetCalendar();
 				String dateStr = getFormatTime(c);
+				String dateYMD = getFormatYMD(c);
 				Intent intent = new Intent();
 				intent.putExtra("date", dateStr);
+				intent.putExtra("dateYMD", dateYMD);
 				BillDataWheelPickerActivity.this.setResult(ConstantUtil.SELECTED_DATE_FINISHED, intent);
 				BillDataWheelPickerActivity.this.finish();
 			}
@@ -137,7 +139,7 @@ public class BillDataWheelPickerActivity extends Activity {
 			else
 				wv_day.setAdapter(new NumericWheelAdapter(1, 28));
 		}
-		wv_day.setCurrentItem(day);
+		wv_day.setCurrentItem(day - 1);
 		wv_hours.setCurrentItem(hour);
 		wv_mins.setCurrentItem(minute);
 	}
@@ -213,6 +215,22 @@ public class BillDataWheelPickerActivity extends Activity {
 		return year + "-" + decimal.format(month + 1) + "-"
 				+ decimal.format(day) + " " + decimal.format(hour) + ":"
 				+ decimal.format(minute);
+
+	}
+	
+	
+	public static String getFormatYMD(Calendar c) {
+		String parten = "00";
+		DecimalFormat decimal = new DecimalFormat(parten);
+		// 设置日期的显示
+		Calendar calendar = c;
+		int year = calendar.get(Calendar.YEAR);
+		int month = calendar.get(Calendar.MONTH);
+		int day = calendar.get(Calendar.DATE);
+		int hour = calendar.get(Calendar.HOUR_OF_DAY);
+		int minute = calendar.get(Calendar.MINUTE);
+		return year + "-" + decimal.format(month + 1) + "-"
+				+ decimal.format(day);
 
 	}
 }

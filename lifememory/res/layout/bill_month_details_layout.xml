@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/mymoney_bg"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bill_title_bar_bg" >
+
+        <TextView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@drawable/bill_common_bar_back_btn_selector"
+            android:clickable="true"
+            android:gravity="center"
+            android:onClick="btnClick"
+            android:text="返回"
+            android:textColor="#ffffff"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/arrowLeft"
+            android:textColor="#ffffff"
+            android:textSize="20dp" />
+
+        <ImageView
+            android:id="@+id/arrowLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/back"
+            android:background="@drawable/bill_monthdetals_arrowleft_selector"
+            android:onClick="btnClick" />
+
+        <ImageView
+            android:id="@+id/arrowRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/title"
+            android:background="@drawable/bill_monthdetals_arrowright_selector"
+            android:onClick="btnClick" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/search_static_bg"
+        android:clickable="true"
+        android:onClick="btnClick" >
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:text="结余:"
+                        android:textColor="#000000"
+                        android:textSize="20dp" />
+
+                    <TextView
+                        android:id="@+id/jieyujine"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:text="-100.00"
+                        android:textColor="#000000"
+                        android:textSize="20dp" />
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/account_merge_separate_line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical" >
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:drawableLeft="@drawable/common_icon_income"
+                            android:gravity="center_vertical"
+                            android:text="收入"
+                            android:textColor="#000000"
+                            android:textSize="14dp" />
+
+                        <TextView
+                            android:id="@+id/income"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:text="20.00"
+                            android:textColor="#000000"
+                            android:textSize="14dp" />
+                    </RelativeLayout>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:background="@drawable/setting_edit_category_seperate_line" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:drawableLeft="@drawable/common_icon_payout"
+                            android:gravity="center_vertical"
+                            android:text="支出"
+                            android:textColor="#000000"
+                            android:textSize="14dp" />
+
+                        <TextView
+                            android:id="@+id/spend"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:text="120.00"
+                            android:textColor="#000000"
+                            android:textSize="14dp" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/jieyujine"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/account_merge_separate_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp" >
+
+                <ListView
+                    android:id="@+id/listView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:listSelector="#00000000"
+                    android:dividerHeight="3dp"
+                    android:divider="@drawable/account_merge_separate_line"
+                    android:cacheColorHint="#00000000"
+                    android:scrollingCache="false"
+                    android:fadingEdge="none"
+                    >
+                </ListView>
+            </LinearLayout>
+        </LinearLayout>
+        
+        <TextView
+            android:id="@+id/msg" 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="当前月没有账单信息"
+            android:textSize="30dp"
+            android:textColor="#ffffff"
+            android:visibility="gone"
+            />
+        
+    </FrameLayout>
+
+</LinearLayout>

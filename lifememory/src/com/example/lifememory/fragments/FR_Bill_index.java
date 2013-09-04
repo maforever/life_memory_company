@@ -1,15 +1,22 @@
 package com.example.lifememory.fragments;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import com.example.lifememory.R;
 import com.example.lifememory.activity.BillInputActivity;
+import com.example.lifememory.activity.BillMonthDetailsActivity;
 import com.example.lifememory.activity.IndexActivity;
+import com.example.lifememory.activity.model.Bill;
 import com.example.lifememory.activity.slidingmenu.menulib.SlidingMenu.OnClosedListener;
 import com.example.lifememory.activity.slidingmenu.menulib.SlidingMenu.OnOpenListener;
 import com.example.lifememory.adapter.BillIndexGridViewAdapter;
+import com.example.lifememory.db.service.BillInfoService;
+import com.example.lifememory.utils.DateFormater;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -49,10 +56,22 @@ public class FR_Bill_index extends Fragment {
 	private ViewFlipper viewFlipper = null;
 	private GridView firstGridView, secondGridView = null;
 	private Animation flipperLeftInAnim, flipperLeftOutAnim, flipperRightInAnim, flipperRightOutAnim = null;
-
+	private BillInfoService billService;
+	private List<Bill> todayBills, monthIncomeBills ,monthSpendBills;
+	private Intent intent;
+	private Handler handler = new Handler() {
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case 0:
+				GridViewAdapter();
+				break;
+			}
+		};
+	};
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		billService = new BillInfoService(getActivity());
 		
 	}
 	
@@ -68,10 +87,8 @@ public class FR_Bill_index extends Fragment {
 		View view = inflater
 				.inflate(R.layout.fr_mybill_index, container, false);
 		findViews(view);
-		GridViewAdapter();
 		runAnimation();
-
-
+		new LoadDatasThread().start();
 		return view;
 	}
 	
@@ -131,9 +148,26 @@ public class FR_Bill_index extends Fragment {
 				});
 	}
 	
+	@Override
+	public void onResume() {
+		super.onResume();
+		new LoadDatasThread().start();
+	}
+	
+	private class LoadDatasThread extends Thread {
+		@Override
+		public void run() {
+			String todayYMD = DateFormater.getInstatnce().getY_M_D();
+			String todayYM = DateFormater.getInstatnce().getY_M();
+			todayBills = billService.findBillByYMD(todayYMD);
+			monthIncomeBills = billService.findIncomeByYM(todayYM);
+			monthSpendBills = billService.findSpendByYM(todayYM);
+			handler.sendEmptyMessage(0);
+		}
+	}
 	
 	private void GridViewAdapter() {
-		firstAdapter = new BillIndexGridViewAdapter(getActivity(), firstPageTitle, firstPageImageIds, true);
+		firstAdapter = new BillIndexGridViewAdapter(getActivity(), firstPageTitle, firstPageImageIds, true, todayBills, monthIncomeBills, monthSpendBills);
 		secondAdapter = new BillIndexGridViewAdapter(getActivity(), secondPageTitle, secondPageImageIds, false);
 		firstGridView.setAdapter(firstAdapter);
 		secondGridView.setAdapter(secondAdapter);
@@ -247,7 +281,9 @@ public class FR_Bill_index extends Fragment {
 				Toast.makeText(getActivity(), firstPageTitle[position], 0).show();
 				break;
 			case 3:
-				Toast.makeText(getActivity(), "Í³¼Æ", 0).show();
+				intent = new Intent(getActivity(), BillMonthDetailsActivity.class);
+				getActivity().startActivity(intent);
+				getActivity().overridePendingTransition(R.anim.activity_up, R.anim.activity_steady);
 				break;
 			}
 		}

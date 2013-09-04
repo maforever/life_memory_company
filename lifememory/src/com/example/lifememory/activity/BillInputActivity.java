@@ -11,6 +11,7 @@ import com.example.lifememory.db.service.BillInfoService;
 import com.example.lifememory.utils.AppAplication;
 import com.example.lifememory.utils.ConstantUtil;
 import com.example.lifememory.utils.CopyFileFromData;
+import com.example.lifememory.utils.DateFormater;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -107,7 +108,7 @@ public class BillInputActivity extends Activity {
 		Date d = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		bill.setDate(sdf.format(d));
-		
+		bill.setDateYMD(DateFormater.getInstatnce().getY_M_D());
 		
 		findViews();
 		initViews();
@@ -165,7 +166,9 @@ public class BillInputActivity extends Activity {
 		}else if(ConstantUtil.SELECTED_DATE_FINISHED == resultCode) {
 			//选择日期完成
 			String dateStr = data.getStringExtra("date");
+			String dateYMD = data.getStringExtra("dateYMD");
 			bill.setDate(dateStr);
+			bill.setDateYMD(dateYMD);
 			currentDateTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.date);
 			currentDateTextView.setText(dateStr);
 		}else if(ConstantUtil.EDIT_BEIZHU == resultCode) {
