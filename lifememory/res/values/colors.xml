@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
     <item type="color" name="leftmenuselected">#cc66ff</item>
     <item type="color" name="colorPink">#ff66ff</item>
     <item type="color" name="colorPurple">#9900cc</item>
     <item type="color" name="colorBlue">#0000ff</item>
+    <item type="color" name ="incomeColor">#009900</item>
+    <item type="color" name ="spendColor">#ff0000</item>
+    <item type="color" name="transferColor">#0033ff</item>
 </resources>

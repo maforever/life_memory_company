@@ -53,132 +53,237 @@ public class BillInputActivity extends Activity {
 										// /)temp2Str
 	private boolean isClickFlag = false; // 标记是否点击了加减乘除按钮
 	private int flagId; // 0加1减2乘3除
-	private int parentId = 1;		     //用于记录一级类别列表选中的数据的数据库id
-	private int catagoryChildId = 0;	 //用于记录级类别列表选中的数据的数据库id
+	private int parentId = 1; // 用于记录一级类别列表选中的数据的数据库id
+	private int catagoryChildId = 0; // 用于记录级类别列表选中的数据的数据库id
 	private BillCatagoryService dbService = null;
-	private String catagoryStr;          //用于保存界面上显示的类别内容
-	private String accountStr;           //用于保存界面上显示的账户内容
-	private String memberStr;            //用于保存界面上显示的成员内容
-	private TextView currentJinETextView = null;		//用于指向当前viewflipper显示的界面上的显示金额内容的textView
-	private TextView inCatagoryTextView = null;    //用于指向当前viewflipper显示的界面上的显示支出类别内容的textView
-	private TextView outCatagoryTextView = null;   //用于指向当前viewflipper显示的界面上的显示收入类别内容的textView
-	private TextView currentAccountTextView = null;     //用于指向当前viewflipper显示的界面上的显示账户内容的textView
-	private TextView currentMemberTextView = null;     //用于指向当前viewflipper显示的界面上的显示成员内容的textView
-	private TextView currentDateTextView = null;		//用于指向当前viewflipper显示的界面上的显示日期内容的textView
-	private TextView currentBeizhuTextView = null;     //用于指向当前viewflipper显示的界面上的显示备注内容的textView
-	private TextView transferInTextView = null;			//存放转入账号的名称
-	private TextView transferOutTextView = null;		//存放转出账号的名称
-	private int outCatagorySelectedId = 0;                 //用于记录一级类别列表选中的索引数
-	private int outCatagorySelectedChildId = 0;			//用于记录二级类别列表选中的索引数
-	private int accountGroupSelectedIndex = 0;			//用于记录账户expandablelistview中组的索引
-	private int accountChildSelectedIndex = 0;  		//用于记录账户expandablelistview中子的索引
-	private int transferOutGroupSelectedIndex = 2;		//用于记录转出expandablelistview中组的索引
-	private int transferOutChildSelectedIndex = 0;		//用于记录转出expandablelistview中子的索引
-	private int transferInGroupSelectedIndex = 0;		//用于记录转入expandablelistview中组的索引
-	private int transferInChildSelectedIndex = 0;		//用于记录转入expandablelistview中子的索引
-	private int memberSelectedIndex = 1;					//用于记录成员列别中的listview选中索引
-	private int inCatagorySelectedIndex = 0;             //用于记录输入类别的数据索引
+	private String catagoryStr; // 用于保存界面上显示的类别内容
+	private String accountStr; // 用于保存界面上显示的账户内容
+	private String memberStr; // 用于保存界面上显示的成员内容
+	private TextView currentJinETextView = null; // 用于指向当前viewflipper显示的界面上的显示金额内容的textView
+	private TextView inCatagoryTextView = null; // 用于指向当前viewflipper显示的界面上的显示支出类别内容的textView
+	private TextView outCatagoryTextView = null; // 用于指向当前viewflipper显示的界面上的显示收入类别内容的textView
+	private TextView currentAccountTextView = null; // 用于指向当前viewflipper显示的界面上的显示账户内容的textView
+	private TextView currentMemberTextView = null; // 用于指向当前viewflipper显示的界面上的显示成员内容的textView
+	private TextView currentDateTextView = null; // 用于指向当前viewflipper显示的界面上的显示日期内容的textView
+	private TextView currentBeizhuTextView = null; // 用于指向当前viewflipper显示的界面上的显示备注内容的textView
+	private TextView transferInTextView = null; // 存放转入账号的名称
+	private TextView transferOutTextView = null; // 存放转出账号的名称
+	private int outCatagorySelectedId = 0; // 用于记录一级类别列表选中的索引数
+	private int outCatagorySelectedChildId = 0; // 用于记录二级类别列表选中的索引数
+	private int accountGroupSelectedIndex = 0; // 用于记录账户expandablelistview中组的索引
+	private int accountChildSelectedIndex = 0; // 用于记录账户expandablelistview中子的索引
+	private int transferOutGroupSelectedIndex = 2; // 用于记录转出expandablelistview中组的索引
+	private int transferOutChildSelectedIndex = 0; // 用于记录转出expandablelistview中子的索引
+	private int transferInGroupSelectedIndex = 0; // 用于记录转入expandablelistview中组的索引
+	private int transferInChildSelectedIndex = 0; // 用于记录转入expandablelistview中子的索引
+	private int memberSelectedIndex = 1; // 用于记录成员列别中的listview选中索引
+	private int inCatagorySelectedIndex = 0; // 用于记录输入类别的数据索引
 	private Intent intent;
-
+	private String flag = "add"; // 用于标示是来自添加还是来自查看
+	private int idx;
 	/*
 	 * 用于纪录等号按钮是否点击了,当每次点击的+,-,*,/按钮后，将isEqualBtnClick=false
-	 * 这样每当点击popwindow之外的或点击back关闭popwindow的时候，就判断如果isEqualBtnClick=false，就将textview
-	 * 的结果设为点击+，-,*,/之前的值
+	 * 这样每当点击popwindow之外的或点击back关闭popwindow的时候
+	 * ，就判断如果isEqualBtnClick=false，就将textview 的结果设为点击+，-,*,/之前的值
 	 */
-	private boolean isEqualBtnClick = true;                
-	
-	
+	private boolean isEqualBtnClick = true;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.bill_input_layout);
-		
+
 		billService = new BillInfoService(this);
 		dbService = new BillCatagoryService(this);
 		inflater = LayoutInflater.from(this);
-		
-		bill = new Bill();
-		bill.setOutCatagory("常用-打的");
-		bill.setAccount("现金");
-		bill.setMember("自己");
-		bill.setInCatagory("工资");
-		bill.setTransferOut("储蓄");
-		bill.setTransferIn("现金");
-		
-		Date d = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-		bill.setDate(sdf.format(d));
-		bill.setDateYMD(DateFormater.getInstatnce().getY_M_D());
-		
-		findViews();
-		initViews();
-		initCalculator();
-		
-//		Log.i("a", "BillInputActivity onCreate catagorySelectedId = " + catagorySelectedId + " catagorySelectedChildId = " + catagorySelectedChildId);
+
+		flag = this.getIntent().getStringExtra("flag");
+
+		if ("add".equals(flag)) {
+			bill = new Bill();
+			bill.setOutCatagory("常用-打的");
+			bill.setAccount("现金");
+			bill.setMember("自己");
+			bill.setInCatagory("工资");
+			bill.setTransferOut("储蓄");
+			bill.setTransferIn("现金");
+
+			Date d = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+			bill.setDate(sdf.format(d));
+			bill.setDateYMD(DateFormater.getInstatnce().getY_M_D());
+
+			findViews();
+			initViews();
+			initCalculator();
+		} else if ("view".equals(flag)) {
+			idx = this.getIntent().getIntExtra("idx", 0);
+			bill = billService.findBillByIdx(idx);
+
+			findViews();
+			initViewsByViewFlag();
+			initCalculator();
+
+			outCatagorySelectedId = 0; // 用于记录一级类别列表选中的索引数
+			outCatagorySelectedChildId = -1; // 用于记录二级类别列表选中的索引数
+			accountGroupSelectedIndex = 0; // 用于记录账户expandablelistview中组的索引
+			accountChildSelectedIndex = -1; // 用于记录账户expandablelistview中子的索引
+			transferOutGroupSelectedIndex = -1; // 用于记录转出expandablelistview中组的索引
+			transferOutChildSelectedIndex = -1; // 用于记录转出expandablelistview中子的索引
+			transferInGroupSelectedIndex = -1; // 用于记录转入expandablelistview中组的索引
+			transferInChildSelectedIndex = -1; // 用于记录转入expandablelistview中子的索引
+			memberSelectedIndex = -1; // 用于记录成员列别中的listview选中索引
+			inCatagorySelectedIndex = -1; // 用于记录输入类别的数据索引
+
+		}
+
+		// Log.i("a", "BillInputActivity onCreate catagorySelectedId = " +
+		// catagorySelectedId + " catagorySelectedChildId = " +
+		// catagorySelectedChildId);
 	}
-	
+
+	private void initViewsByViewFlag() {
+		switch (bill.getBillType()) {
+		case 1:
+			zhichuBtn
+					.setBackgroundResource(R.drawable.exit_demo_mode_btn_pressed);
+			zhichuBtn.setTextColor(Color.WHITE);
+			shouruBtn.setClickable(false);
+			zhuanzhangBtn.setClickable(false);
+			viewFlipper.setDisplayedChild(0);
+			outCatagoryTextView.setText(bill.getOutCatagory());
+			currentAccountTextView = (TextView) viewFlipper.getCurrentView()
+					.findViewById(R.id.zhanghu);
+			currentAccountTextView.setText(bill.getAccount());
+			currentMemberTextView = (TextView) viewFlipper.getCurrentView()
+					.findViewById(R.id.chengyuan);
+			currentMemberTextView.setText(bill.getMember());
+			if (bill.isCanBaoXiao()) {
+				baoxiaoCb.setChecked(true);
+			} else
+				baoxiaoCb.setChecked(false);
+
+			break;
+		case 2:
+			shouruBtn
+					.setBackgroundResource(R.drawable.exit_demo_mode_btn_pressed);
+			shouruBtn.setTextColor(Color.WHITE);
+			zhichuBtn.setClickable(false);
+			zhuanzhangBtn.setClickable(false);
+			viewFlipper.setDisplayedChild(1);
+			inCatagoryTextView.setText(bill.getInCatagory());
+			currentAccountTextView = (TextView) viewFlipper.getCurrentView()
+					.findViewById(R.id.zhanghu);
+			currentAccountTextView.setText(bill.getAccount());
+			currentMemberTextView = (TextView) viewFlipper.getCurrentView()
+					.findViewById(R.id.chengyuan);
+			currentMemberTextView.setText(bill.getMember());
+			break;
+		case 3:
+			zhuanzhangBtn
+					.setBackgroundResource(R.drawable.exit_demo_mode_btn_pressed);
+			zhuanzhangBtn.setTextColor(Color.WHITE);
+			zhichuBtn.setClickable(false);
+			shouruBtn.setClickable(false);
+			viewFlipper.setDisplayedChild(2);
+			transferInTextView.setText(bill.getTransferIn());
+			transferOutTextView.setText(bill.getTransferOut());
+			break;
+		}
+
+		currentJinETextView = (TextView) viewFlipper.getCurrentView()
+				.findViewById(R.id.jine);
+		currentJinETextView.setText(bill.getJine());
+		currentDateTextView = (TextView) viewFlipper.getCurrentView()
+				.findViewById(R.id.date);
+		currentDateTextView.setText(bill.getDate());
+		currentBeizhuTextView = (TextView) viewFlipper.getCurrentView()
+				.findViewById(R.id.beizhu);
+		currentBeizhuTextView.setText(bill.getBeizhu());
+
+	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if(resultCode == 99) {
-			//有BillCatagorySettingActivity返回
+		if (resultCode == 99) {
+			// 有BillCatagorySettingActivity返回
 			parentId = data.getIntExtra("parentId", 0);
 			catagoryChildId = data.getIntExtra("catagoryid", 0);
 			outCatagorySelectedId = data.getIntExtra("catagorySelectedId", 0);
-			outCatagorySelectedChildId = data.getIntExtra("catagorySelectedChildId", 0);
+			outCatagorySelectedChildId = data.getIntExtra(
+					"catagorySelectedChildId", 0);
 			catagoryStr = dbService.getCatagoryStr(catagoryChildId);
-//			Log.i("a", "BillInputActivity onActivityResult catagorySelectedId = " + catagorySelectedId + " catagorySelectedChildId = " + catagorySelectedChildId);
+			// Log.i("a",
+			// "BillInputActivity onActivityResult catagorySelectedId = " +
+			// catagorySelectedId + " catagorySelectedChildId = " +
+			// catagorySelectedChildId);
 			bill.setOutCatagory(catagoryStr);
 			outCatagoryTextView.setText(catagoryStr);
-		}else if(resultCode == 98) {
-			//由BillAccountSettingActivity返回
+		} else if (resultCode == 98) {
+			// 由BillAccountSettingActivity返回
 			String accountFlag = data.getStringExtra("accountFlag");
 			accountStr = data.getStringExtra("accountStr");
-			if(accountFlag.equals(ConstantUtil.ACCOUNT_COMMON)) {
-				accountGroupSelectedIndex = data.getIntExtra("currentGroupSelectedIndex", 0);
-				accountChildSelectedIndex = data.getIntExtra("currentChildSelectedIndex", 0);
+			if (accountFlag.equals(ConstantUtil.ACCOUNT_COMMON)) {
+				accountGroupSelectedIndex = data.getIntExtra(
+						"currentGroupSelectedIndex", 0);
+				accountChildSelectedIndex = data.getIntExtra(
+						"currentChildSelectedIndex", 0);
 				bill.setAccount(accountStr);
-				currentAccountTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.zhanghu);
+				currentAccountTextView = (TextView) viewFlipper
+						.getCurrentView().findViewById(R.id.zhanghu);
 				currentAccountTextView.setText(accountStr);
-			}else if(accountFlag.equals(ConstantUtil.ACCOUNT_TRANSFER_OUT)) {
-				transferOutGroupSelectedIndex = data.getIntExtra("currentGroupSelectedIndex", 0);
-				transferOutChildSelectedIndex = data.getIntExtra("currentChildSelectedIndex", 0);
+			} else if (accountFlag.equals(ConstantUtil.ACCOUNT_TRANSFER_OUT)) {
+				transferOutGroupSelectedIndex = data.getIntExtra(
+						"currentGroupSelectedIndex", 0);
+				transferOutChildSelectedIndex = data.getIntExtra(
+						"currentChildSelectedIndex", 0);
 				bill.setTransferOut(accountStr);
 				transferOutTextView.setText(accountStr);
-			}else if(accountFlag.equals(ConstantUtil.ACCOUNT_TRANSFER_IN)) {
-				transferInGroupSelectedIndex = data.getIntExtra("currentGroupSelectedIndex", 0);
-				transferInChildSelectedIndex = data.getIntExtra("currentChildSelectedIndex", 0);
+			} else if (accountFlag.equals(ConstantUtil.ACCOUNT_TRANSFER_IN)) {
+				transferInGroupSelectedIndex = data.getIntExtra(
+						"currentGroupSelectedIndex", 0);
+				transferInChildSelectedIndex = data.getIntExtra(
+						"currentChildSelectedIndex", 0);
 				bill.setTransferIn(accountStr);
 				transferInTextView.setText(accountStr);
 			}
-//			accountGroupSelectedIndex = data.getIntExtra("currentGroupSelectedIndex", 0);
-//			accountChildSelectedIndex = data.getIntExtra("currentChildSelectedIndex", 0);
-//			accountStr = data.getStringExtra("accountStr");
-//			bill.setAccount(accountStr);
-//			currentAccountTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.zhanghu);
-//			currentAccountTextView.setText(accountStr);
-		}else if(ConstantUtil.SELECT_MEMEBER_FINISHED == resultCode) {
-			//由BillMemberSelect返回
+			// accountGroupSelectedIndex =
+			// data.getIntExtra("currentGroupSelectedIndex", 0);
+			// accountChildSelectedIndex =
+			// data.getIntExtra("currentChildSelectedIndex", 0);
+			// accountStr = data.getStringExtra("accountStr");
+			// bill.setAccount(accountStr);
+			// currentAccountTextView = (TextView)
+			// viewFlipper.getCurrentView().findViewById(R.id.zhanghu);
+			// currentAccountTextView.setText(accountStr);
+		} else if (ConstantUtil.SELECT_MEMEBER_FINISHED == resultCode) {
+			// 由BillMemberSelect返回
 			memberSelectedIndex = data.getIntExtra("currentSelectedIndex", 0);
 			memberStr = data.getStringExtra("member");
 			bill.setMember(memberStr);
-			currentMemberTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.chengyuan);
+			currentMemberTextView = (TextView) viewFlipper.getCurrentView()
+					.findViewById(R.id.chengyuan);
 			currentMemberTextView.setText(memberStr);
-		}else if(ConstantUtil.SELECTED_DATE_FINISHED == resultCode) {
-			//选择日期完成
+		} else if (ConstantUtil.SELECTED_DATE_FINISHED == resultCode) {
+			// 选择日期完成
 			String dateStr = data.getStringExtra("date");
 			String dateYMD = data.getStringExtra("dateYMD");
+			// Log.i("a", "dateStr = " + dateStr + " dateYMD = " + dateYMD);
 			bill.setDate(dateStr);
 			bill.setDateYMD(dateYMD);
-			currentDateTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.date);
+			currentDateTextView = (TextView) viewFlipper.getCurrentView()
+					.findViewById(R.id.date);
 			currentDateTextView.setText(dateStr);
-		}else if(ConstantUtil.EDIT_BEIZHU == resultCode) {
+		} else if (ConstantUtil.EDIT_BEIZHU == resultCode) {
 			String beizhuStr = data.getStringExtra("content");
 			bill.setBeizhu(beizhuStr);
-			currentBeizhuTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.beizhu);
+			currentBeizhuTextView = (TextView) viewFlipper.getCurrentView()
+					.findViewById(R.id.beizhu);
 			currentBeizhuTextView.setText(beizhuStr);
-		}else if(ConstantUtil.SELECTED_INCATAGORY_FINISHED == resultCode) {
+		} else if (ConstantUtil.SELECTED_INCATAGORY_FINISHED == resultCode) {
 			String inCatagoryName = data.getStringExtra("catagoryname");
-			inCatagorySelectedIndex = data.getIntExtra("currentSelectedIndex", 0);
+			inCatagorySelectedIndex = data.getIntExtra("currentSelectedIndex",
+					0);
 			bill.setInCatagory(inCatagoryName);
 			inCatagoryTextView.setText(inCatagoryName);
 		}
@@ -196,23 +301,23 @@ public class BillInputActivity extends Activity {
 		zhichuJine = (TextView) childView1.findViewById(R.id.jine);
 		shouruJine = (TextView) childView2.findViewById(R.id.jine);
 		zhuanzhangJine = (TextView) childView3.findViewById(R.id.jine);
-		currentBeizhuTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.beizhu);
+		currentBeizhuTextView = (TextView) viewFlipper.getCurrentView()
+				.findViewById(R.id.beizhu);
 		outCatagoryTextView = (TextView) childView1.findViewById(R.id.leixing);
 		inCatagoryTextView = (TextView) childView2.findViewById(R.id.leixing);
 		inCatagoryTextView.setText(bill.getInCatagory());
 		outCatagoryTextView.setText(bill.getOutCatagory());
 		transferInTextView = (TextView) childView3.findViewById(R.id.zhuanru);
 		transferOutTextView = (TextView) childView3.findViewById(R.id.zhuanchu);
-		
-		
-		
+
 		popWinParentView = this.findViewById(R.id.popWinParent);
 	}
 
 	private void initViews() {
 		zhichuBtn.setBackgroundResource(R.drawable.exit_demo_mode_btn_pressed);
 		zhichuBtn.setTextColor(Color.WHITE);
-		currentDateTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.date);
+		currentDateTextView = (TextView) viewFlipper.getCurrentView()
+				.findViewById(R.id.date);
 		currentDateTextView.setText(bill.getDate());
 
 	}
@@ -236,50 +341,63 @@ public class BillInputActivity extends Activity {
 			showCalculator();
 			break;
 		case R.id.leixinglayout:
-			//点击转到类型设置界面
-			if(viewFlipper.getDisplayedChild() == 1) {
-				//点击收入界面的类型
-				intent = new Intent(BillInputActivity.this, BillInCatagorySettingActivity.class);
+			// 点击转到类型设置界面
+			if (viewFlipper.getDisplayedChild() == 1) {
+				// 点击收入界面的类型
+				intent = new Intent(BillInputActivity.this,
+						BillInCatagorySettingActivity.class);
 				intent.putExtra("currentSelectedIndex", inCatagorySelectedIndex);
 				this.startActivityForResult(intent, 100);
-				overridePendingTransition(R.anim.activity_up, R.anim.activity_steady);
-			}else {
-				//点击支出界面的类型
-			    intent = new Intent(BillInputActivity.this, BillCatagorySettingActivity.class);
+				overridePendingTransition(R.anim.activity_up,
+						R.anim.activity_steady);
+			} else {
+				// 点击支出界面的类型
+				intent = new Intent(BillInputActivity.this,
+						BillCatagorySettingActivity.class);
 				intent.putExtra("parentId", parentId);
 				intent.putExtra("catagorySelectedId", outCatagorySelectedId);
-				intent.putExtra("catagorySelectedChildId", outCatagorySelectedChildId);
+				intent.putExtra("catagorySelectedChildId",
+						outCatagorySelectedChildId);
 				this.startActivityForResult(intent, 100);
-				overridePendingTransition(R.anim.activity_up, R.anim.activity_steady);
+				overridePendingTransition(R.anim.activity_up,
+						R.anim.activity_steady);
 			}
-			
-			
+
 			break;
 		case R.id.zhanghulayout:
-			intent = new Intent(BillInputActivity.this, BillAccountSettingActivity.class);
-			intent.putExtra("currentGroupSelectedIndex", accountGroupSelectedIndex);
-			intent.putExtra("currentChildSelectedIndex", accountChildSelectedIndex);
+			intent = new Intent(BillInputActivity.this,
+					BillAccountSettingActivity.class);
+			intent.putExtra("currentGroupSelectedIndex",
+					accountGroupSelectedIndex);
+			intent.putExtra("currentChildSelectedIndex",
+					accountChildSelectedIndex);
 			intent.putExtra("accountFlag", ConstantUtil.ACCOUNT_COMMON);
 			this.startActivityForResult(intent, 100);
-			overridePendingTransition(R.anim.activity_up, R.anim.activity_steady);
-			
+			overridePendingTransition(R.anim.activity_up,
+					R.anim.activity_steady);
+
 			break;
 		case R.id.riqilayout:
-			intent = new Intent(BillInputActivity.this, BillDataWheelPickerActivity.class);
+			intent = new Intent(BillInputActivity.this,
+					BillDataWheelPickerActivity.class);
 			startActivityForResult(intent, 100);
 			break;
 		case R.id.chengyuanlayout:
-			intent = new Intent(BillInputActivity.this, BillMemberSelectActivity.class);
+			intent = new Intent(BillInputActivity.this,
+					BillMemberSelectActivity.class);
 			intent.putExtra("currentSelectedIndex", memberSelectedIndex);
 			startActivityForResult(intent, 100);
-			overridePendingTransition(R.anim.activity_up, R.anim.activity_steady);
+			overridePendingTransition(R.anim.activity_up,
+					R.anim.activity_steady);
 			break;
 		case R.id.beizhulayout:
-			intent = new Intent(BillInputActivity.this, BillTextInputActivity.class);
+			intent = new Intent(BillInputActivity.this,
+					BillTextInputActivity.class);
 			intent.putExtra("title", "账单备注");
 			intent.putExtra("fenlei", ConstantUtil.EDIT_BEIZHU);
 			intent.putExtra("editNum", 100);
-			intent.putExtra("content", currentBeizhuTextView.getText().toString());
+			intent.putExtra("content", currentBeizhuTextView.getText()
+					.toString());
 			startActivityForResult(intent, 100);
 			break;
 		case R.id.baoxiaolayout:
@@ -289,73 +407,112 @@ public class BillInputActivity extends Activity {
 				baoxiaoCb.setChecked(true);
 			}
 			break;
-			
+
 		case R.id.zhuanchulayout:
-			
-			intent = new Intent(BillInputActivity.this, BillAccountSettingActivity.class);
-			intent.putExtra("currentGroupSelectedIndex", transferOutGroupSelectedIndex);
-			intent.putExtra("currentChildSelectedIndex", transferOutChildSelectedIndex);
+
+			intent = new Intent(BillInputActivity.this,
+					BillAccountSettingActivity.class);
+			intent.putExtra("currentGroupSelectedIndex",
+					transferOutGroupSelectedIndex);
+			intent.putExtra("currentChildSelectedIndex",
+					transferOutChildSelectedIndex);
 			intent.putExtra("accountFlag", ConstantUtil.ACCOUNT_TRANSFER_OUT);
 			this.startActivityForResult(intent, 100);
-			overridePendingTransition(R.anim.activity_up, R.anim.activity_steady);
-			
+			overridePendingTransition(R.anim.activity_up,
+					R.anim.activity_steady);
+
 			break;
 		case R.id.zhuanrulayout:
-			
-			intent = new Intent(BillInputActivity.this, BillAccountSettingActivity.class);
-			intent.putExtra("currentGroupSelectedIndex", transferInGroupSelectedIndex);
-			intent.putExtra("currentChildSelectedIndex", transferInChildSelectedIndex);
+
+			intent = new Intent(BillInputActivity.this,
+					BillAccountSettingActivity.class);
+			intent.putExtra("currentGroupSelectedIndex",
+					transferInGroupSelectedIndex);
+			intent.putExtra("currentChildSelectedIndex",
+					transferInChildSelectedIndex);
 			intent.putExtra("accountFlag", ConstantUtil.ACCOUNT_TRANSFER_IN);
 			this.startActivityForResult(intent, 100);
-			overridePendingTransition(R.anim.activity_up, R.anim.activity_steady);
-			
+			overridePendingTransition(R.anim.activity_up,
+					R.anim.activity_steady);
+
 			break;
 		case R.id.back:
 			back();
 			break;
 		case R.id.save:
-			
-			currentJinETextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.jine);
-			if(currentJinETextView.getText().toString() == null || "".equals(currentJinETextView.getText().toString()) || "0".equals(currentJinETextView.getText().toString())) {
-				Toast.makeText(BillInputActivity.this, "请输入金额!", 0).show();
-			}else {
-				currentBeizhuTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.beizhu);
-				bill.setBeizhu(currentBeizhuTextView.getText().toString());
-				bill.setJine(currentJinETextView.getText().toString());
-				bill.setBaoxiaoed(false);
-				if(baoxiaoCb.isChecked()) {
-					bill.setCanBaoXiao(true);
-				}else {
-					bill.setCanBaoXiao(false);
-				}
-				
-				switch (viewFlipper.getDisplayedChild()) {
-				case 0:
-					//支出
-					bill.setBillType(1);
-					billService.addOutBill(bill);
-					break;
-				case 1:
-					//收入
-					bill.setBillType(2);
-					billService.addInBill(bill);
-					break;
-				case 2:
-					//转账
-					bill.setBillType(3);
-					billService.addTransferBill(bill);
-					break;
+
+			if ("add".equals(flag)) {
+				currentJinETextView = (TextView) viewFlipper.getCurrentView()
+						.findViewById(R.id.jine);
+				if (currentJinETextView.getText().toString() == null
+						|| "".equals(currentJinETextView.getText().toString())
+						|| "0".equals(currentJinETextView.getText().toString())) {
+					Toast.makeText(BillInputActivity.this, "请输入金额!", 0).show();
+				} else {
+					currentBeizhuTextView = (TextView) viewFlipper
+							.getCurrentView().findViewById(R.id.beizhu);
+					bill.setBeizhu(currentBeizhuTextView.getText().toString());
+					bill.setJine(currentJinETextView.getText().toString());
+					bill.setBaoxiaoed(false);
+					if (baoxiaoCb.isChecked()) {
+						bill.setCanBaoXiao(true);
+					} else {
+						bill.setCanBaoXiao(false);
+					}
+
+					switch (viewFlipper.getDisplayedChild()) {
+					case 0:
+						// 支出
+						bill.setBillType(1);
+						billService.addOutBill(bill);
+						break;
+					case 1:
+						// 收入
+						bill.setBillType(2);
+						billService.addInBill(bill);
+						break;
+					case 2:
+						// 转账
+						bill.setBillType(3);
+						billService.addTransferBill(bill);
+						break;
+					}
 				}
 
-//				Log.i("a", bill.toString());
-				
-				Toast.makeText(BillInputActivity.this, "账单信息保存成功!", 0).show();
-				BillInputActivity.this.finish();
-				overridePendingTransition(R.anim.activity_steady, R.anim.activity_down);
+			} else if ("view".equals(flag)) {
+				if (currentJinETextView.getText().toString() == null
+						|| "".equals(currentJinETextView.getText().toString())
+						|| "0".equals(currentJinETextView.getText().toString())) {
+					Toast.makeText(BillInputActivity.this, "请输入金额!", 0).show();
+				} else {
+					bill.setJine(currentJinETextView.getText().toString());
+					bill.setBeizhu(currentBeizhuTextView.getText().toString());
+					switch (bill.getBillType()) {
+					case 1:
+						if (baoxiaoCb.isChecked()) {
+							bill.setCanBaoXiao(true);
+						} else {
+							bill.setCanBaoXiao(false);
+						}
+						billService.updateOutBill(bill);
+						break;
+					case 2:
+						billService.updateInBill(bill);
+						break;
+					case 3:
+						billService.updateTransferBill(bill);
+						break;
+					}
+				}
 			}
-			
-						
-			
+
+			// Log.i("a", bill.toString());
+
+			Toast.makeText(BillInputActivity.this, "账单信息保存成功!", 0).show();
+			BillInputActivity.this.finish();
+			overridePendingTransition(R.anim.activity_steady,
+					R.anim.activity_down);
+
 			break;
 		}
 	}
@@ -431,13 +588,11 @@ public class BillInputActivity extends Activity {
 		refreshCatagoryTextView();
 		refreshDateTextView();
 		refreshBeizhuTextView();
-		if(viewFlipper.getDisplayedChild() != 2) {
+		if (viewFlipper.getDisplayedChild() != 2) {
 			refreshMemberTextView();
 			refreshAccountTextView();
 		}
 	}
-
-
 
 	LinearLayout cal_equal;
 	LinearLayout cal_del;
@@ -494,14 +649,14 @@ public class BillInputActivity extends Activity {
 		calculator.setFocusable(true);
 		calculator.setBackgroundDrawable(new ColorDrawable());
 		calculator.setOnDismissListener(new OnDismissListener() {
-			
+
 			@Override
 			public void onDismiss() {
-				if(!isEqualBtnClick) {
-					BillInputActivity.this.isClickFlag = false;   //当每次关闭计算器时，让是否点击符号复位
-					BillInputActivity.this.isFloat = false;       //当每次关闭计算器时，让是否是浮点数复位
-					jineTv = (TextView) viewFlipper.getCurrentView().findViewById(
-							R.id.jine);
+				if (!isEqualBtnClick) {
+					BillInputActivity.this.isClickFlag = false; // 当每次关闭计算器时，让是否点击符号复位
+					BillInputActivity.this.isFloat = false; // 当每次关闭计算器时，让是否是浮点数复位
+					jineTv = (TextView) viewFlipper.getCurrentView()
+							.findViewById(R.id.jine);
 					jineTv.setText(temp1Str);
 					cal_equal.setVisibility(ViewGroup.GONE);
 					cal_sure.setVisibility(ViewGroup.VISIBLE);
@@ -593,32 +748,36 @@ public class BillInputActivity extends Activity {
 		shouruJine.setText(jie_txt);
 		zhuanzhangJine.setText(jie_txt);
 	}
-	
+
 	private void refreshCatagoryTextView() {
 		outCatagoryTextView.setText(bill.getOutCatagory());
 		inCatagoryTextView.setText(bill.getInCatagory());
 	}
-	
+
 	private void refreshAccountTextView() {
-		currentAccountTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.zhanghu);
+		currentAccountTextView = (TextView) viewFlipper.getCurrentView()
+				.findViewById(R.id.zhanghu);
 		currentAccountTextView.setText(bill.getAccount());
 	}
-	
+
 	private void refreshMemberTextView() {
-		currentMemberTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.chengyuan);
+		currentMemberTextView = (TextView) viewFlipper.getCurrentView()
+				.findViewById(R.id.chengyuan);
 		currentMemberTextView.setText(bill.getMember());
 	}
-	
+
 	private void refreshDateTextView() {
-		currentDateTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.date);
+		currentDateTextView = (TextView) viewFlipper.getCurrentView()
+				.findViewById(R.id.date);
 		currentDateTextView.setText(bill.getDate());
 	}
-	
+
 	private void refreshBeizhuTextView() {
-		currentBeizhuTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.beizhu);
+		currentBeizhuTextView = (TextView) viewFlipper.getCurrentView()
+				.findViewById(R.id.beizhu);
 		currentBeizhuTextView.setText(bill.getBeizhu());
 	}
-	
+
 	// 点击了计算器上的数字键
 	private void onClickNum(int numStr) {
 		jineTv = (TextView) viewFlipper.getCurrentView()
@@ -670,7 +829,7 @@ public class BillInputActivity extends Activity {
 		jineTv = (TextView) viewFlipper.getCurrentView()
 				.findViewById(R.id.jine);
 		String jie_str = jineTv.getText().toString();
-//		Log.i("a", "jine length = " + jie_str.length());
+		// Log.i("a", "jine length = " + jie_str.length());
 		if (jie_str.length() > 1) {
 			jie_txt = jie_str.substring(0, jie_str.length() - 1); // 去掉最后一个字符
 			if (jie_txt.endsWith(".")) {
@@ -698,7 +857,7 @@ public class BillInputActivity extends Activity {
 			isClickFlag = true; // 点击了加减乘除按钮
 		}
 		this.flagId = flagId;
-		this.isFloat = false;    //点击符号按钮后将是否是浮点数标记为复位，不然再点击数字时会是小数
+		this.isFloat = false; // 点击符号按钮后将是否是浮点数标记为复位，不然再点击数字时会是小数
 	}
 
 	// 点击了计算器上的等号
@@ -725,7 +884,8 @@ public class BillInputActivity extends Activity {
 				resultFloat = temp1Float + temp2Float;
 				resultStr = resultStrDeleteZero(df.format(resultFloat));
 				jineTv.setText(resultStr);
-//				Log.i("a", "temp1Float = " + temp1Float + "   temp2Float = " + temp2Float + "   result = " + resultFloat);
+				// Log.i("a", "temp1Float = " + temp1Float + "   temp2Float = "
+				// + temp2Float + "   result = " + resultFloat);
 				bill.setJine(resultStr);
 
 				break;
@@ -736,7 +896,8 @@ public class BillInputActivity extends Activity {
 				resultFloat = temp1Float - temp2Float;
 				resultStr = resultStrDeleteZero(df.format(resultFloat));
 				jineTv.setText(resultStr);
-//				Log.i("a", "temp1Float = " + temp1Float + "   temp2Float = " + temp2Float + "   result = " + resultFloat);
+				// Log.i("a", "temp1Float = " + temp1Float + "   temp2Float = "
+				// + temp2Float + "   result = " + resultFloat);
 				bill.setJine(resultStr);
 				break;
 			case 2:
@@ -746,7 +907,8 @@ public class BillInputActivity extends Activity {
 				resultFloat = temp1Float * temp2Float;
 				resultStr = resultStrDeleteZero(df.format(resultFloat));
 				jineTv.setText(resultStr);
-//				Log.i("a", "temp1Float = " + temp1Float + "   temp2Float = " + temp2Float + "   result = " + resultFloat);
+				// Log.i("a", "temp1Float = " + temp1Float + "   temp2Float = "
+				// + temp2Float + "   result = " + resultFloat);
 				bill.setJine(resultStr);
 				break;
 			case 3:
@@ -756,42 +918,40 @@ public class BillInputActivity extends Activity {
 				resultFloat = temp1Float / temp2Float;
 				resultStr = resultStrDeleteZero(df.format(resultFloat));
 				jineTv.setText(resultStr);
-//				Log.i("a", "temp1Float = " + temp1Float + "   temp2Float = " + temp2Float + "   result = " + resultFloat);
+				// Log.i("a", "temp1Float = " + temp1Float + "   temp2Float = "
+				// + temp2Float + "   result = " + resultFloat);
 				bill.setJine(resultStr);
 				break;
 			}
 
 		} else {
-			jineTv.setText(temp1Str);    //如果点击完符号后在没有输入数字或者输入的数字为0，此时按等号时，jineTv的值就是之前缓存的值temp1Str
+			jineTv.setText(temp1Str); // 如果点击完符号后在没有输入数字或者输入的数字为0，此时按等号时，jineTv的值就是之前缓存的值temp1Str
 		}
 		isClickFlag = false;
 	}
-	
 
-	//将最后的金额字符型结果去掉小数位的0，例如12.30， 去掉0后成12.3，再如12.00去零成为12
+	// 将最后的金额字符型结果去掉小数位的0，例如12.30， 去掉0后成12.3，再如12.00去零成为12
 	private String resultStrDeleteZero(String resultStr) {
 		String str = null;
-		str = resultStr.substring(resultStr.lastIndexOf(".") + 1, resultStr.length());
-		if(str.length() == 1){
-			if(str.equals("0")) {
+		str = resultStr.substring(resultStr.lastIndexOf(".") + 1,
+				resultStr.length());
+		if (str.length() == 1) {
+			if (str.equals("0")) {
 				return resultStr.substring(0, resultStr.length() - 2);
 			}
-		}else {
-			String a = str.substring(1, 2);   //01 中的1
-			String b = str.substring(0, 1);	  //01中的0
-			if(a.equals("0")) {
+		} else {
+			String a = str.substring(1, 2); // 01 中的1
+			String b = str.substring(0, 1); // 01中的0
+			if (a.equals("0")) {
 				resultStr = resultStr.substring(0, resultStr.length() - 1);
-				if(b.equals("0")) {
+				if (b.equals("0")) {
 					return resultStr.substring(0, resultStr.length() - 2);
 				}
 			}
 		}
 		return resultStr;
 	}
-	
-	
 
-	
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
@@ -800,14 +960,12 @@ public class BillInputActivity extends Activity {
 		dbService = null;
 		billService = null;
 	}
-	
-	
+
 	private void back() {
 		BillInputActivity.this.finish();
-		overridePendingTransition(R.anim.activity_steady,
-				R.anim.activity_down);
+		overridePendingTransition(R.anim.activity_steady, R.anim.activity_down);
 	}
-	
+
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		switch (keyCode) {
@@ -817,20 +975,5 @@ public class BillInputActivity extends Activity {
 		}
 		return true;
 	}
-	
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

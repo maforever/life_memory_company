@@ -130,8 +130,10 @@
             android:name=".activity.BillMonthDetailsActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@android:style/Theme.Black.NoTitleBar" />
-        
-        
+        <activity
+            android:name=".activity.BillLiuShuiSettingDialogActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/dialog" />
     </application>
 
 </manifest>

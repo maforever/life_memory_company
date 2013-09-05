@@ -274,6 +274,7 @@ public class FR_Bill_index extends Fragment {
 				break;
 			case 1:
 				Intent intent = new Intent(getActivity(), BillInputActivity.class);
+				intent.putExtra("flag", "add");
 				getActivity().startActivity(intent);
 				getActivity().overridePendingTransition(R.anim.activity_up, R.anim.activity_steady);
 				break;

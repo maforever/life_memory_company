@@ -35,12 +35,15 @@ public class BillMonthDetailsActivity extends Activity {
 	private BillInfoService billService;
 	private LinearLayout contentLayout;
 	private TextView emptyNoticeTv;
+	private TextView jieyuTv, incomeTv, spendTv;
 	private List<String> dbYMDs;;               //查找数据库数据的属性 yyyy-MM-dd
 	private List<BillMonthDetailsListViewModel> monthDetails = new ArrayList<BillMonthDetailsListViewModel>();
 	private BillMonthDetailsListViewModel monthDetail = null;
 	private List<Bill> bills;
 	private ListView listView;
 	private BillMonthDetailsListViewAdapter adapter = null;
+	private double monthTotalIncome = 0;
+	private double monthTotalSpend = 0;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -54,9 +57,18 @@ public class BillMonthDetailsActivity extends Activity {
 		
 	}
 	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		initDatasAndSetAdapter(dateYM);
+	}
+	
 	private void findViews() {
 		title = (TextView) this.findViewById(R.id.title);
 		listView = (ListView) this.findViewById(R.id.listView);
+		jieyuTv = (TextView) this.findViewById(R.id.jieyujine);
+		incomeTv = (TextView) this.findViewById(R.id.income);
+		spendTv = (TextView) this.findViewById(R.id.spend);
 		contentLayout = (LinearLayout) this.findViewById(R.id.content);
 		emptyNoticeTv = (TextView) this.findViewById(R.id.msg);
 	}
@@ -170,8 +182,10 @@ public class BillMonthDetailsActivity extends Activity {
 			dbYMDs = billService.findAllYMDInMonth(dateYM);
 			
 			monthDetails = new ArrayList<BillMonthDetailsListViewModel>();
+			monthTotalIncome = 0;
+			monthTotalSpend = 0;
 			for(String paramYMD : dbYMDs) {
-				bills = billService.findBillByYMD(paramYMD);
+				bills = billService.findBillByYMDInDetails(paramYMD);
 				double todayIncomeResult = 0;
 				double todaySpendResult = 0;
 				if (bills != null && bills.size() > 0) {
@@ -197,10 +211,24 @@ public class BillMonthDetailsActivity extends Activity {
 				monthDetail.setDay(day);
 				monthDetail.setWeek(DateFormater.getInstatnce().getWeekday(paramYMD));
 				monthDetails.add(monthDetail);
+				
+				monthTotalIncome += todayIncomeResult;
+				monthTotalSpend += todaySpendResult;
+				
+				incomeTv.setText(monthTotalIncome + "");
+				spendTv.setText(monthTotalSpend + "");
+				double jieyuNum = monthTotalIncome + monthTotalSpend;
+				if(jieyuNum > 0) {
+					jieyuTv.setTextColor(getResources().getColor(R.color.incomeColor));
+				}else {
+					jieyuTv.setTextColor(getResources().getColor(R.color.spendColor));
+				}
+				jieyuTv.setText(jieyuNum + "");
+				
 			}
 			
 			
-			adapter = new BillMonthDetailsListViewAdapter(this, monthDetails);
+			adapter = new BillMonthDetailsListViewAdapter(this, monthDetails, this);
 			listView.setAdapter(adapter);
 			
 
