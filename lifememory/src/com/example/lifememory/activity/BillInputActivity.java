@@ -176,6 +176,45 @@ public class BillInputActivity extends Activity {
 			bill.setBillType(toType);
 			findViews();
 			initViewsByViewChangeFlag(toType);
+			
+			
+			commonAccount = accountService.findItemsForAddViews();
+			commonTransferInAccount = accountService.findItemsForAddTransferInViews();
+			commonTransferOutAccount = accountService.findItemsForAddViews();
+			
+			if(commonAccount == null) {
+				//没有是现金类型下的账户
+				bill.setAccount("无账户");
+				bill.setAccountid(-1);
+			}else {
+				bill.setAccount(commonAccount.getName());
+				bill.setAccountid(commonAccount.getIdx());
+			}
+			
+			if(commonTransferInAccount == null) {
+				bill.setTransferIn("现金");
+				bill.setTransferInAccountId(-1);
+			}else {
+				bill.setTransferIn(commonTransferInAccount.getName());
+				bill.setTransferInAccountId(commonTransferInAccount.getIdx());
+			}
+			
+			if(commonTransferOutAccount == null) {
+				bill.setTransferOut("储蓄");
+				bill.setTransferOutAccountId(-1);
+			}else {
+				bill.setTransferOut(commonTransferOutAccount.getName());
+				bill.setTransferOutAccountId(commonTransferOutAccount.getIdx());
+			}
+
+			if(viewFlipper.getDisplayedChild() != 2) {
+				refreshAccountTextView();
+			}else {
+				refreshTransferAccountTextView();
+			}
+			
+			
+			
 			initCalculator();
 		}
 
@@ -198,33 +237,28 @@ public class BillInputActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		Log.i("a", "onResume ......");
 		commonAccount = accountService.findItemsForAddViews();
 		commonTransferInAccount = accountService.findItemsForAddTransferInViews();
 		commonTransferOutAccount = accountService.findItemsForAddViews();
+		
+		
+		
 		
 		if(commonAccount == null) {
 			//没有是现金类型下的账户
 			bill.setAccount("无账户");
 			bill.setAccountid(-1);
-		}else {
-			bill.setAccount(commonAccount.getName());
-			bill.setAccountid(commonAccount.getIdx());
 		}
 		
 		if(commonTransferInAccount == null) {
 			bill.setTransferIn("无账户");
 			bill.setTransferInAccountId(-1);
-		}else {
-			bill.setTransferIn(commonTransferInAccount.getName());
-			bill.setTransferInAccountId(commonTransferInAccount.getIdx());
 		}
 		
 		if(commonTransferOutAccount == null) {
 			bill.setTransferOut("无账户");
 			bill.setTransferOutAccountId(-1);
-		}else {
-			bill.setTransferOut(commonTransferOutAccount.getName());
-			bill.setTransferOutAccountId(commonTransferOutAccount.getIdx());
 		}
 		
 		if(viewFlipper.getDisplayedChild() == 2) {
@@ -400,6 +434,7 @@ public class BillInputActivity extends Activity {
 			// 由BillAccountSettingActivity返回
 			String accountFlag = data.getStringExtra("accountFlag");
 			accountStr = data.getStringExtra("accountStr");
+			Log.i("a", "resultCode .....");
 			int accountid = data.getIntExtra("accountid", 0);
 			if (accountFlag.equals(ConstantUtil.ACCOUNT_COMMON)) {
 				accountGroupSelectedIndex = data.getIntExtra(
@@ -408,9 +443,9 @@ public class BillInputActivity extends Activity {
 						"currentChildSelectedIndex", 0);
 				bill.setAccount(accountStr);
 				bill.setAccountid(accountid);
-				currentAccountTextView = (TextView) viewFlipper
-						.getCurrentView().findViewById(R.id.zhanghu);
-				currentAccountTextView.setText(accountStr);
+//				currentAccountTextView = (TextView) viewFlipper
+//						.getCurrentView().findViewById(R.id.zhanghu);
+//				currentAccountTextView.setText(accountStr);
 			} else if (accountFlag.equals(ConstantUtil.ACCOUNT_TRANSFER_OUT)) {
 				transferOutGroupSelectedIndex = data.getIntExtra(
 						"currentGroupSelectedIndex", 0);
@@ -418,7 +453,7 @@ public class BillInputActivity extends Activity {
 						"currentChildSelectedIndex", 0);
 				bill.setTransferOut(accountStr);
 				bill.setTransferOutAccountId(accountid);
-				transferOutTextView.setText(accountStr);
+//				transferOutTextView.setText(accountStr);
 			} else if (accountFlag.equals(ConstantUtil.ACCOUNT_TRANSFER_IN)) {
 				transferInGroupSelectedIndex = data.getIntExtra(
 						"currentGroupSelectedIndex", 0);
@@ -426,7 +461,13 @@ public class BillInputActivity extends Activity {
 						"currentChildSelectedIndex", 0);
 				bill.setTransferIn(accountStr);
 				bill.setTransferInAccountId(accountid);
-				transferInTextView.setText(accountStr);
+//				transferInTextView.setText(accountStr);
+			}
+			
+			if(viewFlipper.getDisplayedChild() != 2) {
+				refreshAccountTextView();
+			}else {
+				refreshTransferAccountTextView();
 			}
 			// accountGroupSelectedIndex =
 			// data.getIntExtra("currentGroupSelectedIndex", 0);

@@ -58,7 +58,7 @@ public class BillAccountSettingActivity extends Activity {
 				break;
 			case 1:
 				//删除失败
-				Toast.makeText(BillAccountSettingActivity.this, "当前账户信息已被使用，无法删除!", 0).show();
+				Toast.makeText(BillAccountSettingActivity.this, "账户信息不允许删除，清先清空该账户有关的账单记录!", 0).show();
 				break;
 			case 2:
 				//删除成功
@@ -159,12 +159,12 @@ public class BillAccountSettingActivity extends Activity {
 				
 				@Override
 				public void run() {
-//					if(infoService.isRelatedWithAccount(expandableItems.get(groupLocation).getAccountItems().get(childLocation).getIdx())) {
-//						handler.sendEmptyMessage(1);
-//					}else {
+					if(infoService.isRelatedWithAccount(expandableItems.get(groupLocation).getAccountItems().get(childLocation).getIdx())) {
+						handler.sendEmptyMessage(1);
+					}else {
 						dbService.deleteItemById(expandableItems.get(groupLocation).getAccountItems().get(childLocation).getIdx());
 						handler.sendEmptyMessage(2);
-//					}
+					}
 				}
 			}).start();
 		}

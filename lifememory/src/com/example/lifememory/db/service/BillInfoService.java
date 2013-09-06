@@ -72,7 +72,7 @@ public class BillInfoService {
 	//删除
 	//根据账户id查找引用了该账户id的账单数
 	public boolean isRelatedWithAccount(int accountId) {
-		Cursor cursor = db.rawQuery("select count(*) from bill_info where accountid = ?", new String[]{String.valueOf(accountId)});
+		Cursor cursor = db.rawQuery("select count(*) from bill_info where accountid = ? or transferInAccountId = ? or transferOutAccountId = ?", new String[]{String.valueOf(accountId), String.valueOf(accountId), String.valueOf(accountId)} );
 		cursor.moveToFirst();
 		Long num = cursor.getLong(0);
 		if(num > 0) {
@@ -129,6 +129,9 @@ public class BillInfoService {
 			bill.setBeizhu(cursor.getString(cursor.getColumnIndex("beizhu")));
 			bill.setTransferIn(cursor.getString(cursor.getColumnIndex("transferIn")));
 			bill.setTransferOut(cursor.getString(cursor.getColumnIndex("transferOut")));
+			bill.setAccountid(cursor.getInt(cursor.getColumnIndex("accountid")));
+			bill.setTransferInAccountId(cursor.getInt(cursor.getColumnIndex("transferInAccountId")));
+			bill.setTransferOutAccountId(cursor.getInt(cursor.getColumnIndex("transferOutAccountId")));
 			bills.add(bill);
 		}
 		return bills;
@@ -206,6 +209,9 @@ public class BillInfoService {
 			bill.setTransferIn(cursor.getString(cursor.getColumnIndex("transferIn")));
 			bill.setTransferOut(cursor.getString(cursor.getColumnIndex("transferOut")));
 			bill.setBillType(cursor.getInt(cursor.getColumnIndex("billType")));
+			bill.setAccountid(cursor.getInt(cursor.getColumnIndex("accountid")));
+			bill.setTransferInAccountId(cursor.getInt(cursor.getColumnIndex("transferInAccountId")));
+			bill.setTransferOutAccountId(cursor.getInt(cursor.getColumnIndex("transferOutAccountId")));
 		}
 		return bill;
 	}
