@@ -50,8 +50,15 @@ public class BillCatagoryService {
 		return items;
 	}
 	//添加类别信息
-	public void addCatagory(BillCatagoryItem item) {
+	public boolean addCatagory(BillCatagoryItem item) {
+		Cursor cursor = db.rawQuery("select count(*) from bill_catagory where name = ? and parentid = ?", new String[]{item.getName(), String.valueOf(item.getParentId())});
+		cursor.moveToFirst();
+		Long count = cursor.getLong(0);
+		if(count > 0) {
+			return false;
+		}
 		db.execSQL("insert into bill_catagory (name, imageid, parentid) values (?, ?, ?)", new String[]{item.getName(), String.valueOf(item.getImageId()), String.valueOf(item.getParentId())});
+		return true;
 	}
 	
 	public void closeDB() {

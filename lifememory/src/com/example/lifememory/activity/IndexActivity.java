@@ -72,15 +72,33 @@ public class IndexActivity extends SlidingFragmentActivity {
 			if (getSlidingMenu().isMenuShowing()) {
 				Toast.makeText(this, "显示", 0).show();
 			} else {
-				Toast.makeText(this, "不显示", 0).show();
-				CopyFileFromData.getInstance().copyDatabase(getBaseContext(), "pregnancy_diary.db");
-				IndexActivity.this.finish();
+//				Toast.makeText(this, "不显示", 0).show();
+				onBackPressed();
 			}
 			
 			break;
 		}
 		return true;
 	}
+	
+	/**
+	 * 连续按两次返回键就退出
+	 */
+	private long firstTime;
+
+	@Override
+	public void onBackPressed() {
+		if (System.currentTimeMillis() - firstTime < 3000) {
+			CopyFileFromData.getInstance().copyDatabase(getBaseContext(), "pregnancy_diary.db");
+			IndexActivity.this.finish();
+		} else {
+			firstTime = System.currentTimeMillis();
+			Toast.makeText(this, "再次点击就会退出程序!", Toast.LENGTH_SHORT)
+					.show();
+		}
+	}
+	
+	
 	/**
 	 * 自定义拖动事件，分发给fragment
 	 */

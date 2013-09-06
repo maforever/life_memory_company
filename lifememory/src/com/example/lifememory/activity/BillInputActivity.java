@@ -6,6 +6,8 @@ import java.util.Date;
 
 import com.example.lifememory.R;
 import com.example.lifememory.activity.model.Bill;
+import com.example.lifememory.activity.model.BillAccountItem;
+import com.example.lifememory.db.service.BillAccountService;
 import com.example.lifememory.db.service.BillCatagoryService;
 import com.example.lifememory.db.service.BillInfoService;
 import com.example.lifememory.utils.AppAplication;
@@ -56,6 +58,7 @@ public class BillInputActivity extends Activity {
 	private int parentId = 1; // 用于记录一级类别列表选中的数据的数据库id
 	private int catagoryChildId = 0; // 用于记录级类别列表选中的数据的数据库id
 	private BillCatagoryService dbService = null;
+	private BillAccountService accountService = null;
 	private String catagoryStr; // 用于保存界面上显示的类别内容
 	private String accountStr; // 用于保存界面上显示的账户内容
 	private String memberStr; // 用于保存界面上显示的成员内容
@@ -79,8 +82,12 @@ public class BillInputActivity extends Activity {
 	private int memberSelectedIndex = 1; // 用于记录成员列别中的listview选中索引
 	private int inCatagorySelectedIndex = 0; // 用于记录输入类别的数据索引
 	private Intent intent;
-	private String flag = "add"; // 用于标示是来自添加还是来自查看
+	private String flag = "add"; // 用于标示是来自添加界面， view来自流水点击与长点击后选择编辑   viewchange来自流水长点击后选择的changetoxxx
+	private int toType = 0;      //changeto的类型  1支出， 2收入 ， 3转账
 	private int idx;
+	private BillAccountItem commonAccount;
+	private BillAccountItem commonTransferInAccount;
+	private BillAccountItem commonTransferOutAccount;
 	/*
 	 * 用于纪录等号按钮是否点击了,当每次点击的+,-,*,/按钮后，将isEqualBtnClick=false
 	 * 这样每当点击popwindow之外的或点击back关闭popwindow的时候
@@ -95,25 +102,63 @@ public class BillInputActivity extends Activity {
 
 		billService = new BillInfoService(this);
 		dbService = new BillCatagoryService(this);
+		accountService = new BillAccountService(this);
 		inflater = LayoutInflater.from(this);
 
 		flag = this.getIntent().getStringExtra("flag");
 
 		if ("add".equals(flag)) {
+			
 			bill = new Bill();
+			
+			commonAccount = accountService.findItemsForAddViews();
+			commonTransferInAccount = accountService.findItemsForAddTransferInViews();
+			commonTransferOutAccount = accountService.findItemsForAddViews();
+			
+			if(commonAccount == null) {
+				//没有是现金类型下的账户
+				bill.setAccount("无账户");
+				bill.setAccountid(-1);
+			}else {
+				bill.setAccount(commonAccount.getName());
+				bill.setAccountid(commonAccount.getIdx());
+			}
+			
+			if(commonTransferInAccount == null) {
+				bill.setTransferIn("现金");
+				bill.setTransferInAccountId(-1);
+			}else {
+				bill.setTransferIn(commonTransferInAccount.getName());
+				bill.setTransferInAccountId(commonTransferInAccount.getIdx());
+			}
+			
+			if(commonTransferOutAccount == null) {
+				bill.setTransferOut("储蓄");
+				bill.setTransferOutAccountId(-1);
+			}else {
+				bill.setTransferOut(commonTransferOutAccount.getName());
+				bill.setTransferOutAccountId(commonTransferOutAccount.getIdx());
+			}
+
 			bill.setOutCatagory("常用-打的");
-			bill.setAccount("现金");
+//			bill.setAccount("现金");
 			bill.setMember("自己");
 			bill.setInCatagory("工资");
-			bill.setTransferOut("储蓄");
-			bill.setTransferIn("现金");
+//			bill.setTransferOut("储蓄");
+//			bill.setTransferIn("现金");
 
+			
+			
 			Date d = new Date();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 			bill.setDate(sdf.format(d));
 			bill.setDateYMD(DateFormater.getInstatnce().getY_M_D());
 
 			findViews();
+			currentAccountTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.zhanghu);
+			currentAccountTextView.setText(bill.getAccount());
+			
+			
 			initViews();
 			initCalculator();
 		} else if ("view".equals(flag)) {
@@ -121,29 +166,80 @@ public class BillInputActivity extends Activity {
 			bill = billService.findBillByIdx(idx);
 
 			findViews();
-			initViewsByViewFlag();
+			initViewsByViewFlag(bill.getBillType());
 			initCalculator();
 
-			outCatagorySelectedId = 0; // 用于记录一级类别列表选中的索引数
-			outCatagorySelectedChildId = -1; // 用于记录二级类别列表选中的索引数
-			accountGroupSelectedIndex = 0; // 用于记录账户expandablelistview中组的索引
-			accountChildSelectedIndex = -1; // 用于记录账户expandablelistview中子的索引
-			transferOutGroupSelectedIndex = -1; // 用于记录转出expandablelistview中组的索引
-			transferOutChildSelectedIndex = -1; // 用于记录转出expandablelistview中子的索引
-			transferInGroupSelectedIndex = -1; // 用于记录转入expandablelistview中组的索引
-			transferInChildSelectedIndex = -1; // 用于记录转入expandablelistview中子的索引
-			memberSelectedIndex = -1; // 用于记录成员列别中的listview选中索引
-			inCatagorySelectedIndex = -1; // 用于记录输入类别的数据索引
-
+		}else if("viewchange".equals(flag)) {
+			idx = this.getIntent().getIntExtra("idx", 0);
+			toType = this.getIntent().getIntExtra("toType", 0);
+			bill = billService.findBillByIdx(idx);
+			bill.setBillType(toType);
+			findViews();
+			initViewsByViewChangeFlag(toType);
+			initCalculator();
 		}
 
+		outCatagorySelectedId = 0; // 用于记录一级类别列表选中的索引数
+		outCatagorySelectedChildId = -1; // 用于记录二级类别列表选中的索引数
+		accountGroupSelectedIndex = 0; // 用于记录账户expandablelistview中组的索引
+		accountChildSelectedIndex = -1; // 用于记录账户expandablelistview中子的索引
+		transferOutGroupSelectedIndex = 0; // 用于记录转出expandablelistview中组的索引
+		transferOutChildSelectedIndex = -1; // 用于记录转出expandablelistview中子的索引
+		transferInGroupSelectedIndex = 0; // 用于记录转入expandablelistview中组的索引
+		transferInChildSelectedIndex = -1; // 用于记录转入expandablelistview中子的索引
+		memberSelectedIndex = -1; // 用于记录成员列别中的listview选中索引
+		inCatagorySelectedIndex = -1; // 用于记录输入类别的数据索引
+		
 		// Log.i("a", "BillInputActivity onCreate catagorySelectedId = " +
 		// catagorySelectedId + " catagorySelectedChildId = " +
 		// catagorySelectedChildId);
 	}
 
-	private void initViewsByViewFlag() {
-		switch (bill.getBillType()) {
+	@Override
+	protected void onResume() {
+		super.onResume();
+		commonAccount = accountService.findItemsForAddViews();
+		commonTransferInAccount = accountService.findItemsForAddTransferInViews();
+		commonTransferOutAccount = accountService.findItemsForAddViews();
+		
+		if(commonAccount == null) {
+			//没有是现金类型下的账户
+			bill.setAccount("无账户");
+			bill.setAccountid(-1);
+		}else {
+			bill.setAccount(commonAccount.getName());
+			bill.setAccountid(commonAccount.getIdx());
+		}
+		
+		if(commonTransferInAccount == null) {
+			bill.setTransferIn("无账户");
+			bill.setTransferInAccountId(-1);
+		}else {
+			bill.setTransferIn(commonTransferInAccount.getName());
+			bill.setTransferInAccountId(commonTransferInAccount.getIdx());
+		}
+		
+		if(commonTransferOutAccount == null) {
+			bill.setTransferOut("无账户");
+			bill.setTransferOutAccountId(-1);
+		}else {
+			bill.setTransferOut(commonTransferOutAccount.getName());
+			bill.setTransferOutAccountId(commonTransferOutAccount.getIdx());
+		}
+		
+		if(viewFlipper.getDisplayedChild() == 2) {
+			transferInTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.zhuanru);
+			transferInTextView.setText(bill.getTransferIn());
+			transferOutTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.zhuanchu);
+			transferOutTextView.setText(bill.getTransferOut());
+		}else {
+			currentAccountTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.zhanghu);
+			currentAccountTextView.setText(bill.getAccount());
+		}
+	}
+	
+	private void initViewsByViewFlag(int billType) {
+		switch (billType) {
 		case 1:
 			zhichuBtn
 					.setBackgroundResource(R.drawable.exit_demo_mode_btn_pressed);
@@ -202,6 +298,87 @@ public class BillInputActivity extends Activity {
 		currentBeizhuTextView.setText(bill.getBeizhu());
 
 	}
+	
+	
+	private void initViewsByViewChangeFlag(int billType) {
+		switch (billType) {
+		case 1:
+			zhichuBtn
+					.setBackgroundResource(R.drawable.exit_demo_mode_btn_pressed);
+			zhichuBtn.setTextColor(Color.WHITE);
+			shouruBtn.setClickable(false);
+			zhuanzhangBtn.setClickable(false);
+			viewFlipper.setDisplayedChild(0);
+			outCatagoryTextView.setText("常用-打的");
+			bill.setOutCatagory("常用-打的");
+			currentAccountTextView = (TextView) viewFlipper.getCurrentView()
+					.findViewById(R.id.zhanghu);
+			currentMemberTextView = (TextView) viewFlipper.getCurrentView()
+					.findViewById(R.id.chengyuan);
+			if(bill.getBillType() == 2) {
+				currentAccountTextView.setText(bill.getAccount());  //如果之前是收入类型账单，就显示收入类型账单的账户类型
+				currentMemberTextView.setText(bill.getMember());    //如果之前是收入类型账单，就显示收入类型账单的成员类型
+				bill.setAccount(bill.getAccount());
+			}else {
+				currentAccountTextView.setText("现金");               //如果之前是转账类型账单，就显示默认的现金
+				currentMemberTextView.setText("自己");                //如果之前是转账类型账单，就显示默认的自己
+				bill.setAccount("现金");
+				bill.setMember("自己");
+			}
+			baoxiaoCb.setChecked(false);
+			bill.setCanBaoXiao(false);
+			break;
+		case 2:
+			shouruBtn
+					.setBackgroundResource(R.drawable.exit_demo_mode_btn_pressed);
+			shouruBtn.setTextColor(Color.WHITE);
+			zhichuBtn.setClickable(false);
+			zhuanzhangBtn.setClickable(false);
+			viewFlipper.setDisplayedChild(1);
+			inCatagoryTextView.setText("工资");
+			bill.setInCatagory("工资");
+			currentAccountTextView = (TextView) viewFlipper.getCurrentView()
+					.findViewById(R.id.zhanghu);
+			currentMemberTextView = (TextView) viewFlipper.getCurrentView()
+					.findViewById(R.id.chengyuan);
+
+			if(bill.getBillType() == 1) {
+				//如果之前的类型是支出，就将账户类型与成员类型设为之前支出类型的相关属性
+				currentAccountTextView.setText(bill.getAccount());
+				currentMemberTextView.setText(bill.getMember());
+			}else {
+				currentAccountTextView.setText("现金");
+				currentMemberTextView.setText("自己");
+				bill.setAccount("现金");
+				bill.setMember("自己");
+			}
+
+			break;
+		case 3:
+			zhuanzhangBtn
+					.setBackgroundResource(R.drawable.exit_demo_mode_btn_pressed);
+			zhuanzhangBtn.setTextColor(Color.WHITE);
+			zhichuBtn.setClickable(false);
+			shouruBtn.setClickable(false);
+			viewFlipper.setDisplayedChild(2);
+			transferInTextView.setText("现金");
+			transferOutTextView.setText("储蓄");
+			bill.setTransferIn("现金");
+			bill.setTransferOut("储蓄");
+			break;
+		}
+
+		currentJinETextView = (TextView) viewFlipper.getCurrentView()
+				.findViewById(R.id.jine);
+		currentJinETextView.setText(bill.getJine());
+		currentDateTextView = (TextView) viewFlipper.getCurrentView()
+				.findViewById(R.id.date);
+		currentDateTextView.setText(bill.getDate());
+		currentBeizhuTextView = (TextView) viewFlipper.getCurrentView()
+				.findViewById(R.id.beizhu);
+		currentBeizhuTextView.setText(bill.getBeizhu());
+
+	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -223,12 +400,14 @@ public class BillInputActivity extends Activity {
 			// 由BillAccountSettingActivity返回
 			String accountFlag = data.getStringExtra("accountFlag");
 			accountStr = data.getStringExtra("accountStr");
+			int accountid = data.getIntExtra("accountid", 0);
 			if (accountFlag.equals(ConstantUtil.ACCOUNT_COMMON)) {
 				accountGroupSelectedIndex = data.getIntExtra(
 						"currentGroupSelectedIndex", 0);
 				accountChildSelectedIndex = data.getIntExtra(
 						"currentChildSelectedIndex", 0);
 				bill.setAccount(accountStr);
+				bill.setAccountid(accountid);
 				currentAccountTextView = (TextView) viewFlipper
 						.getCurrentView().findViewById(R.id.zhanghu);
 				currentAccountTextView.setText(accountStr);
@@ -238,6 +417,7 @@ public class BillInputActivity extends Activity {
 				transferOutChildSelectedIndex = data.getIntExtra(
 						"currentChildSelectedIndex", 0);
 				bill.setTransferOut(accountStr);
+				bill.setTransferOutAccountId(accountid);
 				transferOutTextView.setText(accountStr);
 			} else if (accountFlag.equals(ConstantUtil.ACCOUNT_TRANSFER_IN)) {
 				transferInGroupSelectedIndex = data.getIntExtra(
@@ -245,6 +425,7 @@ public class BillInputActivity extends Activity {
 				transferInChildSelectedIndex = data.getIntExtra(
 						"currentChildSelectedIndex", 0);
 				bill.setTransferIn(accountStr);
+				bill.setTransferInAccountId(accountid);
 				transferInTextView.setText(accountStr);
 			}
 			// accountGroupSelectedIndex =
@@ -464,17 +645,35 @@ public class BillInputActivity extends Activity {
 					case 0:
 						// 支出
 						bill.setBillType(1);
-						billService.addOutBill(bill);
+						if(bill.getAccountid() > 0) {
+							billService.addOutBill(bill);
+							saveOrUpdateOk();
+						}else {
+							Toast.makeText(BillInputActivity.this, "无账户类型，请先添加账户!", 0).show();
+							return;
+						}
 						break;
 					case 1:
 						// 收入
 						bill.setBillType(2);
-						billService.addInBill(bill);
+						if(bill.getAccountid() > 0) {
+							billService.addInBill(bill);
+							saveOrUpdateOk();
+						}else {
+							Toast.makeText(BillInputActivity.this, "无账户类型，请先添加账户!", 0).show();
+							return;
+						}
 						break;
 					case 2:
 						// 转账
 						bill.setBillType(3);
-						billService.addTransferBill(bill);
+						if(bill.getTransferInAccountId() > 0 && bill.getTransferOutAccountId() > 0) {
+							billService.addTransferBill(bill);
+							saveOrUpdateOk();
+						}else {
+							Toast.makeText(BillInputActivity.this, "无账户类型，请先添加账户!", 0).show();
+							return;
+						}
 						break;
 					}
 				}
@@ -494,27 +693,95 @@ public class BillInputActivity extends Activity {
 						} else {
 							bill.setCanBaoXiao(false);
 						}
-						billService.updateOutBill(bill);
+						if(bill.getAccountid() > 0) {
+							billService.updateOutBill(bill);
+							saveOrUpdateOk();
+						}else {
+							Toast.makeText(BillInputActivity.this, "无账户类型，请先添加账户!", 0).show();
+							return;
+						}
+						
 						break;
 					case 2:
-						billService.updateInBill(bill);
+						if(bill.getAccountid() > 0) {
+							billService.updateInBill(bill);
+							saveOrUpdateOk();
+						}else {
+							Toast.makeText(BillInputActivity.this, "无账户类型，请先添加账户!", 0).show();
+						}
+						
 						break;
 					case 3:
-						billService.updateTransferBill(bill);
+						if(bill.getTransferInAccountId() > 0 && bill.getTransferOutAccountId() > 0) {
+							billService.updateTransferBill(bill);
+							saveOrUpdateOk();
+						}else {
+							Toast.makeText(BillInputActivity.this, "无账户类型，请先添加账户!", 0).show();
+							return;
+						}
+						
 						break;
+					}
+				}
+			}else if ("viewchange".equals(flag)) {
+				if (currentJinETextView.getText().toString() == null
+						|| "".equals(currentJinETextView.getText().toString())
+						|| "0".equals(currentJinETextView.getText().toString())) {
+					Toast.makeText(BillInputActivity.this, "请输入金额!", 0).show();
+				} else {
+					bill.setJine(currentJinETextView.getText().toString());
+					bill.setBeizhu(currentBeizhuTextView.getText().toString());
+					switch (bill.getBillType()) {
+					case 1:
+						if (baoxiaoCb.isChecked()) {
+							bill.setCanBaoXiao(true);
+						} else {
+							bill.setCanBaoXiao(false);
+						}
+						if(bill.getAccountid() > 0) {
+							billService.updateOutBill(bill);
+							saveOrUpdateOk();
+						}else {
+							Toast.makeText(BillInputActivity.this, "无账户类型，请先添加账户!", 0).show();
+							return;
+						}
+						break;
+					case 2:
+						if(bill.getAccountid() > 0) {
+							billService.updateInBill(bill);
+							saveOrUpdateOk();
+						}else {
+							Toast.makeText(BillInputActivity.this, "无账户类型，请先添加账户!", 0).show();
+							return;
+						}
+						break;
+					case 3:
+						if(bill.getTransferInAccountId() > 0 && bill.getTransferOutAccountId() > 0) {
+							billService.updateTransferBill(bill);
+							saveOrUpdateOk();
+						}else {
+							Toast.makeText(BillInputActivity.this, "无账户类型，请先添加账户!", 0).show();
+							return;
+						}
+						break;
+						
 					}
 				}
 			}
 
 			// Log.i("a", bill.toString());
 
-			Toast.makeText(BillInputActivity.this, "账单信息保存成功!", 0).show();
-			BillInputActivity.this.finish();
-			overridePendingTransition(R.anim.activity_steady,
-					R.anim.activity_down);
+
 
 			break;
 		}
+	}
+	
+	private void saveOrUpdateOk() {
+		Toast.makeText(BillInputActivity.this, "账单信息保存成功!", 0).show();
+		BillInputActivity.this.finish();
+		overridePendingTransition(R.anim.activity_steady,
+				R.anim.activity_down);
 	}
 
 	private void changeBtnBack(int index) {
@@ -591,6 +858,8 @@ public class BillInputActivity extends Activity {
 		if (viewFlipper.getDisplayedChild() != 2) {
 			refreshMemberTextView();
 			refreshAccountTextView();
+		}else {
+			refreshTransferAccountTextView();
 		}
 	}
 
@@ -760,6 +1029,13 @@ public class BillInputActivity extends Activity {
 		currentAccountTextView.setText(bill.getAccount());
 	}
 
+	private void refreshTransferAccountTextView() {
+		transferInTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.zhuanru);
+		transferInTextView.setText(bill.getTransferIn());
+		transferOutTextView = (TextView) viewFlipper.getCurrentView().findViewById(R.id.zhuanchu);
+		transferOutTextView.setText(bill.getTransferOut());
+	}
+	
 	private void refreshMemberTextView() {
 		currentMemberTextView = (TextView) viewFlipper.getCurrentView()
 				.findViewById(R.id.chengyuan);

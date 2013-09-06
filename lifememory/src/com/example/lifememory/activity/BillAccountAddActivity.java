@@ -48,6 +48,11 @@ public class BillAccountAddActivity extends Activity {
 				BillAccountAddActivity.this.finish();
 				overridePendingTransition(R.anim.activity_steady, R.anim.activity_down);
 				break;
+			case 1:
+				//类别名称重复，添加失败
+				Toast.makeText(BillAccountAddActivity.this, "类别名称不能重复哦~", 0).show();
+				break;
+				
 			}
 		};
 	};
@@ -116,8 +121,11 @@ public class BillAccountAddActivity extends Activity {
 				new Thread(new Runnable() {
 					@Override
 					public void run() {
-						dbService.addAccount(accountItem);	
-						handler.sendEmptyMessage(0);
+						boolean result  = dbService.addAccount(accountItem);	
+						if(result) {
+							handler.sendEmptyMessage(0);
+						}else 
+							handler.sendEmptyMessage(1);
 					}
 				}).start();
 				

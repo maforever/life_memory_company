@@ -108,7 +108,19 @@ public class BillMonthDetailsListViewAdapter extends BaseAdapter {
 			public boolean onItemLongClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				int idx = monthDetails.get(parentListViewPosition).getBills().get(position).getIdx();
+				int billType = monthDetails.get(parentListViewPosition).getBills().get(position).getBillType();
 				Intent intent = new Intent(ac, BillLiuShuiSettingDialogActivity.class);
+				if(billType == 1) {
+					//支出
+					intent.putExtra("flag", "spend");
+				}else if(billType ==2) {
+					//收入
+					intent.putExtra("flag", "income");
+				}else if(billType ==3) {
+					//转账
+					intent.putExtra("flag", "transfer");
+				}
+
 				intent.putExtra("idx", idx);
 				ac.startActivity(intent);
 				return true;

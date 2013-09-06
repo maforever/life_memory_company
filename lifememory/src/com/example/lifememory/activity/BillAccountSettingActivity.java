@@ -115,11 +115,13 @@ public class BillAccountSettingActivity extends Activity {
 				childLocation = childPosition;
 				if(!updateCb.isChecked() && !deleteCb.isChecked()) {
 					String name = expandableItems.get(groupPosition).getAccountItems().get(childPosition).getName();
+					int idx = expandableItems.get(groupPosition).getAccountItems().get(childPosition).getIdx();
 					intent = new Intent();
 					intent.putExtra("currentGroupSelectedIndex", groupPosition);
 					intent.putExtra("currentChildSelectedIndex", childPosition);
 					intent.putExtra("accountStr", name);
 					intent.putExtra("accountFlag", accountFlag);
+					intent.putExtra("accountid", idx);
 					BillAccountSettingActivity.this.setResult(98, intent);
 					BillAccountSettingActivity.this.finish();
 					overridePendingTransition(R.anim.activity_steady, R.anim.activity_down);
@@ -157,12 +159,12 @@ public class BillAccountSettingActivity extends Activity {
 				
 				@Override
 				public void run() {
-					if(infoService.isRelatedWithAccount(expandableItems.get(groupLocation).getAccountItems().get(childLocation).getIdx())) {
-						handler.sendEmptyMessage(1);
-					}else {
+//					if(infoService.isRelatedWithAccount(expandableItems.get(groupLocation).getAccountItems().get(childLocation).getIdx())) {
+//						handler.sendEmptyMessage(1);
+//					}else {
 						dbService.deleteItemById(expandableItems.get(groupLocation).getAccountItems().get(childLocation).getIdx());
 						handler.sendEmptyMessage(2);
-					}
+//					}
 				}
 			}).start();
 		}

@@ -57,8 +57,12 @@ public class BillCatatoryAddActivity extends Activity {
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case 0:
+				//添加成功
 				BillCatatoryAddActivity.this.finish();
 				overridePendingTransition(R.anim.activity_steady, R.anim.activity_down);
+				break;
+			case 1:
+				Toast.makeText(BillCatatoryAddActivity.this, "类别名称不能重复哦", 0).show();
 				break;
 			}
 		};
@@ -135,8 +139,11 @@ public class BillCatatoryAddActivity extends Activity {
 	private class AddCatagoryThread extends Thread {
 		@Override
 		public void run() {
-			dbService.addCatagory(item);
-			handler.sendEmptyMessage(0);
+			boolean result = dbService.addCatagory(item);
+			if(result) {
+				handler.sendEmptyMessage(0);
+			}else 
+				handler.sendEmptyMessage(1);
 		}
 	}
 	

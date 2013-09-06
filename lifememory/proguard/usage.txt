@@ -912,7 +912,7 @@ com.example.lifememory.R$menu
 com.example.lifememory.R$string
 com.example.lifememory.R$style
 com.example.lifememory.R$styleable:
-    834:834:public R$styleable()
+    910:910:public R$styleable()
 com.example.lifememory.activity.BabyJiShiBenAddActivity:
     425:428:private java.lang.String getYMD()
     432:435:private java.lang.String getYM()
@@ -930,7 +930,9 @@ com.example.lifememory.activity.BillAccountUpdateActivity:
     android.widget.LinearLayout cal_equal
     android.widget.LinearLayout cal_del
     android.widget.ImageView cal_sure
-com.example.lifememory.activity.BillInputActivity$LoadCatagoryInfo
+com.example.lifememory.activity.BillMonthDetailsActivity:
+    private long tipPopwindowShowTime
+    private java.util.Timer timer
 com.example.lifememory.activity.IndexActivity:
     private static final java.lang.String LEFT_MENU_TAG
 com.example.lifememory.activity.PregnancyJiShiBenAddActivity:
@@ -953,36 +955,7 @@ com.example.lifememory.activity.model.BabyJiShiBenListViewExpandableGroupItem:
 com.example.lifememory.activity.model.BabyLuYin:
     private static final long serialVersionUID
 com.example.lifememory.activity.model.Bill:
-    private int idx
-    private java.lang.String chengyuan
-    private int catagoryid
-    private int accountid
-    private int memberid
-    private java.lang.String riqi
-    private java.lang.String beizhu
-    private boolean isCanBaoXiao
-    private boolean isBaoxiaoed
-    private int billType
-    25:25:public int getIdx()
-    28:29:public void setIdx(int)
-    49:49:public java.lang.String getRiqi()
-    52:53:public void setRiqi(java.lang.String)
-    55:55:public java.lang.String getChengyuan()
-    58:59:public void setChengyuan(java.lang.String)
-    61:61:public java.lang.String getBeizhu()
-    64:65:public void setBeizhu(java.lang.String)
-    67:67:public boolean isCanBaoXiao()
-    70:71:public void setCanBaoXiao(boolean)
-    73:73:public boolean isBaoxiaoed()
-    76:77:public void setBaoxiaoed(boolean)
-    79:79:public int getCatagoryid()
-    82:83:public void setCatagoryid(int)
-    85:85:public int getAccountid()
-    88:89:public void setAccountid(int)
-    91:91:public int getMemberid()
-    94:95:public void setMemberid(int)
-    97:97:public int getBillType()
-    100:101:public void setBillType(int)
+    89:89:public boolean isBaoxiaoed()
 com.example.lifememory.activity.model.PregnancyJiShiBen:
     private static final long serialVersionUID
     72:72:public static long getSerialversionuid()
@@ -1049,6 +1022,7 @@ com.example.lifememory.activity.views.KeyboardListenRelativeLayout:
     public static final byte KEYBOARD_STATE_SHOW
     public static final byte KEYBOARD_STATE_HIDE
     public static final byte KEYBOARD_STATE_INIT
+com.example.lifememory.activity.views.MyInnerListView
 com.example.lifememory.activity.views.ScrollLayout
 com.example.lifememory.activity.views.ScrollLayout$PageListener
 com.example.lifememory.adapter.BabyDiaryJiShiListAdapter:
@@ -1083,6 +1057,8 @@ com.example.lifememory.db.service.BabyDiaryJiShiBenService:
     127:148:public java.util.ArrayList getTodayItems(java.lang.String)
 com.example.lifememory.db.service.BillAccountService:
     40:46:public com.example.lifememory.activity.model.BillAccountItem findItemById(int)
+com.example.lifememory.db.service.BillInfoService:
+    75:81:public boolean isRelatedWithAccount(int)
 com.example.lifememory.db.service.PregnancyDiaryJiShiBenService:
     47:67:public java.util.ArrayList listAll()
     126:147:public java.util.ArrayList getTodayItems(java.lang.String)
@@ -1095,6 +1071,8 @@ com.example.lifememory.dialog.DialogBackUnSaveAlert:
 com.example.lifememory.dialog.DialogPregnancyJiShiBenReNameDialog:
     37:41:public DialogPregnancyJiShiBenReNameDialog(android.content.Context,com.example.lifememory.dialog.DialogInputListener,java.lang.String,java.lang.String,boolean)
     45:49:public DialogPregnancyJiShiBenReNameDialog(android.content.Context,com.example.lifememory.dialog.DialogInputListener,java.lang.String,java.lang.String,java.lang.Object)
+com.example.lifememory.fragments.FR_Bill_index:
+    private android.content.Intent intent
 com.example.lifememory.fragments.FR_Bill_index_bak
 com.example.lifememory.fragments.FR_Bill_index_bak$1
 com.example.lifememory.fragments.FR_Bill_index_bak$2
@@ -1129,7 +1107,13 @@ com.example.lifememory.utils.ConstantUtil:
     public static final int EDIT_YUEFINISHED
     public static final int SELECT_MEMEBER_FINISHED
     public static final int EDIT_MEMBER_FINISHED
+    public static final int SELECTED_DATE_FINISHED
+    public static final int SELECTED_INCATAGORY_FINISHED
+    public static final int EDIT_INCATAGORY_FINISHED
     public static final int EDIT_NOCHANGE_BACK
+    public static final java.lang.String ACCOUNT_COMMON
+    public static final java.lang.String ACCOUNT_TRANSFER_IN
+    public static final java.lang.String ACCOUNT_TRANSFER_OUT
     7:7:public ConstantUtil()
 com.example.lifememory.utils.MD5
 com.example.lifememory.utils.MutilRecodeManager:
@@ -1142,3 +1126,21 @@ com.example.lifememory.utils.SoundMeter:
     private static final double EMA_FILTER
     49:52:public void start()
     65:67:public double getAmplitudeEMA()
+com.example.lifememory.wheel.ArrayWheelAdapter
+com.example.lifememory.wheel.NumericWheelAdapter:
+    public static final int DEFAULT_MAX_VALUE
+    private static final int DEFAULT_MIN_VALUE
+com.example.lifememory.wheel.WheelView:
+    private static final int SCROLLING_DURATION
+    private static final int MIN_DELTA_FOR_SCROLLING
+    private static final int VALUE_TEXT_COLOR
+    private static final int ITEMS_TEXT_COLOR
+    private static final int ADDITIONAL_ITEM_HEIGHT
+    private static final int ADDITIONAL_ITEMS_SPACE
+    private static final int LABEL_OFFSET
+    private static final int PADDING
+    private static final int DEF_VISIBLE_ITEMS
+    272:273:public void removeChangingListener(com.example.lifememory.wheel.OnWheelChangedListener)
+    296:297:public void addScrollingListener(com.example.lifememory.wheel.OnWheelScrollListener)
+    306:307:public void removeScrollingListener(com.example.lifememory.wheel.OnWheelScrollListener)
+    391:391:public boolean isCyclic()

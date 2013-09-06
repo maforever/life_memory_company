@@ -69,12 +69,20 @@ public class BillAccountService {
 
 	
 	
-	public void addAccount(BillAccountItem item) {
+	public boolean addAccount(BillAccountItem item) {
+		
+		Cursor cursor = db.rawQuery("select count(*) from bill_account where name = ? and catagoryname = ?", new String[]{item.getName(), String.valueOf(item.getCatagoryname())});
+		cursor.moveToFirst();
+		Long count = cursor.getLong(0);
+		if(count > 0) {
+			return false;
+		}
 		db.execSQL("insert into bill_account (catagoryname, name, bizhong, dangqianyue, isnotice, noticevalue, imageid, beizhu) values (?, ?, ?, ?, ?, ?, ?, ?)", new String[]{
 				String.valueOf(item.getCatagoryname()), item.getName(), item.getBizhong(), String.valueOf(item.getDangqianyue()),
 				String.valueOf(item.isNotice()), String.valueOf(item.getNoticeValue()), String.valueOf(item.getImageId()), item.getBeizhu()
 				
 		});
+		return true;
 	}
 	
 	//根据id删除账户信息
@@ -89,6 +97,95 @@ public class BillAccountService {
 				String.valueOf(item.isNotice()), String.valueOf(item.getNoticeValue()), String.valueOf(item.getImageId()), item.getBeizhu(), String.valueOf(item.getIdx())
 		});
 	}
+	
+	//支出与收入添加界面的默认account信息
+	public BillAccountItem findItemsForAddViews() {
+		BillAccountItem item = null;
+		Cursor cursor = db.rawQuery("select * from bill_account where catagoryname = 1", null);
+		if(cursor.moveToFirst()) {
+			item = new BillAccountItem();
+			item.setCatagoryname(1);
+			item.setIdx(cursor.getInt(cursor.getColumnIndex("idx")));
+			item.setName(cursor.getString(cursor.getColumnIndex("name")));
+		}else {
+			cursor = db.rawQuery("select * from bill_account where catagoryname = 2", null);
+			if(cursor.moveToFirst()) {
+				item = new BillAccountItem();
+				item.setCatagoryname(1);
+				item.setIdx(cursor.getInt(cursor.getColumnIndex("idx")));
+				item.setName(cursor.getString(cursor.getColumnIndex("name")));
+				return item;
+			}else {
+				cursor = db.rawQuery("select * from bill_account where catagoryname = 3", null);
+				if(cursor.moveToFirst()) {
+					item = new BillAccountItem();
+					item.setCatagoryname(1);
+					item.setIdx(cursor.getInt(cursor.getColumnIndex("idx")));
+					item.setName(cursor.getString(cursor.getColumnIndex("name")));
+					return item;
+				}else {
+					cursor = db.rawQuery("select * from bill_account where catagoryname = 4", null);
+					if(cursor.moveToFirst()) {
+						item = new BillAccountItem();
+						item.setCatagoryname(1);
+						item.setIdx(cursor.getInt(cursor.getColumnIndex("idx")));
+						item.setName(cursor.getString(cursor.getColumnIndex("name")));
+						return item;
+					}
+				}
+			}
+		}
+		return item;
+	}
+	
+	//转账添加界面的默认转出account信息  顺序是储蓄， 信用卡， 网上支付， 现金
+	public BillAccountItem findItemsForAddTransferInViews() {
+		BillAccountItem item = null;
+		Cursor cursor = db.rawQuery("select * from bill_account where catagoryname = 3", null);
+		if(cursor.moveToFirst()) {
+			item = new BillAccountItem();
+			item.setIdx(cursor.getInt(cursor.getColumnIndex("idx")));
+			item.setCatagoryname(3);
+			item.setName(cursor.getString(cursor.getColumnIndex("name")));
+		}else {
+			cursor = db.rawQuery("select * from bill_account where catagoryname = 2", null);
+			if(cursor.moveToFirst()) {
+				item = new BillAccountItem();
+				item.setIdx(cursor.getInt(cursor.getColumnIndex("idx")));
+				item.setCatagoryname(3);
+				item.setName(cursor.getString(cursor.getColumnIndex("name")));
+			}else {
+			    cursor = db.rawQuery("select * from bill_account where catagoryname = 4", null);
+				if(cursor.moveToFirst()) {
+					item = new BillAccountItem();
+					item.setIdx(cursor.getInt(cursor.getColumnIndex("idx")));
+					item.setCatagoryname(3);
+					item.setName(cursor.getString(cursor.getColumnIndex("name")));
+				}else {
+					cursor = db.rawQuery("select * from bill_account where catagoryname = 1", null);
+					if(cursor.moveToFirst()) {
+						item = new BillAccountItem();
+						item.setIdx(cursor.getInt(cursor.getColumnIndex("idx")));
+						item.setCatagoryname(3);
+						item.setName(cursor.getString(cursor.getColumnIndex("name")));
+					}
+				}
+			}
+		}
+		return item;
+	}
+//	//转账添加界面的默认转入account信息    顺序是现金，信用卡， 储蓄， 网上支付
+//	public BillAccountItem findItemsForAddTransferOutViews() {
+//		BillAccountItem item = null;
+//		Cursor cursor = db.rawQuery("select * from bill_account where catagoryname = 1", null);
+//		if(cursor.moveToFirst()) {
+//			item = new BillAccountItem();
+//			item.setIdx(cursor.getInt(cursor.getColumnIndex("idx")));
+//			item.setCatagoryname(1);
+//			item.setName(cursor.getString(cursor.getColumnIndex("name")));
+//		}
+//		return item;
+//	}
 	
 	public void closeDB() {
 		db.close();

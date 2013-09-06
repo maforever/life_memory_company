@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import com.example.lifememory.R;
 import com.example.lifememory.activity.model.Bill;
@@ -13,28 +15,38 @@ import com.example.lifememory.db.service.BillInfoService;
 import com.example.lifememory.utils.DateFormater;
 
 import android.app.Activity;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class BillMonthDetailsActivity extends Activity {
 	private String[] months_big = { "1", "3", "5", "7", "8", "10", "12" };
 	private String[] months_little = { "4", "6", "9", "11" };
 	final List<String> list_big = Arrays.asList(months_big);
 	final List<String> list_little = Arrays.asList(months_little);
-	private String dateTitle;   //activity的标题
 	private Calendar calendar;
 	private int year, month, day;
 	private TextView title;    
 	private String dateYM;      //数据库查找当月数据的参数，格式yyyy-MM
 	private BillInfoService billService;
 	private LinearLayout contentLayout;
-	private TextView emptyNoticeTv;
+	private LinearLayout emptyNoticeLayout;
 	private TextView jieyuTv, incomeTv, spendTv;
 	private List<String> dbYMDs;;               //查找数据库数据的属性 yyyy-MM-dd
 	private List<BillMonthDetailsListViewModel> monthDetails = new ArrayList<BillMonthDetailsListViewModel>();
@@ -44,17 +56,31 @@ public class BillMonthDetailsActivity extends Activity {
 	private BillMonthDetailsListViewAdapter adapter = null;
 	private double monthTotalIncome = 0;
 	private double monthTotalSpend = 0;
+	private PopupWindow tipPopWindow;
+	private LayoutInflater inflater;
+	private RelativeLayout parentPopWindow;
+	private int screenHeight; //屏幕的高度
+	private int[] locations = new int[2];
+	private  long tipPopwindowShowTime;
+	private Timer timer;
+	private Handler handler = new Handler() {
+		
+	};
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.bill_month_details_layout);
 		
+		DisplayMetrics dm = this.getResources().getDisplayMetrics();
+		screenHeight = dm.heightPixels;
+		
+		inflater = LayoutInflater.from(this);
 		billService = new BillInfoService(this);
 		findViews();
 		title.setText(initDateTitle());
 		
 		initDatasAndSetAdapter(dateYM);
-		
+		initTipPopWindow();
 	}
 	
 	@Override
@@ -70,7 +96,15 @@ public class BillMonthDetailsActivity extends Activity {
 		incomeTv = (TextView) this.findViewById(R.id.income);
 		spendTv = (TextView) this.findViewById(R.id.spend);
 		contentLayout = (LinearLayout) this.findViewById(R.id.content);
-		emptyNoticeTv = (TextView) this.findViewById(R.id.msg);
+		emptyNoticeLayout = (LinearLayout) this.findViewById(R.id.msgLayout);
+		parentPopWindow = (RelativeLayout)this.findViewById(R.id.parentPopWindow);
+	}
+	
+	private void initTipPopWindow() {
+		View contentView = inflater.inflate(R.layout.bill_tip_layout, null);
+		tipPopWindow = new PopupWindow(contentView, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+		tipPopWindow.setFocusable(true);
+		tipPopWindow.setBackgroundDrawable(new ColorDrawable());
 	}
 	
 	public void btnClick(View view) {
@@ -84,8 +118,29 @@ public class BillMonthDetailsActivity extends Activity {
 		case R.id.arrowRight:
 			arrowRightDonw();
 			break;
+		case R.id.tipBtn:
+//			Toast.makeText(BillMonthDetailsActivity.this, "tip", 0).show();
+			if(tipPopWindow.isShowing()) {
+				tipPopWindow.dismiss();
+			}else {
+				parentPopWindow.getLocationInWindow(locations);
+				tipPopWindow.showAtLocation(parentPopWindow, Gravity.BOTTOM, 0, screenHeight - locations[1]);
+				handler.postDelayed(timeTask, 3000);
+			}
+			break;
 		}
 	}
+	
+	private Runnable timeTask = new Runnable() {
+		
+		@Override
+		public void run() {
+			if(tipPopWindow.isShowing()) {
+				tipPopWindow.dismiss();
+			}
+			handler.removeCallbacks(this);
+		}
+	};
 	
 	private void back() {
 		BillMonthDetailsActivity.this.finish();
@@ -138,11 +193,12 @@ public class BillMonthDetailsActivity extends Activity {
 		
 		if(billService.isCurrentHaveBills(dateYM)) {
 			contentLayout.setVisibility(ViewGroup.VISIBLE);
-			emptyNoticeTv.setVisibility(ViewGroup.GONE);
+			emptyNoticeLayout.setVisibility(ViewGroup.GONE);
 			initDatasAndSetAdapter(dateYM);
 		}else {
 			contentLayout.setVisibility(ViewGroup.GONE);
-			emptyNoticeTv.setVisibility(ViewGroup.VISIBLE);
+			emptyNoticeLayout.setVisibility(ViewGroup.VISIBLE);
+			
 		}
 	}
 	
@@ -166,11 +222,11 @@ public class BillMonthDetailsActivity extends Activity {
 		
 		if(billService.isCurrentHaveBills(dateYM)) {
 			contentLayout.setVisibility(ViewGroup.VISIBLE);
-			emptyNoticeTv.setVisibility(ViewGroup.GONE);
+			emptyNoticeLayout.setVisibility(ViewGroup.GONE);
 			initDatasAndSetAdapter(dateYM);
 		}else {
 			contentLayout.setVisibility(ViewGroup.GONE);
-			emptyNoticeTv.setVisibility(ViewGroup.VISIBLE);
+			emptyNoticeLayout.setVisibility(ViewGroup.VISIBLE);
 		}
 	}
 	
@@ -178,7 +234,7 @@ public class BillMonthDetailsActivity extends Activity {
 	private void initDatasAndSetAdapter(String dateYM) {
 		if(billService.isCurrentHaveBills(dateYM)) {
 			contentLayout.setVisibility(ViewGroup.VISIBLE);
-			emptyNoticeTv.setVisibility(ViewGroup.GONE);
+			emptyNoticeLayout.setVisibility(ViewGroup.GONE);
 			dbYMDs = billService.findAllYMDInMonth(dateYM);
 			
 			monthDetails = new ArrayList<BillMonthDetailsListViewModel>();
@@ -235,7 +291,7 @@ public class BillMonthDetailsActivity extends Activity {
 			
 		}else {
 			contentLayout.setVisibility(ViewGroup.GONE);
-			emptyNoticeTv.setVisibility(ViewGroup.VISIBLE);
+			emptyNoticeLayout.setVisibility(ViewGroup.VISIBLE);
 		}
 	}
 }

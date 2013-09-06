@@ -29,40 +29,41 @@ public class BillInfoService {
 	
 	//添加支出类型的账单信息
 	public void addOutBill(Bill bill) {
-		db.execSQL("insert into bill_info (jine, outcatagory, account, date, dateymd, member, beizhu, isCanBaoXiao, billType) values (?,?,?,?,?,?,?,?,?)", 
-				new String[]{bill.getJine(), bill.getOutCatagory(), bill.getAccount(), bill.getDate(),bill.getDateYMD(), bill.getMember(),
+		db.execSQL("insert into bill_info (jine, outcatagory, account, accountid, date, dateymd, member, beizhu, isCanBaoXiao, billType) values (?,?,?,?,?,?,?,?,?, ?)", 
+				new String[]{bill.getJine(), bill.getOutCatagory(), bill.getAccount(), String.valueOf(bill.getAccountid()), bill.getDate(),bill.getDateYMD(), bill.getMember(),
 				bill.getBeizhu(), String.valueOf(bill.isCanBaoXiao()), String.valueOf(bill.getBillType())});
 	}
 	//添加收入类型的账单信息
 	public void addInBill(Bill bill) {
-		db.execSQL("insert into bill_info (jine, incatagory, account, date,dateymd, member, beizhu, billType) values (?, ?,?, ?, ?, ?, ?, ?)", 
-				new String[]{bill.getJine(), bill.getInCatagory(), bill.getAccount(), bill.getDate(),bill.getDateYMD(), bill.getMember(),
+		db.execSQL("insert into bill_info (jine, incatagory, account, accountid, date,dateymd, member, beizhu, billType) values (?, ?,?, ?, ?, ?, ?, ?, ?)", 
+				new String[]{bill.getJine(), bill.getInCatagory(), bill.getAccount(), String.valueOf(bill.getAccountid()), bill.getDate(),bill.getDateYMD(), bill.getMember(),
 				bill.getBeizhu(), String.valueOf(bill.getBillType())});
 	}
 	//添加转账类型的账单信息
 	public void addTransferBill(Bill bill) {
-		db.execSQL("insert into bill_info (jine, date, dateymd, transferIn, transferOut, billType) values (?, ?, ?, ?, ?, ?)", new String[]{
-				bill.getJine(), bill.getDate(),bill.getDateYMD(), bill.getTransferIn(), bill.getTransferOut(), String.valueOf(bill.getBillType())
+		db.execSQL("insert into bill_info (jine, date, dateymd, transferIn, transferInAccountId, transferOut, transferOutAccountId, billType) values (?, ?, ?, ?, ?, ?, ?, ?)", new String[]{
+				bill.getJine(), bill.getDate(),bill.getDateYMD(), bill.getTransferIn(), String.valueOf(bill.getTransferInAccountId()), bill.getTransferOut(), String.valueOf(bill.getTransferOutAccountId()), String.valueOf(bill.getBillType())
 		});
 	}
+
 	
 	
 	//修改支出类型的账单信息
 	public void updateOutBill(Bill bill) {
-		db.execSQL("update bill_info set jine = ?, outcatagory = ?, account = ?, date = ?, dateymd = ?, member = ?, beizhu = ?, isCanBaoXiao = ?, billType = ? where idx = ?", 
-				new String[]{bill.getJine(), bill.getOutCatagory(), bill.getAccount(), bill.getDate(),bill.getDateYMD(), bill.getMember(),
+		db.execSQL("update bill_info set jine = ?, outcatagory = ?, account = ?, accountid = ?,  date = ?, dateymd = ?, member = ?, beizhu = ?, isCanBaoXiao = ?, billType = ? where idx = ?", 
+				new String[]{bill.getJine(), bill.getOutCatagory(), bill.getAccount(), String.valueOf(bill.getAccountid()), bill.getDate(),bill.getDateYMD(), bill.getMember(),
 				bill.getBeizhu(), String.valueOf(bill.isCanBaoXiao()), String.valueOf(bill.getBillType()), String.valueOf(bill.getIdx())});
 	}
 	//修改收入类型的账单信息
 	public void updateInBill(Bill bill) {
-		db.execSQL("update  bill_info set jine = ?, incatagory = ?, account = ?, date = ?,dateymd = ?, member = ?, beizhu = ?, billType = ? where idx = ?", 
-				new String[]{bill.getJine(), bill.getInCatagory(), bill.getAccount(), bill.getDate(),bill.getDateYMD(), bill.getMember(),
+		db.execSQL("update  bill_info set jine = ?, incatagory = ?, account = ?, accountid = ?, date = ?,dateymd = ?, member = ?, beizhu = ?, billType = ? where idx = ?", 
+				new String[]{bill.getJine(), bill.getInCatagory(), bill.getAccount(), String.valueOf(bill.getAccountid()), bill.getDate(),bill.getDateYMD(), bill.getMember(),
 				bill.getBeizhu(), String.valueOf(bill.getBillType()), String.valueOf(bill.getIdx())});
 	}
 	//修改转账类型的账单信息
 	public void updateTransferBill(Bill bill) {
-		db.execSQL("update bill_info set jine = ?, date = ?, dateymd = ?, transferIn = ?, transferOut = ?, billType = ? where idx = ?", new String[]{
-				bill.getJine(), bill.getDate(),bill.getDateYMD(), bill.getTransferIn(), bill.getTransferOut(), String.valueOf(bill.getBillType()), String.valueOf(bill.getIdx())
+		db.execSQL("update bill_info set jine = ?, date = ?, dateymd = ?, transferIn = ?, transferInAccountId = ?, transferOut = ?, transferOutAccountId = ?, billType = ? where idx = ?", new String[]{
+				bill.getJine(), bill.getDate(),bill.getDateYMD(), bill.getTransferIn(), String.valueOf(bill.getTransferInAccountId()), bill.getTransferOut(), String.valueOf(bill.getTransferOutAccountId()), String.valueOf(bill.getBillType()), String.valueOf(bill.getIdx())
 		});
 	}
 	

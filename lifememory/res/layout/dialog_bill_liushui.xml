@@ -112,6 +112,7 @@
             android:layout_marginBottom="20dp"
             >
             <LinearLayout
+                android:id="@+id/changetoincomelayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center" 
@@ -133,6 +134,7 @@
             </LinearLayout>
             
             <LinearLayout
+                android:id="@+id/changetospendlayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -143,6 +145,28 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="转为支出" 
+                    android:clickable="true"
+                    android:onClick="btnClick"
+                    android:textSize="20dp"
+                    android:textColor="#ffffff"
+                    android:background="@drawable/bill_common_bar_common_btn_selector"
+                    android:gravity="center"
+                                        android:padding="5dp"
+                    />
+            </LinearLayout>
+            
+            <LinearLayout
+                android:id="@+id/changetotransferlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_weight="1" 
+                >
+                <TextView
+                    android:id="@+id/changetotransfer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="转为转账" 
                     android:clickable="true"
                     android:onClick="btnClick"
                     android:textSize="20dp"

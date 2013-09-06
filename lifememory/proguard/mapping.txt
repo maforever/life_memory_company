@@ -1712,13 +1712,14 @@ com.example.lifememory.activity.BillAccountSettingActivity -> com.example.lifeme
     com.example.lifememory.activity.model.BillAccountExpandableListViewItem expandableItem -> k
     java.util.List expandableItems -> l
     com.example.lifememory.adapter.BillAccountExpandableListAdapter adapter -> m
-    int accountGroupSelectedIndex -> n
-    int accountChildSelectedIndex -> o
+    int currentGroupSelectedIndex -> n
+    int currentChildSelectedIndex -> o
     int groupLocation -> p
     int childLocation -> q
     android.content.Intent intent -> r
-    android.os.Handler handler -> s
-    com.example.lifememory.dialog.DialogAlertListener listener -> t
+    java.lang.String accountFlag -> s
+    android.os.Handler handler -> t
+    com.example.lifememory.dialog.DialogAlertListener listener -> u
     void onCreate(android.os.Bundle) -> onCreate
     void findViews() -> a
     void btnClick(android.view.View) -> btnClick
@@ -1728,31 +1729,31 @@ com.example.lifememory.activity.BillAccountSettingActivity -> com.example.lifeme
     void back() -> c
     boolean onKeyDown(int,android.view.KeyEvent) -> onKeyDown
     void access$0(com.example.lifememory.activity.BillAccountSettingActivity) -> a
-    com.example.lifememory.db.service.BillInfoService access$1(com.example.lifememory.activity.BillAccountSettingActivity) -> b
+    com.example.lifememory.db.service.BillAccountService access$1(com.example.lifememory.activity.BillAccountSettingActivity) -> b
     java.util.List access$2(com.example.lifememory.activity.BillAccountSettingActivity) -> c
     int access$3(com.example.lifememory.activity.BillAccountSettingActivity) -> d
     int access$4(com.example.lifememory.activity.BillAccountSettingActivity) -> e
     android.os.Handler access$5(com.example.lifememory.activity.BillAccountSettingActivity) -> f
-    com.example.lifememory.db.service.BillAccountService access$6(com.example.lifememory.activity.BillAccountSettingActivity) -> g
-    void access$7(com.example.lifememory.activity.BillAccountSettingActivity,java.util.List) -> a
-    void access$8(com.example.lifememory.activity.BillAccountSettingActivity,java.util.List) -> b
-    void access$9(com.example.lifememory.activity.BillAccountSettingActivity,java.util.List) -> c
-    void access$10(com.example.lifememory.activity.BillAccountSettingActivity,java.util.List) -> d
-    void access$11(com.example.lifememory.activity.BillAccountSettingActivity,java.util.List) -> e
-    void access$12(com.example.lifememory.activity.BillAccountSettingActivity,java.util.List) -> f
+    void access$6(com.example.lifememory.activity.BillAccountSettingActivity,java.util.List) -> a
+    void access$7(com.example.lifememory.activity.BillAccountSettingActivity,java.util.List) -> b
+    void access$8(com.example.lifememory.activity.BillAccountSettingActivity,java.util.List) -> c
+    void access$9(com.example.lifememory.activity.BillAccountSettingActivity,java.util.List) -> d
+    void access$10(com.example.lifememory.activity.BillAccountSettingActivity,java.util.List) -> e
+    void access$11(com.example.lifememory.activity.BillAccountSettingActivity,java.util.List) -> f
+    java.util.List access$12(com.example.lifememory.activity.BillAccountSettingActivity) -> g
     java.util.List access$13(com.example.lifememory.activity.BillAccountSettingActivity) -> h
     java.util.List access$14(com.example.lifememory.activity.BillAccountSettingActivity) -> i
     java.util.List access$15(com.example.lifememory.activity.BillAccountSettingActivity) -> j
     java.util.List access$16(com.example.lifememory.activity.BillAccountSettingActivity) -> k
-    java.util.List access$17(com.example.lifememory.activity.BillAccountSettingActivity) -> l
-    void access$18(com.example.lifememory.activity.BillAccountSettingActivity,com.example.lifememory.activity.model.BillAccountExpandableListViewItem) -> a
-    com.example.lifememory.activity.model.BillAccountExpandableListViewItem access$19(com.example.lifememory.activity.BillAccountSettingActivity) -> m
+    void access$17(com.example.lifememory.activity.BillAccountSettingActivity,com.example.lifememory.activity.model.BillAccountExpandableListViewItem) -> a
+    com.example.lifememory.activity.model.BillAccountExpandableListViewItem access$18(com.example.lifememory.activity.BillAccountSettingActivity) -> l
+    android.widget.CheckBox access$19(com.example.lifememory.activity.BillAccountSettingActivity) -> m
     android.widget.CheckBox access$20(com.example.lifememory.activity.BillAccountSettingActivity) -> n
-    android.widget.CheckBox access$21(com.example.lifememory.activity.BillAccountSettingActivity) -> o
-    void access$22(com.example.lifememory.activity.BillAccountSettingActivity,int) -> a
-    void access$23(com.example.lifememory.activity.BillAccountSettingActivity,int) -> b
-    void access$24(com.example.lifememory.activity.BillAccountSettingActivity,android.content.Intent) -> a
-    android.content.Intent access$25(com.example.lifememory.activity.BillAccountSettingActivity) -> p
+    void access$21(com.example.lifememory.activity.BillAccountSettingActivity,int) -> a
+    void access$22(com.example.lifememory.activity.BillAccountSettingActivity,int) -> b
+    void access$23(com.example.lifememory.activity.BillAccountSettingActivity,android.content.Intent) -> a
+    android.content.Intent access$24(com.example.lifememory.activity.BillAccountSettingActivity) -> o
+    java.lang.String access$25(com.example.lifememory.activity.BillAccountSettingActivity) -> p
     com.example.lifememory.dialog.DialogAlertListener access$26(com.example.lifememory.activity.BillAccountSettingActivity) -> q
 com.example.lifememory.activity.BillAccountSettingActivity$1 -> com.example.lifememory.activity.av:
     com.example.lifememory.activity.BillAccountSettingActivity this$0 -> a
@@ -1955,68 +1956,173 @@ com.example.lifememory.activity.BillCatatoryAddActivity$2 -> com.example.lifemem
 com.example.lifememory.activity.BillCatatoryAddActivity$AddCatagoryThread -> com.example.lifememory.activity.bn:
     com.example.lifememory.activity.BillCatatoryAddActivity this$0 -> a
     void run() -> run
+com.example.lifememory.activity.BillDataWheelPickerActivity -> com.example.lifememory.activity.BillDataWheelPickerActivity:
+    int START_YEAR -> e
+    int END_YEAR -> f
+    com.example.lifememory.wheel.WheelView wv_year -> g
+    com.example.lifememory.wheel.WheelView wv_month -> h
+    com.example.lifememory.wheel.WheelView wv_day -> i
+    com.example.lifememory.wheel.WheelView wv_hours -> j
+    com.example.lifememory.wheel.WheelView wv_mins -> k
+    java.util.Calendar calendar -> l
+    java.lang.String[] months_big -> a
+    java.lang.String[] months_little -> b
+    android.widget.TextView btn_sure -> m
+    android.widget.TextView btn_cancel -> n
+    java.util.List list_big -> c
+    java.util.List list_little -> d
+    com.example.lifememory.wheel.OnWheelChangedListener wheelListener_year -> o
+    com.example.lifememory.wheel.OnWheelChangedListener wheelListener_month -> p
+    void onCreate(android.os.Bundle) -> onCreate
+    void findView() -> d
+    void adjustView() -> e
+    int pixelsToDip(android.content.res.Resources,int) -> a
+    void setDate() -> a
+    void setListener() -> f
+    java.util.Calendar getSetCalendar() -> b
+    java.lang.String getFormatTime(java.util.Calendar) -> a
+    java.lang.String getFormatYMD(java.util.Calendar) -> b
+    int access$0() -> c
+    com.example.lifememory.wheel.WheelView access$1(com.example.lifememory.activity.BillDataWheelPickerActivity) -> a
+    com.example.lifememory.wheel.WheelView access$2(com.example.lifememory.activity.BillDataWheelPickerActivity) -> b
+    com.example.lifememory.wheel.WheelView access$3(com.example.lifememory.activity.BillDataWheelPickerActivity) -> c
+com.example.lifememory.activity.BillDataWheelPickerActivity$1 -> com.example.lifememory.activity.bo:
+    com.example.lifememory.activity.BillDataWheelPickerActivity this$0 -> a
+    void onChanged(com.example.lifememory.wheel.WheelView,int,int) -> a
+com.example.lifememory.activity.BillDataWheelPickerActivity$2 -> com.example.lifememory.activity.bp:
+    com.example.lifememory.activity.BillDataWheelPickerActivity this$0 -> a
+    void onChanged(com.example.lifememory.wheel.WheelView,int,int) -> a
+com.example.lifememory.activity.BillDataWheelPickerActivity$3 -> com.example.lifememory.activity.bq:
+    com.example.lifememory.activity.BillDataWheelPickerActivity this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.example.lifememory.activity.BillDataWheelPickerActivity$4 -> com.example.lifememory.activity.br:
+    com.example.lifememory.activity.BillDataWheelPickerActivity this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.example.lifememory.activity.BillInCatagorySettingActivity -> com.example.lifememory.activity.BillInCatagorySettingActivity:
+    android.widget.ListView listView -> a
+    int currentSelectedIndex -> b
+    com.example.lifememory.db.service.BillInCatagoryService dbService -> c
+    com.example.lifememory.adapter.BillInCatagoryListViewAdapter adapter -> d
+    java.util.List bics -> e
+    android.content.Intent intent -> f
+    android.os.Handler handler -> g
+    void onCreate(android.os.Bundle) -> onCreate
+    void setListeners() -> a
+    void findViews() -> b
+    void onResume() -> onResume
+    void initViews() -> c
+    void btnClick(android.view.View) -> btnClick
+    void back() -> d
+    boolean onKeyDown(int,android.view.KeyEvent) -> onKeyDown
+    void onDestroy() -> onDestroy
+    void access$0(com.example.lifememory.activity.BillInCatagorySettingActivity) -> a
+    com.example.lifememory.db.service.BillInCatagoryService access$1(com.example.lifememory.activity.BillInCatagorySettingActivity) -> b
+    void access$2(com.example.lifememory.activity.BillInCatagorySettingActivity,java.util.List) -> a
+    android.os.Handler access$3(com.example.lifememory.activity.BillInCatagorySettingActivity) -> c
+    void access$4(com.example.lifememory.activity.BillInCatagorySettingActivity,android.content.Intent) -> a
+    android.content.Intent access$5(com.example.lifememory.activity.BillInCatagorySettingActivity) -> d
+    java.util.List access$6(com.example.lifememory.activity.BillInCatagorySettingActivity) -> e
+    com.example.lifememory.adapter.BillInCatagoryListViewAdapter access$7(com.example.lifememory.activity.BillInCatagorySettingActivity) -> f
+com.example.lifememory.activity.BillInCatagorySettingActivity$1 -> com.example.lifememory.activity.bs:
+    com.example.lifememory.activity.BillInCatagorySettingActivity this$0 -> a
+    void handleMessage(android.os.Message) -> handleMessage
+com.example.lifememory.activity.BillInCatagorySettingActivity$2 -> com.example.lifememory.activity.bt:
+    com.example.lifememory.activity.BillInCatagorySettingActivity this$0 -> a
+    void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
+com.example.lifememory.activity.BillInCatagorySettingActivity$3 -> com.example.lifememory.activity.bu:
+    com.example.lifememory.activity.BillInCatagorySettingActivity this$0 -> a
+    boolean onItemLongClick(android.widget.AdapterView,android.view.View,int,long) -> onItemLongClick
+com.example.lifememory.activity.BillInCatagorySettingActivity$LoadDatasThread -> com.example.lifememory.activity.bv:
+    com.example.lifememory.activity.BillInCatagorySettingActivity this$0 -> a
+    void run() -> run
 com.example.lifememory.activity.BillInputActivity -> com.example.lifememory.activity.BillInputActivity:
-    android.widget.TextView zhichuBtn -> d
-    android.widget.TextView shouruBtn -> e
-    android.widget.TextView zhuanzhangBtn -> f
-    android.widget.CheckBox baoxiaoCb -> g
-    android.widget.ViewFlipper viewFlipper -> h
-    android.view.LayoutInflater inflater -> i
-    android.view.View childView1 -> j
-    android.view.View childView2 -> k
-    android.view.View childView3 -> l
-    android.widget.PopupWindow calculator -> m
-    android.view.View popWinParentView -> n
-    android.widget.TextView zhichuJine -> o
-    android.widget.TextView shouruJine -> p
-    android.widget.TextView zhuanzhangJine -> q
-    android.widget.TextView jineTv -> r
-    java.lang.String jie_txt -> s
-    com.example.lifememory.activity.model.Bill bill -> t
-    boolean isFloat -> u
-    java.lang.String temp1Str -> v
-    java.lang.String temp2Str -> w
-    boolean isClickFlag -> x
-    int flagId -> y
-    int parentId -> z
-    int catagoryChildId -> A
-    com.example.lifememory.db.service.BillCatagoryService dbService -> B
-    java.lang.String catagoryStr -> C
-    java.lang.String accountStr -> D
-    java.lang.String memberStr -> E
-    android.widget.TextView currentCatagoryTextView -> F
-    android.widget.TextView currentAccountTextView -> G
-    android.widget.TextView currentMemberTextView -> H
-    int catagorySelectedId -> I
-    int catagorySelectedChildId -> J
-    int accountGroupSelectedIndex -> K
-    int accountChildSelectedIndex -> L
-    int memberSelectedIndex -> M
-    android.content.Intent intent -> N
-    boolean isEqualBtnClick -> O
+    com.example.lifememory.db.service.BillInfoService billService -> d
+    android.widget.TextView zhichuBtn -> e
+    android.widget.TextView shouruBtn -> f
+    android.widget.TextView zhuanzhangBtn -> g
+    android.widget.CheckBox baoxiaoCb -> h
+    android.widget.ViewFlipper viewFlipper -> i
+    android.view.LayoutInflater inflater -> j
+    android.view.View childView1 -> k
+    android.view.View childView2 -> l
+    android.view.View childView3 -> m
+    android.widget.PopupWindow calculator -> n
+    android.view.View popWinParentView -> o
+    android.widget.TextView zhichuJine -> p
+    android.widget.TextView shouruJine -> q
+    android.widget.TextView zhuanzhangJine -> r
+    android.widget.TextView jineTv -> s
+    java.lang.String jie_txt -> t
+    com.example.lifememory.activity.model.Bill bill -> u
+    boolean isFloat -> v
+    java.lang.String temp1Str -> w
+    java.lang.String temp2Str -> x
+    boolean isClickFlag -> y
+    int flagId -> z
+    int parentId -> A
+    int catagoryChildId -> B
+    com.example.lifememory.db.service.BillCatagoryService dbService -> C
+    com.example.lifememory.db.service.BillAccountService accountService -> D
+    java.lang.String catagoryStr -> E
+    java.lang.String accountStr -> F
+    java.lang.String memberStr -> G
+    android.widget.TextView currentJinETextView -> H
+    android.widget.TextView inCatagoryTextView -> I
+    android.widget.TextView outCatagoryTextView -> J
+    android.widget.TextView currentAccountTextView -> K
+    android.widget.TextView currentMemberTextView -> L
+    android.widget.TextView currentDateTextView -> M
+    android.widget.TextView currentBeizhuTextView -> N
+    android.widget.TextView transferInTextView -> O
+    android.widget.TextView transferOutTextView -> P
+    int outCatagorySelectedId -> Q
+    int outCatagorySelectedChildId -> R
+    int accountGroupSelectedIndex -> S
+    int accountChildSelectedIndex -> T
+    int transferOutGroupSelectedIndex -> U
+    int transferOutChildSelectedIndex -> V
+    int transferInGroupSelectedIndex -> W
+    int transferInChildSelectedIndex -> X
+    int memberSelectedIndex -> Y
+    int inCatagorySelectedIndex -> Z
+    android.content.Intent intent -> aa
+    java.lang.String flag -> ab
+    int toType -> ac
+    int idx -> ad
+    com.example.lifememory.activity.model.BillAccountItem commonAccount -> ae
+    com.example.lifememory.activity.model.BillAccountItem commonTransferInAccount -> af
+    com.example.lifememory.activity.model.BillAccountItem commonTransferOutAccount -> ag
+    boolean isEqualBtnClick -> ah
     android.widget.LinearLayout cal_equal -> a
     android.widget.LinearLayout cal_del -> b
     android.widget.ImageView cal_sure -> c
     void onCreate(android.os.Bundle) -> onCreate
+    void onResume() -> onResume
+    void initViewsByViewFlag(int) -> a
+    void initViewsByViewChangeFlag(int) -> b
     void onActivityResult(int,int,android.content.Intent) -> onActivityResult
     void findViews() -> a
     void initViews() -> b
     void btnClick(android.view.View) -> btnClick
-    void changeBtnBack(int) -> a
-    void initCalculator() -> c
-    void showCalculator() -> d
-    void refreshJinETextView() -> e
-    void refreshCatagoryTextView() -> f
-    void refreshAccountTextView() -> g
-    void refreshMemberTextView() -> h
-    void onClickNum(int) -> b
-    void onClickDot() -> i
-    void onClickDel() -> j
-    void onClickFlag(int) -> c
-    void onClickEqual() -> k
+    void saveOrUpdateOk() -> c
+    void changeBtnBack(int) -> c
+    void initCalculator() -> d
+    void showCalculator() -> e
+    void refreshJinETextView() -> f
+    void refreshCatagoryTextView() -> g
+    void refreshAccountTextView() -> h
+    void refreshTransferAccountTextView() -> i
+    void refreshMemberTextView() -> j
+    void refreshDateTextView() -> k
+    void refreshBeizhuTextView() -> l
+    void onClickNum(int) -> d
+    void onClickDot() -> m
+    void onClickDel() -> n
+    void onClickFlag(int) -> e
+    void onClickEqual() -> o
     java.lang.String resultStrDeleteZero(java.lang.String) -> a
     void onDestroy() -> onDestroy
-    void back() -> l
+    void back() -> p
     boolean onKeyDown(int,android.view.KeyEvent) -> onKeyDown
     void access$0(com.example.lifememory.activity.BillInputActivity,boolean) -> a
     void access$1(com.example.lifememory.activity.BillInputActivity,int) -> a
@@ -2032,12 +2138,36 @@ com.example.lifememory.activity.BillInputActivity -> com.example.lifememory.acti
     void access$11(com.example.lifememory.activity.BillInputActivity,android.widget.TextView) -> a
     android.widget.TextView access$12(com.example.lifememory.activity.BillInputActivity) -> g
     java.lang.String access$13(com.example.lifememory.activity.BillInputActivity) -> h
-com.example.lifememory.activity.BillInputActivity$1 -> com.example.lifememory.activity.bo:
+com.example.lifememory.activity.BillInputActivity$1 -> com.example.lifememory.activity.bw:
     com.example.lifememory.activity.BillInputActivity this$0 -> a
     void onDismiss() -> onDismiss
-com.example.lifememory.activity.BillInputActivity$CalculatorBtnClickListener -> com.example.lifememory.activity.bp:
+com.example.lifememory.activity.BillInputActivity$CalculatorBtnClickListener -> com.example.lifememory.activity.bx:
     com.example.lifememory.activity.BillInputActivity this$0 -> a
     void onClick(android.view.View) -> onClick
+com.example.lifememory.activity.BillLiuShuiSettingDialogActivity -> com.example.lifememory.activity.BillLiuShuiSettingDialogActivity:
+    int idx -> a
+    com.example.lifememory.db.service.BillInfoService billService -> b
+    java.lang.String flag -> c
+    android.widget.LinearLayout changeToIncomeLayout -> d
+    android.widget.LinearLayout changeToSpendLayout -> e
+    android.widget.LinearLayout changeToTransferLayout -> f
+    android.content.Intent intent -> g
+    void onCreate(android.os.Bundle) -> onCreate
+    void findViews() -> a
+    void btnClick(android.view.View) -> btnClick
+    void onDestroy() -> onDestroy
+    com.example.lifememory.db.service.BillInfoService access$0(com.example.lifememory.activity.BillLiuShuiSettingDialogActivity) -> a
+    int access$1(com.example.lifememory.activity.BillLiuShuiSettingDialogActivity) -> b
+    void access$2(com.example.lifememory.activity.BillLiuShuiSettingDialogActivity,android.content.Intent) -> a
+    android.content.Intent access$3(com.example.lifememory.activity.BillLiuShuiSettingDialogActivity) -> c
+com.example.lifememory.activity.BillLiuShuiSettingDialogActivity$MyDialogListener -> com.example.lifememory.activity.by:
+    int dialogType -> b
+    com.example.lifememory.activity.BillLiuShuiSettingDialogActivity this$0 -> a
+    void onDialogCreate(android.app.Dialog,java.lang.Object) -> b
+    void onDialogOk(android.app.Dialog,java.lang.Object) -> a
+    void onDialogCancel(android.app.Dialog,java.lang.Object) -> c
+    void onDialogSave(android.app.Dialog,java.lang.Object) -> d
+    void onDialogUnSave(android.app.Dialog,java.lang.Object) -> e
 com.example.lifememory.activity.BillMemberSelectActivity -> com.example.lifememory.activity.BillMemberSelectActivity:
     android.widget.ListView listView -> a
     android.content.Intent intent -> b
@@ -2064,17 +2194,67 @@ com.example.lifememory.activity.BillMemberSelectActivity -> com.example.lifememo
     android.content.Intent access$5(com.example.lifememory.activity.BillMemberSelectActivity) -> d
     java.util.List access$6(com.example.lifememory.activity.BillMemberSelectActivity) -> e
     com.example.lifememory.adapter.BillMemberListViewAdapter access$7(com.example.lifememory.activity.BillMemberSelectActivity) -> f
-com.example.lifememory.activity.BillMemberSelectActivity$1 -> com.example.lifememory.activity.bq:
+com.example.lifememory.activity.BillMemberSelectActivity$1 -> com.example.lifememory.activity.bz:
     com.example.lifememory.activity.BillMemberSelectActivity this$0 -> a
     void handleMessage(android.os.Message) -> handleMessage
-com.example.lifememory.activity.BillMemberSelectActivity$2 -> com.example.lifememory.activity.br:
+com.example.lifememory.activity.BillMemberSelectActivity$2 -> com.example.lifememory.activity.ca:
     com.example.lifememory.activity.BillMemberSelectActivity this$0 -> a
     void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
-com.example.lifememory.activity.BillMemberSelectActivity$3 -> com.example.lifememory.activity.bs:
+com.example.lifememory.activity.BillMemberSelectActivity$3 -> com.example.lifememory.activity.cb:
     com.example.lifememory.activity.BillMemberSelectActivity this$0 -> a
     boolean onItemLongClick(android.widget.AdapterView,android.view.View,int,long) -> onItemLongClick
-com.example.lifememory.activity.BillMemberSelectActivity$InitDatasThread -> com.example.lifememory.activity.bt:
+com.example.lifememory.activity.BillMemberSelectActivity$InitDatasThread -> com.example.lifememory.activity.cc:
     com.example.lifememory.activity.BillMemberSelectActivity this$0 -> a
+    void run() -> run
+com.example.lifememory.activity.BillMonthDetailsActivity -> com.example.lifememory.activity.BillMonthDetailsActivity:
+    java.lang.String[] months_big -> c
+    java.lang.String[] months_little -> d
+    java.util.List list_big -> a
+    java.util.List list_little -> b
+    java.util.Calendar calendar -> e
+    int year -> f
+    int month -> g
+    int day -> h
+    android.widget.TextView title -> i
+    java.lang.String dateYM -> j
+    com.example.lifememory.db.service.BillInfoService billService -> k
+    android.widget.LinearLayout contentLayout -> l
+    android.widget.LinearLayout emptyNoticeLayout -> m
+    android.widget.TextView jieyuTv -> n
+    android.widget.TextView incomeTv -> o
+    android.widget.TextView spendTv -> p
+    java.util.List dbYMDs -> q
+    java.util.List monthDetails -> r
+    com.example.lifememory.activity.model.BillMonthDetailsListViewModel monthDetail -> s
+    java.util.List bills -> t
+    android.widget.ListView listView -> u
+    com.example.lifememory.adapter.BillMonthDetailsListViewAdapter adapter -> v
+    double monthTotalIncome -> w
+    double monthTotalSpend -> x
+    android.widget.PopupWindow tipPopWindow -> y
+    android.view.LayoutInflater inflater -> z
+    android.widget.RelativeLayout parentPopWindow -> A
+    int screenHeight -> B
+    int[] locations -> C
+    android.os.Handler handler -> D
+    java.lang.Runnable timeTask -> E
+    void onCreate(android.os.Bundle) -> onCreate
+    void onResume() -> onResume
+    void findViews() -> a
+    void initTipPopWindow() -> b
+    void btnClick(android.view.View) -> btnClick
+    void back() -> c
+    boolean onKeyDown(int,android.view.KeyEvent) -> onKeyDown
+    java.lang.String initDateTitle() -> d
+    void arrowLeftDonw() -> e
+    void arrowRightDonw() -> f
+    void initDatasAndSetAdapter(java.lang.String) -> a
+    android.widget.PopupWindow access$0(com.example.lifememory.activity.BillMonthDetailsActivity) -> a
+    android.os.Handler access$1(com.example.lifememory.activity.BillMonthDetailsActivity) -> b
+com.example.lifememory.activity.BillMonthDetailsActivity$1 -> com.example.lifememory.activity.cd:
+    com.example.lifememory.activity.BillMonthDetailsActivity this$0 -> a
+com.example.lifememory.activity.BillMonthDetailsActivity$2 -> com.example.lifememory.activity.ce:
+    com.example.lifememory.activity.BillMonthDetailsActivity this$0 -> a
     void run() -> run
 com.example.lifememory.activity.BillTextInputActivity -> com.example.lifememory.activity.BillTextInputActivity:
     android.content.Intent intent -> a
@@ -2083,11 +2263,13 @@ com.example.lifememory.activity.BillTextInputActivity -> com.example.lifememory.
     android.widget.EditText contentEt -> d
     java.lang.String title -> e
     com.example.lifememory.db.service.BillMemberService dbService -> f
-    int currentFenLei -> g
-    int editNum -> h
-    java.lang.String content -> i
-    com.example.lifememory.activity.model.BillMember member -> j
-    android.os.Handler handler -> k
+    com.example.lifememory.db.service.BillInCatagoryService inCatagoryService -> g
+    int currentFenLei -> h
+    int editNum -> i
+    java.lang.String content -> j
+    com.example.lifememory.activity.model.BillMember member -> k
+    com.example.lifememory.activity.model.BillInCatagory ic -> l
+    android.os.Handler handler -> m
     void onCreate(android.os.Bundle) -> onCreate
     void findViews() -> a
     void initDatas() -> b
@@ -2104,15 +2286,20 @@ com.example.lifememory.activity.BillTextInputActivity -> com.example.lifememory.
     com.example.lifememory.db.service.BillMemberService access$5(com.example.lifememory.activity.BillTextInputActivity) -> e
     com.example.lifememory.activity.model.BillMember access$6(com.example.lifememory.activity.BillTextInputActivity) -> f
     android.os.Handler access$7(com.example.lifememory.activity.BillTextInputActivity) -> g
-com.example.lifememory.activity.BillTextInputActivity$1 -> com.example.lifememory.activity.bu:
+    com.example.lifememory.db.service.BillInCatagoryService access$8(com.example.lifememory.activity.BillTextInputActivity) -> h
+    com.example.lifememory.activity.model.BillInCatagory access$9(com.example.lifememory.activity.BillTextInputActivity) -> i
+com.example.lifememory.activity.BillTextInputActivity$1 -> com.example.lifememory.activity.cf:
     com.example.lifememory.activity.BillTextInputActivity this$0 -> a
     void handleMessage(android.os.Message) -> handleMessage
-com.example.lifememory.activity.BillTextInputActivity$2 -> com.example.lifememory.activity.bv:
+com.example.lifememory.activity.BillTextInputActivity$2 -> com.example.lifememory.activity.cg:
     com.example.lifememory.activity.BillTextInputActivity this$0 -> a
     void onTextChanged(java.lang.CharSequence,int,int,int) -> onTextChanged
     void beforeTextChanged(java.lang.CharSequence,int,int,int) -> beforeTextChanged
     void afterTextChanged(android.text.Editable) -> afterTextChanged
-com.example.lifememory.activity.BillTextInputActivity$3 -> com.example.lifememory.activity.bw:
+com.example.lifememory.activity.BillTextInputActivity$3 -> com.example.lifememory.activity.ch:
+    com.example.lifememory.activity.BillTextInputActivity this$0 -> a
+    void run() -> run
+com.example.lifememory.activity.BillTextInputActivity$4 -> com.example.lifememory.activity.ci:
     com.example.lifememory.activity.BillTextInputActivity this$0 -> a
     void run() -> run
 com.example.lifememory.activity.GuideActivity -> com.example.lifememory.activity.GuideActivity:
@@ -2129,24 +2316,26 @@ com.example.lifememory.activity.GuideActivity -> com.example.lifememory.activity
     void initPagerViews() -> b
     void initPointLayout() -> c
     android.widget.ImageView[] access$0(com.example.lifememory.activity.GuideActivity) -> a
-com.example.lifememory.activity.GuideActivity$1 -> com.example.lifememory.activity.bx:
+com.example.lifememory.activity.GuideActivity$1 -> com.example.lifememory.activity.cj:
     com.example.lifememory.activity.GuideActivity this$0 -> a
     void onPageSelected(int) -> a
     void onPageScrolled(int,float,int) -> a
     void onPageScrollStateChanged(int) -> b
-com.example.lifememory.activity.GuideActivity$2 -> com.example.lifememory.activity.by:
+com.example.lifememory.activity.GuideActivity$2 -> com.example.lifememory.activity.ck:
     com.example.lifememory.activity.GuideActivity this$0 -> a
     void onClick(android.view.View) -> onClick
 com.example.lifememory.activity.IndexActivity -> com.example.lifememory.activity.IndexActivity:
     java.util.ArrayList fragments -> o
     android.support.v4.app.FragmentManager fm -> n
-    java.util.ArrayList onTouchListeners -> p
+    long firstTime -> p
+    java.util.ArrayList onTouchListeners -> q
     void onCreate(android.os.Bundle) -> onCreate
     boolean onKeyDown(int,android.view.KeyEvent) -> onKeyDown
+    void onBackPressed() -> onBackPressed
     boolean dispatchTouchEvent(android.view.MotionEvent) -> dispatchTouchEvent
     void registerMyOnTouchListener(com.example.lifememory.activity.IndexActivity$MyOnTouchListener) -> a
     void unregisterMyOnTouchListener(com.example.lifememory.activity.IndexActivity$MyOnTouchListener) -> b
-com.example.lifememory.activity.IndexActivity$MyOnTouchListener -> com.example.lifememory.activity.bz:
+com.example.lifememory.activity.IndexActivity$MyOnTouchListener -> com.example.lifememory.activity.cl:
     boolean onTouch(android.view.MotionEvent) -> a
 com.example.lifememory.activity.PregnancyJiShiBenAddActivity -> com.example.lifememory.activity.PregnancyJiShiBenAddActivity:
     android.widget.EditText contentEt -> a
@@ -2206,10 +2395,10 @@ com.example.lifememory.activity.PregnancyJiShiBenAddActivity -> com.example.life
     com.example.lifememory.adapter.ColorGridViewAdapter access$21(com.example.lifememory.activity.PregnancyJiShiBenAddActivity) -> p
     void access$22(com.example.lifememory.activity.PregnancyJiShiBenAddActivity,int) -> b
     int[] access$23(com.example.lifememory.activity.PregnancyJiShiBenAddActivity) -> q
-com.example.lifememory.activity.PregnancyJiShiBenAddActivity$1 -> com.example.lifememory.activity.ca:
+com.example.lifememory.activity.PregnancyJiShiBenAddActivity$1 -> com.example.lifememory.activity.cm:
     com.example.lifememory.activity.PregnancyJiShiBenAddActivity this$0 -> a
     void handleMessage(android.os.Message) -> handleMessage
-com.example.lifememory.activity.PregnancyJiShiBenAddActivity$2 -> com.example.lifememory.activity.cb:
+com.example.lifememory.activity.PregnancyJiShiBenAddActivity$2 -> com.example.lifememory.activity.cn:
     com.example.lifememory.activity.PregnancyJiShiBenAddActivity this$0 -> a
     void onDialogOk(android.app.Dialog,java.lang.Object) -> a
     void onDialogCreate(android.app.Dialog,java.lang.Object) -> b
@@ -2217,25 +2406,25 @@ com.example.lifememory.activity.PregnancyJiShiBenAddActivity$2 -> com.example.li
     void onDialogInput(android.app.Dialog,java.lang.String) -> a
     void onDialogSave(android.app.Dialog,java.lang.Object) -> d
     void onDialogUnSave(android.app.Dialog,java.lang.Object) -> e
-com.example.lifememory.activity.PregnancyJiShiBenAddActivity$3 -> com.example.lifememory.activity.cc:
+com.example.lifememory.activity.PregnancyJiShiBenAddActivity$3 -> com.example.lifememory.activity.co:
     com.example.lifememory.activity.PregnancyJiShiBenAddActivity this$0 -> a
     void onTextChanged(java.lang.CharSequence,int,int,int) -> onTextChanged
     void beforeTextChanged(java.lang.CharSequence,int,int,int) -> beforeTextChanged
     void afterTextChanged(android.text.Editable) -> afterTextChanged
-com.example.lifememory.activity.PregnancyJiShiBenAddActivity$4 -> com.example.lifememory.activity.cd:
+com.example.lifememory.activity.PregnancyJiShiBenAddActivity$4 -> com.example.lifememory.activity.cp:
     com.example.lifememory.activity.PregnancyJiShiBenAddActivity this$0 -> a
     void onKeyboardStateChanged(int) -> a
-com.example.lifememory.activity.PregnancyJiShiBenAddActivity$5 -> com.example.lifememory.activity.ce:
+com.example.lifememory.activity.PregnancyJiShiBenAddActivity$5 -> com.example.lifememory.activity.cq:
     com.example.lifememory.activity.PregnancyJiShiBenAddActivity this$0 -> a
     void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
-com.example.lifememory.activity.PregnancyJiShiBenAddActivity$SaveJiShiBenThread -> com.example.lifememory.activity.cf:
+com.example.lifememory.activity.PregnancyJiShiBenAddActivity$SaveJiShiBenThread -> com.example.lifememory.activity.cr:
     com.example.lifememory.activity.model.PregnancyJiShiBen jishiben -> a
     com.example.lifememory.activity.PregnancyJiShiBenAddActivity this$0 -> b
     void run() -> run
-com.example.lifememory.activity.PregnancyJiShiBenAddActivity$ToolBarGridViewItemClick -> com.example.lifememory.activity.cg:
+com.example.lifememory.activity.PregnancyJiShiBenAddActivity$ToolBarGridViewItemClick -> com.example.lifememory.activity.cs:
     com.example.lifememory.activity.PregnancyJiShiBenAddActivity this$0 -> a
     void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
-com.example.lifememory.activity.PregnancyJiShiBenAddActivity$listener -> com.example.lifememory.activity.ch:
+com.example.lifememory.activity.PregnancyJiShiBenAddActivity$listener -> com.example.lifememory.activity.ct:
     com.example.lifememory.activity.PregnancyJiShiBenAddActivity this$0 -> a
     void onDialogCreate(android.app.Dialog,java.lang.Object) -> b
     void onDialogOk(android.app.Dialog,java.lang.Object) -> a
@@ -2298,10 +2487,10 @@ com.example.lifememory.activity.PregnancyJiShiBenEditActivity -> com.example.lif
     com.example.lifememory.adapter.ColorGridViewAdapter access$18(com.example.lifememory.activity.PregnancyJiShiBenEditActivity) -> q
     void access$19(com.example.lifememory.activity.PregnancyJiShiBenEditActivity,int) -> b
     int[] access$20(com.example.lifememory.activity.PregnancyJiShiBenEditActivity) -> r
-com.example.lifememory.activity.PregnancyJiShiBenEditActivity$1 -> com.example.lifememory.activity.ci:
+com.example.lifememory.activity.PregnancyJiShiBenEditActivity$1 -> com.example.lifememory.activity.cu:
     com.example.lifememory.activity.PregnancyJiShiBenEditActivity this$0 -> a
     void handleMessage(android.os.Message) -> handleMessage
-com.example.lifememory.activity.PregnancyJiShiBenEditActivity$2 -> com.example.lifememory.activity.cj:
+com.example.lifememory.activity.PregnancyJiShiBenEditActivity$2 -> com.example.lifememory.activity.cv:
     com.example.lifememory.activity.PregnancyJiShiBenEditActivity this$0 -> a
     void onDialogOk(android.app.Dialog,java.lang.Object) -> a
     void onDialogCreate(android.app.Dialog,java.lang.Object) -> b
@@ -2309,19 +2498,19 @@ com.example.lifememory.activity.PregnancyJiShiBenEditActivity$2 -> com.example.l
     void onDialogInput(android.app.Dialog,java.lang.String) -> a
     void onDialogSave(android.app.Dialog,java.lang.Object) -> d
     void onDialogUnSave(android.app.Dialog,java.lang.Object) -> e
-com.example.lifememory.activity.PregnancyJiShiBenEditActivity$3 -> com.example.lifememory.activity.ck:
+com.example.lifememory.activity.PregnancyJiShiBenEditActivity$3 -> com.example.lifememory.activity.cw:
     com.example.lifememory.activity.PregnancyJiShiBenEditActivity this$0 -> a
     void onKeyboardStateChanged(int) -> a
-com.example.lifememory.activity.PregnancyJiShiBenEditActivity$4 -> com.example.lifememory.activity.cl:
+com.example.lifememory.activity.PregnancyJiShiBenEditActivity$4 -> com.example.lifememory.activity.cx:
     com.example.lifememory.activity.PregnancyJiShiBenEditActivity this$0 -> a
     void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
-com.example.lifememory.activity.PregnancyJiShiBenEditActivity$InitDatasThread -> com.example.lifememory.activity.cm:
+com.example.lifememory.activity.PregnancyJiShiBenEditActivity$InitDatasThread -> com.example.lifememory.activity.cy:
     com.example.lifememory.activity.PregnancyJiShiBenEditActivity this$0 -> a
     void run() -> run
-com.example.lifememory.activity.PregnancyJiShiBenEditActivity$ToolBarGridViewItemClick -> com.example.lifememory.activity.cn:
+com.example.lifememory.activity.PregnancyJiShiBenEditActivity$ToolBarGridViewItemClick -> com.example.lifememory.activity.cz:
     com.example.lifememory.activity.PregnancyJiShiBenEditActivity this$0 -> a
     void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
-com.example.lifememory.activity.PregnancyJiShiBenEditActivity$UpdateThread -> com.example.lifememory.activity.co:
+com.example.lifememory.activity.PregnancyJiShiBenEditActivity$UpdateThread -> com.example.lifememory.activity.da:
     com.example.lifememory.activity.model.PregnancyJiShiBen jishiben -> a
     com.example.lifememory.activity.PregnancyJiShiBenEditActivity this$0 -> b
     void run() -> run
@@ -2365,10 +2554,10 @@ com.example.lifememory.activity.PregnancyJiShiBenReadActivity -> com.example.lif
     void access$12(com.example.lifememory.activity.PregnancyJiShiBenReadActivity,boolean) -> a
     com.example.lifememory.dialog.DialogInputListener access$13(com.example.lifememory.activity.PregnancyJiShiBenReadActivity) -> m
     com.example.lifememory.dialog.DialogAlertListener access$14(com.example.lifememory.activity.PregnancyJiShiBenReadActivity) -> n
-com.example.lifememory.activity.PregnancyJiShiBenReadActivity$1 -> com.example.lifememory.activity.cp:
+com.example.lifememory.activity.PregnancyJiShiBenReadActivity$1 -> com.example.lifememory.activity.db:
     com.example.lifememory.activity.PregnancyJiShiBenReadActivity this$0 -> a
     void handleMessage(android.os.Message) -> handleMessage
-com.example.lifememory.activity.PregnancyJiShiBenReadActivity$2 -> com.example.lifememory.activity.cq:
+com.example.lifememory.activity.PregnancyJiShiBenReadActivity$2 -> com.example.lifememory.activity.dc:
     com.example.lifememory.activity.PregnancyJiShiBenReadActivity this$0 -> a
     void onDialogOk(android.app.Dialog,java.lang.Object) -> a
     void onDialogCreate(android.app.Dialog,java.lang.Object) -> b
@@ -2376,26 +2565,26 @@ com.example.lifememory.activity.PregnancyJiShiBenReadActivity$2 -> com.example.l
     void onDialogInput(android.app.Dialog,java.lang.String) -> a
     void onDialogSave(android.app.Dialog,java.lang.Object) -> d
     void onDialogUnSave(android.app.Dialog,java.lang.Object) -> e
-com.example.lifememory.activity.PregnancyJiShiBenReadActivity$3 -> com.example.lifememory.activity.cr:
+com.example.lifememory.activity.PregnancyJiShiBenReadActivity$3 -> com.example.lifememory.activity.dd:
     com.example.lifememory.activity.PregnancyJiShiBenReadActivity this$0 -> a
     void onDialogOk(android.app.Dialog,java.lang.Object) -> a
     void onDialogCreate(android.app.Dialog,java.lang.Object) -> b
     void onDialogCancel(android.app.Dialog,java.lang.Object) -> c
     void onDialogSave(android.app.Dialog,java.lang.Object) -> d
     void onDialogUnSave(android.app.Dialog,java.lang.Object) -> e
-com.example.lifememory.activity.PregnancyJiShiBenReadActivity$4 -> com.example.lifememory.activity.cs:
+com.example.lifememory.activity.PregnancyJiShiBenReadActivity$4 -> com.example.lifememory.activity.de:
     com.example.lifememory.activity.PregnancyJiShiBenReadActivity this$0 -> a
     void onClick(android.view.View) -> onClick
-com.example.lifememory.activity.PregnancyJiShiBenReadActivity$5 -> com.example.lifememory.activity.ct:
+com.example.lifememory.activity.PregnancyJiShiBenReadActivity$5 -> com.example.lifememory.activity.df:
     com.example.lifememory.activity.PregnancyJiShiBenReadActivity this$0 -> a
     void onClick(android.view.View) -> onClick
-com.example.lifememory.activity.PregnancyJiShiBenReadActivity$DelThread -> com.example.lifememory.activity.cu:
+com.example.lifememory.activity.PregnancyJiShiBenReadActivity$DelThread -> com.example.lifememory.activity.dg:
     com.example.lifememory.activity.PregnancyJiShiBenReadActivity this$0 -> a
     void run() -> run
-com.example.lifememory.activity.PregnancyJiShiBenReadActivity$InitDatasThread -> com.example.lifememory.activity.cv:
+com.example.lifememory.activity.PregnancyJiShiBenReadActivity$InitDatasThread -> com.example.lifememory.activity.dh:
     com.example.lifememory.activity.PregnancyJiShiBenReadActivity this$0 -> a
     void run() -> run
-com.example.lifememory.activity.PregnancyJiShiBenReadActivity$RenameThread -> com.example.lifememory.activity.cw:
+com.example.lifememory.activity.PregnancyJiShiBenReadActivity$RenameThread -> com.example.lifememory.activity.di:
     java.lang.String title -> a
     com.example.lifememory.activity.PregnancyJiShiBenReadActivity this$0 -> b
     void run() -> run
@@ -2481,17 +2670,17 @@ com.example.lifememory.activity.PregnancyLuYinAddActivity -> com.example.lifemem
     com.example.lifememory.activity.PregnancyLuYinAddActivity$SeekBarTask access$36(com.example.lifememory.activity.PregnancyLuYinAddActivity) -> B
     void access$37(com.example.lifememory.activity.PregnancyLuYinAddActivity,java.util.List) -> a
     void access$38(com.example.lifememory.activity.PregnancyLuYinAddActivity,android.media.MediaPlayer) -> a
-com.example.lifememory.activity.PregnancyLuYinAddActivity$1 -> com.example.lifememory.activity.cx:
+com.example.lifememory.activity.PregnancyLuYinAddActivity$1 -> com.example.lifememory.activity.dj:
     com.example.lifememory.activity.PregnancyLuYinAddActivity this$0 -> a
     void handleMessage(android.os.Message) -> handleMessage
     com.example.lifememory.activity.PregnancyLuYinAddActivity access$0(com.example.lifememory.activity.PregnancyLuYinAddActivity$1) -> a
-com.example.lifememory.activity.PregnancyLuYinAddActivity$1$1 -> com.example.lifememory.activity.cy:
+com.example.lifememory.activity.PregnancyLuYinAddActivity$1$1 -> com.example.lifememory.activity.dk:
     com.example.lifememory.activity.PregnancyLuYinAddActivity$1 this$1 -> a
     void onCompletion(android.media.MediaPlayer) -> onCompletion
-com.example.lifememory.activity.PregnancyLuYinAddActivity$2 -> com.example.lifememory.activity.cz:
+com.example.lifememory.activity.PregnancyLuYinAddActivity$2 -> com.example.lifememory.activity.dl:
     com.example.lifememory.activity.PregnancyLuYinAddActivity this$0 -> a
     void run() -> run
-com.example.lifememory.activity.PregnancyLuYinAddActivity$3 -> com.example.lifememory.activity.da:
+com.example.lifememory.activity.PregnancyLuYinAddActivity$3 -> com.example.lifememory.activity.dm:
     com.example.lifememory.activity.PregnancyLuYinAddActivity this$0 -> a
     void onDialogOk(android.app.Dialog,java.lang.Object) -> a
     void onDialogCreate(android.app.Dialog,java.lang.Object) -> b
@@ -2499,25 +2688,25 @@ com.example.lifememory.activity.PregnancyLuYinAddActivity$3 -> com.example.lifem
     void onDialogInput(android.app.Dialog,java.lang.String) -> a
     void onDialogSave(android.app.Dialog,java.lang.Object) -> d
     void onDialogUnSave(android.app.Dialog,java.lang.Object) -> e
-com.example.lifememory.activity.PregnancyLuYinAddActivity$4 -> com.example.lifememory.activity.db:
+com.example.lifememory.activity.PregnancyLuYinAddActivity$4 -> com.example.lifememory.activity.dn:
     com.example.lifememory.activity.PregnancyLuYinAddActivity this$0 -> a
     void onCheckedChanged(android.widget.CompoundButton,boolean) -> onCheckedChanged
-com.example.lifememory.activity.PregnancyLuYinAddActivity$5 -> com.example.lifememory.activity.dc:
+com.example.lifememory.activity.PregnancyLuYinAddActivity$5 -> com.example.lifememory.activity.do:
     com.example.lifememory.activity.PregnancyLuYinAddActivity this$0 -> a
     void onCheckedChanged(android.widget.CompoundButton,boolean) -> onCheckedChanged
-com.example.lifememory.activity.PregnancyLuYinAddActivity$6 -> com.example.lifememory.activity.dd:
+com.example.lifememory.activity.PregnancyLuYinAddActivity$6 -> com.example.lifememory.activity.dp:
     com.example.lifememory.activity.PregnancyLuYinAddActivity this$0 -> a
     void onStopTrackingTouch(android.widget.SeekBar) -> onStopTrackingTouch
     void onStartTrackingTouch(android.widget.SeekBar) -> onStartTrackingTouch
     void onProgressChanged(android.widget.SeekBar,int,boolean) -> onProgressChanged
-com.example.lifememory.activity.PregnancyLuYinAddActivity$7 -> com.example.lifememory.activity.de:
+com.example.lifememory.activity.PregnancyLuYinAddActivity$7 -> com.example.lifememory.activity.dq:
     com.example.lifememory.activity.PregnancyLuYinAddActivity this$0 -> a
     java.lang.String val$filePath -> b
     void run() -> run
-com.example.lifememory.activity.PregnancyLuYinAddActivity$SaveLuYinThread -> com.example.lifememory.activity.df:
+com.example.lifememory.activity.PregnancyLuYinAddActivity$SaveLuYinThread -> com.example.lifememory.activity.dr:
     com.example.lifememory.activity.PregnancyLuYinAddActivity this$0 -> a
     void run() -> run
-com.example.lifememory.activity.PregnancyLuYinAddActivity$SeekBarTask -> com.example.lifememory.activity.dg:
+com.example.lifememory.activity.PregnancyLuYinAddActivity$SeekBarTask -> com.example.lifememory.activity.ds:
     com.example.lifememory.activity.PregnancyLuYinAddActivity this$0 -> a
     java.lang.String doInBackground(java.lang.Integer[]) -> a
     void onProgressUpdate(java.lang.Integer[]) -> b
@@ -2564,17 +2753,17 @@ com.example.lifememory.activity.PregnancyLuYinReadActivity -> com.example.lifeme
     void access$13(com.example.lifememory.activity.PregnancyLuYinReadActivity,com.example.lifememory.activity.PregnancyLuYinReadActivity$SeekBarProgressTask) -> a
     com.example.lifememory.activity.PregnancyLuYinReadActivity$SeekBarProgressTask access$14(com.example.lifememory.activity.PregnancyLuYinReadActivity) -> l
     android.graphics.drawable.AnimationDrawable access$15(com.example.lifememory.activity.PregnancyLuYinReadActivity) -> m
-com.example.lifememory.activity.PregnancyLuYinReadActivity$1 -> com.example.lifememory.activity.dh:
+com.example.lifememory.activity.PregnancyLuYinReadActivity$1 -> com.example.lifememory.activity.dt:
     com.example.lifememory.activity.PregnancyLuYinReadActivity this$0 -> a
     void handleMessage(android.os.Message) -> handleMessage
-com.example.lifememory.activity.PregnancyLuYinReadActivity$2 -> com.example.lifememory.activity.di:
+com.example.lifememory.activity.PregnancyLuYinReadActivity$2 -> com.example.lifememory.activity.du:
     com.example.lifememory.activity.PregnancyLuYinReadActivity this$0 -> a
     void onDialogOk(android.app.Dialog,java.lang.Object) -> a
     void onDialogCreate(android.app.Dialog,java.lang.Object) -> b
     void onDialogCancel(android.app.Dialog,java.lang.Object) -> c
     void onDialogSave(android.app.Dialog,java.lang.Object) -> d
     void onDialogUnSave(android.app.Dialog,java.lang.Object) -> e
-com.example.lifememory.activity.PregnancyLuYinReadActivity$3 -> com.example.lifememory.activity.dj:
+com.example.lifememory.activity.PregnancyLuYinReadActivity$3 -> com.example.lifememory.activity.dv:
     com.example.lifememory.activity.PregnancyLuYinReadActivity this$0 -> a
     void onDialogOk(android.app.Dialog,java.lang.Object) -> a
     void onDialogCreate(android.app.Dialog,java.lang.Object) -> b
@@ -2582,27 +2771,27 @@ com.example.lifememory.activity.PregnancyLuYinReadActivity$3 -> com.example.life
     void onDialogInput(android.app.Dialog,java.lang.String) -> a
     void onDialogSave(android.app.Dialog,java.lang.Object) -> d
     void onDialogUnSave(android.app.Dialog,java.lang.Object) -> e
-com.example.lifememory.activity.PregnancyLuYinReadActivity$4 -> com.example.lifememory.activity.dk:
+com.example.lifememory.activity.PregnancyLuYinReadActivity$4 -> com.example.lifememory.activity.dw:
     com.example.lifememory.activity.PregnancyLuYinReadActivity this$0 -> a
     void onCompletion(android.media.MediaPlayer) -> onCompletion
-com.example.lifememory.activity.PregnancyLuYinReadActivity$5 -> com.example.lifememory.activity.dl:
+com.example.lifememory.activity.PregnancyLuYinReadActivity$5 -> com.example.lifememory.activity.dx:
     com.example.lifememory.activity.PregnancyLuYinReadActivity this$0 -> a
     void onCheckedChanged(android.widget.CompoundButton,boolean) -> onCheckedChanged
-com.example.lifememory.activity.PregnancyLuYinReadActivity$6 -> com.example.lifememory.activity.dm:
+com.example.lifememory.activity.PregnancyLuYinReadActivity$6 -> com.example.lifememory.activity.dy:
     com.example.lifememory.activity.PregnancyLuYinReadActivity this$0 -> a
     void onStopTrackingTouch(android.widget.SeekBar) -> onStopTrackingTouch
     void onStartTrackingTouch(android.widget.SeekBar) -> onStartTrackingTouch
     void onProgressChanged(android.widget.SeekBar,int,boolean) -> onProgressChanged
-com.example.lifememory.activity.PregnancyLuYinReadActivity$DelThread -> com.example.lifememory.activity.dn:
+com.example.lifememory.activity.PregnancyLuYinReadActivity$DelThread -> com.example.lifememory.activity.dz:
     com.example.lifememory.activity.PregnancyLuYinReadActivity this$0 -> a
     void run() -> run
-com.example.lifememory.activity.PregnancyLuYinReadActivity$SeekBarProgressTask -> com.example.lifememory.activity.do:
+com.example.lifememory.activity.PregnancyLuYinReadActivity$SeekBarProgressTask -> com.example.lifememory.activity.ea:
     com.example.lifememory.activity.PregnancyLuYinReadActivity this$0 -> a
     java.lang.String doInBackground(java.lang.Integer[]) -> a
     void onProgressUpdate(java.lang.Integer[]) -> b
     java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
     void onProgressUpdate(java.lang.Object[]) -> onProgressUpdate
-com.example.lifememory.activity.PregnancyLuYinReadActivity$UpdateTitleThread -> com.example.lifememory.activity.dp:
+com.example.lifememory.activity.PregnancyLuYinReadActivity$UpdateTitleThread -> com.example.lifememory.activity.eb:
     com.example.lifememory.activity.PregnancyLuYinReadActivity this$0 -> a
     void run() -> run
 com.example.lifememory.activity.WelcomeActivity -> com.example.lifememory.activity.WelcomeActivity:
@@ -2619,18 +2808,18 @@ com.example.lifememory.activity.WelcomeActivity -> com.example.lifememory.activi
     android.widget.ImageView access$2(com.example.lifememory.activity.WelcomeActivity) -> c
     android.view.animation.TranslateAnimation access$3(com.example.lifememory.activity.WelcomeActivity) -> d
     android.view.animation.TranslateAnimation access$4(com.example.lifememory.activity.WelcomeActivity) -> e
-com.example.lifememory.activity.WelcomeActivity$1 -> com.example.lifememory.activity.dq:
+com.example.lifememory.activity.WelcomeActivity$1 -> com.example.lifememory.activity.ec:
     com.example.lifememory.activity.WelcomeActivity this$0 -> a
     void handleMessage(android.os.Message) -> handleMessage
-com.example.lifememory.activity.WelcomeActivity$2 -> com.example.lifememory.activity.dr:
+com.example.lifememory.activity.WelcomeActivity$2 -> com.example.lifememory.activity.ed:
     com.example.lifememory.activity.WelcomeActivity this$0 -> a
     void run() -> run
-com.example.lifememory.activity.WelcomeActivity$3 -> com.example.lifememory.activity.ds:
+com.example.lifememory.activity.WelcomeActivity$3 -> com.example.lifememory.activity.ee:
     com.example.lifememory.activity.WelcomeActivity this$0 -> a
     void onAnimationStart(android.view.animation.Animation) -> onAnimationStart
     void onAnimationRepeat(android.view.animation.Animation) -> onAnimationRepeat
     void onAnimationEnd(android.view.animation.Animation) -> onAnimationEnd
-com.example.lifememory.activity.WelcomeActivity$4 -> com.example.lifememory.activity.dt:
+com.example.lifememory.activity.WelcomeActivity$4 -> com.example.lifememory.activity.ef:
     com.example.lifememory.activity.WelcomeActivity this$0 -> a
     void onAnimationStart(android.view.animation.Animation) -> onAnimationStart
     void onAnimationRepeat(android.view.animation.Animation) -> onAnimationRepeat
@@ -2722,18 +2911,57 @@ com.example.lifememory.activity.model.BabyLuYin -> com.example.lifememory.activi
     void setImageId(int) -> b
     java.lang.String toString() -> toString
 com.example.lifememory.activity.model.Bill -> com.example.lifememory.activity.a.e:
-    java.lang.String jine -> a
-    java.lang.String leixing -> b
-    java.lang.String zhanghu -> c
-    java.lang.String member -> d
-    java.lang.String getJine() -> a
+    int idx -> a
+    java.lang.String jine -> b
+    java.lang.String outCatagory -> c
+    java.lang.String inCatagory -> d
+    java.lang.String account -> e
+    int accountid -> f
+    java.lang.String member -> g
+    java.lang.String date -> h
+    java.lang.String dateYMD -> i
+    java.lang.String beizhu -> j
+    boolean isCanBaoXiao -> k
+    boolean isBaoxiaoed -> l
+    java.lang.String TransferIn -> m
+    int transferInAccountId -> n
+    int transferOutAccountId -> o
+    java.lang.String TransferOut -> p
+    int billType -> q
+    int getIdx() -> a
+    void setIdx(int) -> a
+    java.lang.String getJine() -> b
     void setJine(java.lang.String) -> a
-    java.lang.String getLeixing() -> b
-    void setLeixing(java.lang.String) -> b
-    java.lang.String getZhanghu() -> c
-    void setZhanghu(java.lang.String) -> c
-    java.lang.String getMember() -> d
-    void setMember(java.lang.String) -> d
+    java.lang.String getOutCatagory() -> c
+    void setOutCatagory(java.lang.String) -> b
+    java.lang.String getInCatagory() -> d
+    void setInCatagory(java.lang.String) -> c
+    java.lang.String getAccount() -> e
+    void setAccount(java.lang.String) -> d
+    int getAccountid() -> f
+    void setAccountid(int) -> b
+    java.lang.String getMember() -> g
+    void setMember(java.lang.String) -> e
+    java.lang.String getDate() -> h
+    void setDate(java.lang.String) -> f
+    java.lang.String getDateYMD() -> i
+    void setDateYMD(java.lang.String) -> g
+    java.lang.String getBeizhu() -> j
+    void setBeizhu(java.lang.String) -> h
+    boolean isCanBaoXiao() -> k
+    void setCanBaoXiao(boolean) -> a
+    void setBaoxiaoed(boolean) -> b
+    java.lang.String getTransferIn() -> l
+    void setTransferIn(java.lang.String) -> i
+    java.lang.String getTransferOut() -> m
+    void setTransferOut(java.lang.String) -> j
+    int getBillType() -> n
+    void setBillType(int) -> c
+    int getTransferInAccountId() -> o
+    void setTransferInAccountId(int) -> d
+    int getTransferOutAccountId() -> p
+    void setTransferOutAccountId(int) -> e
+    java.lang.String toString() -> toString
 com.example.lifememory.activity.model.BillAccountExpandableListViewItem -> com.example.lifememory.activity.a.f:
     java.lang.String title -> a
     int imageId -> b
@@ -2786,14 +3014,37 @@ com.example.lifememory.activity.model.BillCatagoryItem -> com.example.lifememory
     void setImageId(int) -> b
     int getParentId() -> d
     void setParentId(int) -> c
-com.example.lifememory.activity.model.BillMember -> com.example.lifememory.activity.a.i:
+com.example.lifememory.activity.model.BillInCatagory -> com.example.lifememory.activity.a.i:
     int idx -> a
     java.lang.String name -> b
     int getIdx() -> a
     void setIdx(int) -> a
     java.lang.String getName() -> b
     void setName(java.lang.String) -> a
-com.example.lifememory.activity.model.LeftMenuItem -> com.example.lifememory.activity.a.j:
+com.example.lifememory.activity.model.BillMember -> com.example.lifememory.activity.a.j:
+    int idx -> a
+    java.lang.String name -> b
+    int getIdx() -> a
+    void setIdx(int) -> a
+    java.lang.String getName() -> b
+    void setName(java.lang.String) -> a
+com.example.lifememory.activity.model.BillMonthDetailsListViewModel -> com.example.lifememory.activity.a.k:
+    java.lang.String day -> a
+    java.lang.String week -> b
+    java.lang.String income -> c
+    java.lang.String spend -> d
+    java.util.List bills -> e
+    java.lang.String getDay() -> a
+    void setDay(java.lang.String) -> a
+    java.lang.String getWeek() -> b
+    void setWeek(java.lang.String) -> b
+    java.lang.String getIncome() -> c
+    void setIncome(java.lang.String) -> c
+    java.lang.String getSpend() -> d
+    void setSpend(java.lang.String) -> d
+    java.util.List getBills() -> e
+    void setBills(java.util.List) -> a
+com.example.lifememory.activity.model.LeftMenuItem -> com.example.lifememory.activity.a.l:
     java.lang.String title -> a
     java.lang.String subTitle -> b
     int imageId -> c
@@ -2803,7 +3054,7 @@ com.example.lifememory.activity.model.LeftMenuItem -> com.example.lifememory.act
     void setSubTitle(java.lang.String) -> b
     int getImageId() -> c
     void setImageId(int) -> a
-com.example.lifememory.activity.model.PregnancyJiShiBen -> com.example.lifememory.activity.a.k:
+com.example.lifememory.activity.model.PregnancyJiShiBen -> com.example.lifememory.activity.a.m:
     int idx -> a
     java.lang.String title -> b
     java.lang.String content -> c
@@ -2842,7 +3093,7 @@ com.example.lifememory.activity.model.PregnancyJiShiBen -> com.example.lifememor
     void setCreateym(java.lang.String) -> g
     java.lang.String getUpdateym() -> m
     void setUpdateym(java.lang.String) -> h
-com.example.lifememory.activity.model.PregnancyLuYin -> com.example.lifememory.activity.a.l:
+com.example.lifememory.activity.model.PregnancyLuYin -> com.example.lifememory.activity.a.n:
     int idx -> a
     java.lang.String title -> b
     java.lang.String audioPath -> c
@@ -2865,7 +3116,7 @@ com.example.lifememory.activity.model.PregnancyLuYin -> com.example.lifememory.a
     int getImageId() -> g
     void setImageId(int) -> b
     java.lang.String toString() -> toString
-com.example.lifememory.activity.model.PrenancyJiShiBenGridViewExpandableGroupItem -> com.example.lifememory.activity.a.m:
+com.example.lifememory.activity.model.PrenancyJiShiBenGridViewExpandableGroupItem -> com.example.lifememory.activity.a.o:
     java.lang.String title -> a
     int num -> b
     int image -> c
@@ -2877,7 +3128,7 @@ com.example.lifememory.activity.model.PrenancyJiShiBenGridViewExpandableGroupIte
     void setImage(int) -> b
     java.util.List getJishibenItems() -> c
     void setJishibenItems(java.util.List) -> a
-com.example.lifememory.activity.model.PrenancyJiShiBenListViewExpandableGroupItem -> com.example.lifememory.activity.a.n:
+com.example.lifememory.activity.model.PrenancyJiShiBenListViewExpandableGroupItem -> com.example.lifememory.activity.a.p:
     java.lang.String title -> a
     int num -> b
     int image -> c
@@ -3383,19 +3634,52 @@ com.example.lifememory.adapter.BillCatatorySecondaryListAdapter$ViewHolder -> co
     android.widget.ImageView imageView -> a
     android.widget.TextView textView -> b
     android.widget.ImageView selectedImage -> c
-com.example.lifememory.adapter.BillIndexGridViewAdapter -> com.example.lifememory.a.y:
-    android.view.LayoutInflater inflater -> a
-    java.lang.String[] titles -> b
-    int[] imageIds -> c
-    boolean isFirstPage -> d
+com.example.lifememory.adapter.BillInCatagoryListViewAdapter -> com.example.lifememory.a.y:
+    android.content.Context context -> a
+    java.util.List bics -> b
+    android.view.LayoutInflater inflater -> c
+    int curretnSelectedIndex -> d
+    int currentLongClickIndex -> e
+    com.example.lifememory.db.service.BillInCatagoryService dbService -> f
+    int getCount() -> getCount
+    java.lang.Object getItem(int) -> getItem
+    long getItemId(int) -> getItemId
+    void setSelected(int) -> a
+    void setShowDeleteTag(int) -> b
+    android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+    int access$0(com.example.lifememory.adapter.BillInCatagoryListViewAdapter) -> a
+    int access$1(com.example.lifememory.adapter.BillInCatagoryListViewAdapter) -> b
+    android.content.Context access$2(com.example.lifememory.adapter.BillInCatagoryListViewAdapter) -> c
+    com.example.lifememory.db.service.BillInCatagoryService access$3(com.example.lifememory.adapter.BillInCatagoryListViewAdapter) -> d
+    java.util.List access$4(com.example.lifememory.adapter.BillInCatagoryListViewAdapter) -> e
+    void access$5(com.example.lifememory.adapter.BillInCatagoryListViewAdapter,int) -> a
+com.example.lifememory.adapter.BillInCatagoryListViewAdapter$1 -> com.example.lifememory.a.z:
+    com.example.lifememory.adapter.BillInCatagoryListViewAdapter this$0 -> a
+    android.widget.TextView val$deleteTag -> b
+    int val$idx -> c
+    int val$location -> d
+    void onClick(android.view.View) -> onClick
+com.example.lifememory.adapter.BillInCatagoryListViewAdapter$ViewHolder -> com.example.lifememory.a.aa:
+    android.widget.TextView name -> a
+    android.widget.TextView deleteTag -> b
+    android.widget.ImageView selectedTag -> c
+com.example.lifememory.adapter.BillIndexGridViewAdapter -> com.example.lifememory.a.ab:
+    android.content.Context context -> a
+    android.view.LayoutInflater inflater -> b
+    java.lang.String[] titles -> c
+    int[] imageIds -> d
+    boolean isFirstPage -> e
+    java.util.List todayBills -> f
+    java.util.List monthIncomeBills -> g
+    java.util.List monthSpendBills -> h
     int getCount() -> getCount
     java.lang.Object getItem(int) -> getItem
     long getItemId(int) -> getItemId
     android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
-com.example.lifememory.adapter.BillIndexGridViewAdapter$ViewHolder -> com.example.lifememory.a.z:
+com.example.lifememory.adapter.BillIndexGridViewAdapter$ViewHolder -> com.example.lifememory.a.ac:
     android.widget.ImageView imageView -> a
     android.widget.TextView title -> b
-com.example.lifememory.adapter.BillMemberListViewAdapter -> com.example.lifememory.a.aa:
+com.example.lifememory.adapter.BillMemberListViewAdapter -> com.example.lifememory.a.ad:
     android.view.LayoutInflater inflater -> a
     java.util.List members -> b
     int currentSelectedIndex -> c
@@ -3408,23 +3692,58 @@ com.example.lifememory.adapter.BillMemberListViewAdapter -> com.example.lifememo
     void setSelected(int) -> a
     void setShowDeleteTag(int) -> b
     android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
-    com.example.lifememory.db.service.BillMemberService access$0(com.example.lifememory.adapter.BillMemberListViewAdapter) -> a
+    int access$0(com.example.lifememory.adapter.BillMemberListViewAdapter) -> a
     int access$1(com.example.lifememory.adapter.BillMemberListViewAdapter) -> b
-    int access$2(com.example.lifememory.adapter.BillMemberListViewAdapter) -> c
-    android.content.Context access$3(com.example.lifememory.adapter.BillMemberListViewAdapter) -> d
+    android.content.Context access$2(com.example.lifememory.adapter.BillMemberListViewAdapter) -> c
+    com.example.lifememory.db.service.BillMemberService access$3(com.example.lifememory.adapter.BillMemberListViewAdapter) -> d
     java.util.List access$4(com.example.lifememory.adapter.BillMemberListViewAdapter) -> e
     void access$5(com.example.lifememory.adapter.BillMemberListViewAdapter,int) -> a
-com.example.lifememory.adapter.BillMemberListViewAdapter$1 -> com.example.lifememory.a.ab:
+com.example.lifememory.adapter.BillMemberListViewAdapter$1 -> com.example.lifememory.a.ae:
     com.example.lifememory.adapter.BillMemberListViewAdapter this$0 -> a
-    int val$idx -> b
-    android.widget.TextView val$deleteTag -> c
+    android.widget.TextView val$deleteTag -> b
+    int val$idx -> c
     int val$location -> d
     void onClick(android.view.View) -> onClick
-com.example.lifememory.adapter.BillMemberListViewAdapter$ViewHolder -> com.example.lifememory.a.ac:
+com.example.lifememory.adapter.BillMemberListViewAdapter$ViewHolder -> com.example.lifememory.a.af:
     android.widget.TextView deleteTag -> a
     android.widget.ImageView selectedTag -> b
     android.widget.TextView name -> c
-com.example.lifememory.adapter.ColorGridViewAdapter -> com.example.lifememory.a.ad:
+com.example.lifememory.adapter.BillMonthDetailsListViewAdapter -> com.example.lifememory.a.ag:
+    android.view.LayoutInflater inflater -> a
+    android.content.Context context -> b
+    com.example.lifememory.adapter.BillMonthDetailsListViewListViewAdapter adapter -> c
+    java.util.List monthDetails -> d
+    android.app.Activity ac -> e
+    int getCount() -> getCount
+    java.lang.Object getItem(int) -> getItem
+    long getItemId(int) -> getItemId
+    android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+    java.util.List access$0(com.example.lifememory.adapter.BillMonthDetailsListViewAdapter) -> a
+    android.app.Activity access$1(com.example.lifememory.adapter.BillMonthDetailsListViewAdapter) -> b
+com.example.lifememory.adapter.BillMonthDetailsListViewAdapter$1 -> com.example.lifememory.a.ah:
+    com.example.lifememory.adapter.BillMonthDetailsListViewAdapter this$0 -> a
+    int val$parentListViewPosition -> b
+    void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
+com.example.lifememory.adapter.BillMonthDetailsListViewAdapter$2 -> com.example.lifememory.a.ai:
+    com.example.lifememory.adapter.BillMonthDetailsListViewAdapter this$0 -> a
+    int val$parentListViewPosition -> b
+    boolean onItemLongClick(android.widget.AdapterView,android.view.View,int,long) -> onItemLongClick
+com.example.lifememory.adapter.BillMonthDetailsListViewListViewAdapter -> com.example.lifememory.a.aj:
+    android.content.Context context -> a
+    android.view.LayoutInflater inflater -> b
+    java.util.List bills -> c
+    com.example.lifememory.activity.model.Bill bill -> d
+    int getCount() -> getCount
+    java.lang.Object getItem(int) -> getItem
+    long getItemId(int) -> getItemId
+    android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+com.example.lifememory.adapter.BillMonthDetailsListViewListViewAdapter$ViewHolder -> com.example.lifememory.a.ak:
+    android.widget.ImageView icon -> a
+    android.widget.TextView catagoryName -> b
+    android.widget.TextView money -> c
+    android.widget.TextView beizhu -> d
+    android.widget.TextView account -> e
+com.example.lifememory.adapter.ColorGridViewAdapter -> com.example.lifememory.a.al:
     android.view.LayoutInflater inflater -> a
     int[] colorImageIds -> b
     int currentSelectedId -> c
@@ -3433,13 +3752,13 @@ com.example.lifememory.adapter.ColorGridViewAdapter -> com.example.lifememory.a.
     long getItemId(int) -> getItemId
     void setSelected(int) -> a
     android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
-com.example.lifememory.adapter.GuideActivityPagerViewAdapter -> com.example.lifememory.a.ae:
+com.example.lifememory.adapter.GuideActivityPagerViewAdapter -> com.example.lifememory.a.am:
     java.util.ArrayList views -> a
     int getCount() -> b
     boolean isViewFromObject(android.view.View,java.lang.Object) -> a
     java.lang.Object instantiateItem(android.view.ViewGroup,int) -> a
     void destroyItem(android.view.ViewGroup,int,java.lang.Object) -> a
-com.example.lifememory.adapter.LeftMenuListViewAdapter -> com.example.lifememory.a.af:
+com.example.lifememory.adapter.LeftMenuListViewAdapter -> com.example.lifememory.a.an:
     android.view.LayoutInflater inflater -> a
     java.util.List menuItems -> b
     int currentSelected -> c
@@ -3448,11 +3767,11 @@ com.example.lifememory.adapter.LeftMenuListViewAdapter -> com.example.lifememory
     long getItemId(int) -> getItemId
     void setSelected(int) -> a
     android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
-com.example.lifememory.adapter.LeftMenuListViewAdapter$ViewHolder -> com.example.lifememory.a.ag:
+com.example.lifememory.adapter.LeftMenuListViewAdapter$ViewHolder -> com.example.lifememory.a.ao:
     android.widget.TextView title -> a
     android.widget.TextView subTitle -> b
     android.widget.ImageView image -> c
-com.example.lifememory.adapter.MyExpandableListViewAdapter -> com.example.lifememory.a.ah:
+com.example.lifememory.adapter.MyExpandableListViewAdapter -> com.example.lifememory.a.ap:
     android.content.Context context -> b
     android.view.LayoutInflater inflater -> c
     com.example.lifememory.activity.views.MyGridView toolbarGrid -> d
@@ -3475,12 +3794,12 @@ com.example.lifememory.adapter.MyExpandableListViewAdapter -> com.example.lifeme
     android.content.Context access$0(com.example.lifememory.adapter.MyExpandableListViewAdapter) -> a
     android.support.v4.app.FragmentActivity access$1(com.example.lifememory.adapter.MyExpandableListViewAdapter) -> b
     java.util.List access$2(com.example.lifememory.adapter.MyExpandableListViewAdapter) -> c
-com.example.lifememory.adapter.MyExpandableListViewAdapter$MyOnItemClick -> com.example.lifememory.a.ai:
+com.example.lifememory.adapter.MyExpandableListViewAdapter$MyOnItemClick -> com.example.lifememory.a.aq:
     int groupPosition -> a
     int childPosition -> b
     com.example.lifememory.adapter.MyExpandableListViewAdapter this$0 -> c
     void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
-com.example.lifememory.adapter.MyExpandableListViewAdapterList -> com.example.lifememory.a.aj:
+com.example.lifememory.adapter.MyExpandableListViewAdapterList -> com.example.lifememory.a.ar:
     android.content.Context context -> b
     android.view.LayoutInflater inflater -> c
     java.util.List groupItems -> d
@@ -3498,11 +3817,11 @@ com.example.lifememory.adapter.MyExpandableListViewAdapterList -> com.example.li
     android.view.View getGroupView(int,boolean,android.view.View,android.view.ViewGroup) -> getGroupView
     android.view.View getChildView(int,int,boolean,android.view.View,android.view.ViewGroup) -> getChildView
     boolean isChildSelectable(int,int) -> isChildSelectable
-com.example.lifememory.adapter.MyExpandableListViewAdapterList$1 -> com.example.lifememory.a.ak:
+com.example.lifememory.adapter.MyExpandableListViewAdapterList$1 -> com.example.lifememory.a.as:
     com.example.lifememory.adapter.MyExpandableListViewAdapterList this$0 -> a
     java.lang.Integer val$idx -> b
     void onCheckedChanged(android.widget.CompoundButton,boolean) -> onCheckedChanged
-com.example.lifememory.adapter.MyExpandableListViewAdapterLuYinList -> com.example.lifememory.a.al:
+com.example.lifememory.adapter.MyExpandableListViewAdapterLuYinList -> com.example.lifememory.a.at:
     android.content.Context context -> b
     android.view.LayoutInflater inflater -> c
     java.util.List groupItems -> d
@@ -3520,11 +3839,11 @@ com.example.lifememory.adapter.MyExpandableListViewAdapterLuYinList -> com.examp
     android.view.View getGroupView(int,boolean,android.view.View,android.view.ViewGroup) -> getGroupView
     android.view.View getChildView(int,int,boolean,android.view.View,android.view.ViewGroup) -> getChildView
     boolean isChildSelectable(int,int) -> isChildSelectable
-com.example.lifememory.adapter.MyExpandableListViewAdapterLuYinList$1 -> com.example.lifememory.a.am:
+com.example.lifememory.adapter.MyExpandableListViewAdapterLuYinList$1 -> com.example.lifememory.a.au:
     com.example.lifememory.adapter.MyExpandableListViewAdapterLuYinList this$0 -> a
     java.lang.Integer val$idx -> b
     void onCheckedChanged(android.widget.CompoundButton,boolean) -> onCheckedChanged
-com.example.lifememory.adapter.MyExpandableListViewLuYinAdapter -> com.example.lifememory.a.an:
+com.example.lifememory.adapter.MyExpandableListViewLuYinAdapter -> com.example.lifememory.a.av:
     android.content.Context context -> b
     android.view.LayoutInflater inflater -> c
     com.example.lifememory.activity.views.MyGridView toolbarGrid -> d
@@ -3547,18 +3866,18 @@ com.example.lifememory.adapter.MyExpandableListViewLuYinAdapter -> com.example.l
     android.content.Context access$0(com.example.lifememory.adapter.MyExpandableListViewLuYinAdapter) -> a
     android.support.v4.app.FragmentActivity access$1(com.example.lifememory.adapter.MyExpandableListViewLuYinAdapter) -> b
     java.util.List access$2(com.example.lifememory.adapter.MyExpandableListViewLuYinAdapter) -> c
-com.example.lifememory.adapter.MyExpandableListViewLuYinAdapter$MyOnItemClick -> com.example.lifememory.a.ao:
+com.example.lifememory.adapter.MyExpandableListViewLuYinAdapter$MyOnItemClick -> com.example.lifememory.a.aw:
     int groupPosition -> a
     int childPosition -> b
     com.example.lifememory.adapter.MyExpandableListViewLuYinAdapter this$0 -> c
     void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
-com.example.lifememory.adapter.MyFragmentViewPagerAdapter -> com.example.lifememory.a.ap:
+com.example.lifememory.adapter.MyFragmentViewPagerAdapter -> com.example.lifememory.a.ax:
     android.support.v4.app.FragmentManager fm -> a
     java.util.ArrayList fragments -> b
     android.support.v4.app.Fragment getItem(int) -> a
     int getCount() -> b
     int getItemPosition(java.lang.Object) -> a
-com.example.lifememory.adapter.PregnancyDiaryJiShiListAdapter -> com.example.lifememory.a.aq:
+com.example.lifememory.adapter.PregnancyDiaryJiShiListAdapter -> com.example.lifememory.a.ay:
     android.content.Context context -> b
     java.util.List items -> c
     android.view.LayoutInflater inflater -> d
@@ -3570,11 +3889,11 @@ com.example.lifememory.adapter.PregnancyDiaryJiShiListAdapter -> com.example.lif
     long getItemId(int) -> getItemId
     void showDeleteTag(boolean) -> a
     android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
-com.example.lifememory.adapter.PregnancyDiaryJiShiListAdapter$1 -> com.example.lifememory.a.ar:
+com.example.lifememory.adapter.PregnancyDiaryJiShiListAdapter$1 -> com.example.lifememory.a.az:
     com.example.lifememory.adapter.PregnancyDiaryJiShiListAdapter this$0 -> a
     java.lang.Integer val$idx -> b
     void onCheckedChanged(android.widget.CompoundButton,boolean) -> onCheckedChanged
-com.example.lifememory.adapter.PregnancyDiaryLuYinBenListAdapter -> com.example.lifememory.a.as:
+com.example.lifememory.adapter.PregnancyDiaryLuYinBenListAdapter -> com.example.lifememory.a.ba:
     android.content.Context context -> b
     java.util.List items -> c
     android.view.LayoutInflater inflater -> d
@@ -3586,11 +3905,11 @@ com.example.lifememory.adapter.PregnancyDiaryLuYinBenListAdapter -> com.example.
     long getItemId(int) -> getItemId
     void showDeleteTag(boolean) -> a
     android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
-com.example.lifememory.adapter.PregnancyDiaryLuYinBenListAdapter$1 -> com.example.lifememory.a.at:
+com.example.lifememory.adapter.PregnancyDiaryLuYinBenListAdapter$1 -> com.example.lifememory.a.bb:
     com.example.lifememory.adapter.PregnancyDiaryLuYinBenListAdapter this$0 -> a
     java.lang.Integer val$idx -> b
     void onCheckedChanged(android.widget.CompoundButton,boolean) -> onCheckedChanged
-com.example.lifememory.adapter.PregnancyJSBPopWindowGridAdapter -> com.example.lifememory.a.au:
+com.example.lifememory.adapter.PregnancyJSBPopWindowGridAdapter -> com.example.lifememory.a.bc:
     int[] imageIds -> a
     java.lang.String[] titles -> b
     android.view.LayoutInflater inflater -> c
@@ -3598,10 +3917,10 @@ com.example.lifememory.adapter.PregnancyJSBPopWindowGridAdapter -> com.example.l
     java.lang.Object getItem(int) -> getItem
     long getItemId(int) -> getItemId
     android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
-com.example.lifememory.adapter.PregnancyJSBPopWindowGridAdapter$ViewHolder -> com.example.lifememory.a.av:
+com.example.lifememory.adapter.PregnancyJSBPopWindowGridAdapter$ViewHolder -> com.example.lifememory.a.bd:
     android.widget.ImageView imageView -> a
     android.widget.TextView textView -> b
-com.example.lifememory.adapter.PregnancyJiShiBenAddToolBarAdapter -> com.example.lifememory.a.aw:
+com.example.lifememory.adapter.PregnancyJiShiBenAddToolBarAdapter -> com.example.lifememory.a.be:
     int[] imageIds -> a
     java.lang.String[] titles -> b
     android.view.LayoutInflater inflater -> c
@@ -3610,7 +3929,7 @@ com.example.lifememory.adapter.PregnancyJiShiBenAddToolBarAdapter -> com.example
     java.lang.Object getItem(int) -> getItem
     long getItemId(int) -> getItemId
     android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
-com.example.lifememory.adapter.PregnancyJiShiBenAddToolBarAdapter$ViewHolder -> com.example.lifememory.a.ax:
+com.example.lifememory.adapter.PregnancyJiShiBenAddToolBarAdapter$ViewHolder -> com.example.lifememory.a.bf:
     android.widget.ImageView imageView -> a
     android.widget.TextView title -> b
 com.example.lifememory.db.PregnancyDiaryOpenHelper -> com.example.lifememory.b.a:
@@ -3647,27 +3966,49 @@ com.example.lifememory.db.service.BillAccountService -> com.example.lifememory.b
     android.database.sqlite.SQLiteDatabase db -> a
     java.util.List getAllAccounts() -> a
     com.example.lifememory.activity.model.BillAccountItem findItemDetailById(int) -> a
-    void addAccount(com.example.lifememory.activity.model.BillAccountItem) -> a
+    boolean addAccount(com.example.lifememory.activity.model.BillAccountItem) -> a
     void deleteItemById(int) -> b
     void updateItem(com.example.lifememory.activity.model.BillAccountItem) -> b
-    void closeDB() -> b
+    com.example.lifememory.activity.model.BillAccountItem findItemsForAddViews() -> b
+    com.example.lifememory.activity.model.BillAccountItem findItemsForAddTransferInViews() -> c
+    void closeDB() -> d
 com.example.lifememory.db.service.BillCatagoryService -> com.example.lifememory.b.a.d:
     android.database.sqlite.SQLiteDatabase db -> a
     java.util.List findFirstLevel() -> a
     java.util.List findSecondaryLevelByParentId(int) -> a
-    void addCatagory(com.example.lifememory.activity.model.BillCatagoryItem) -> a
+    boolean addCatagory(com.example.lifememory.activity.model.BillCatagoryItem) -> a
     void closeDB() -> b
     java.lang.String getCatagoryStr(int) -> b
-com.example.lifememory.db.service.BillInfoService -> com.example.lifememory.b.a.e:
+com.example.lifememory.db.service.BillInCatagoryService -> com.example.lifememory.b.a.e:
     android.database.sqlite.SQLiteDatabase db -> a
-    boolean isRelatedWithAccount(int) -> a
-com.example.lifememory.db.service.BillMemberService -> com.example.lifememory.b.a.f:
+    java.util.List getAllItems() -> a
+    void addItem(com.example.lifememory.activity.model.BillInCatagory) -> a
+    void deleteItem(int) -> a
+    void closeDB() -> b
+com.example.lifememory.db.service.BillInfoService -> com.example.lifememory.b.a.f:
+    android.database.sqlite.SQLiteDatabase db -> a
+    void addOutBill(com.example.lifememory.activity.model.Bill) -> a
+    void addInBill(com.example.lifememory.activity.model.Bill) -> b
+    void addTransferBill(com.example.lifememory.activity.model.Bill) -> c
+    void updateOutBill(com.example.lifememory.activity.model.Bill) -> d
+    void updateInBill(com.example.lifememory.activity.model.Bill) -> e
+    void updateTransferBill(com.example.lifememory.activity.model.Bill) -> f
+    void closeDB() -> a
+    java.util.List findBillByYMD(java.lang.String) -> a
+    java.util.List findBillByYMDInDetails(java.lang.String) -> b
+    java.util.List findIncomeByYM(java.lang.String) -> c
+    java.util.List findSpendByYM(java.lang.String) -> d
+    boolean isCurrentHaveBills(java.lang.String) -> e
+    java.util.List findAllYMDInMonth(java.lang.String) -> f
+    com.example.lifememory.activity.model.Bill findBillByIdx(int) -> a
+    void deleteBillByIdx(int) -> b
+com.example.lifememory.db.service.BillMemberService -> com.example.lifememory.b.a.g:
     android.database.sqlite.SQLiteDatabase db -> a
     java.util.List listAllMember() -> a
     void deleteItemByIdx(int) -> a
     void addMember(com.example.lifememory.activity.model.BillMember) -> a
     void closeDB() -> b
-com.example.lifememory.db.service.PregnancyDiaryJiShiBenService -> com.example.lifememory.b.a.g:
+com.example.lifememory.db.service.PregnancyDiaryJiShiBenService -> com.example.lifememory.b.a.h:
     android.database.sqlite.SQLiteDatabase db -> a
     void addPregnancyDiaryJiShiBen(com.example.lifememory.activity.model.PregnancyJiShiBen) -> a
     void updateItemByCreateDate(com.example.lifememory.activity.model.PregnancyJiShiBen) -> b
@@ -3681,7 +4022,7 @@ com.example.lifememory.db.service.PregnancyDiaryJiShiBenService -> com.example.l
     void deleteItemsByIdxs(java.util.List) -> a
     void deleteAll() -> a
     void closeDB() -> b
-com.example.lifememory.db.service.PregnancyDiaryLuYinService -> com.example.lifememory.b.a.h:
+com.example.lifememory.db.service.PregnancyDiaryLuYinService -> com.example.lifememory.b.a.i:
     android.database.sqlite.SQLiteDatabase db -> a
     com.example.lifememory.db.PregnancyDiaryOpenHelper openHelper -> b
     com.example.lifememory.activity.model.PregnancyLuYin findItemById(int) -> a
@@ -4093,55 +4434,73 @@ com.example.lifememory.fragments.FR_Bill_index -> com.example.lifememory.d.ar:
     android.view.animation.Animation flipperLeftOutAnim -> ah
     android.view.animation.Animation flipperRightInAnim -> ai
     android.view.animation.Animation flipperRightOutAnim -> aj
+    com.example.lifememory.db.service.BillInfoService billService -> ak
+    java.util.List todayBills -> al
+    java.util.List monthIncomeBills -> am
+    java.util.List monthSpendBills -> an
+    android.os.Handler handler -> ao
     void onCreate(android.os.Bundle) -> c
     android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
     void findViews(android.view.View) -> a
+    void onResume() -> k
     void GridViewAdapter() -> C
     void runAnimation() -> B
-    android.widget.ViewFlipper access$0(com.example.lifememory.fragments.FR_Bill_index) -> a
-    android.view.animation.Animation access$1(com.example.lifememory.fragments.FR_Bill_index) -> b
-    android.view.animation.Animation access$2(com.example.lifememory.fragments.FR_Bill_index) -> c
-    android.widget.TextView access$3(com.example.lifememory.fragments.FR_Bill_index) -> d
-    android.view.animation.Animation access$4(com.example.lifememory.fragments.FR_Bill_index) -> e
-    android.view.animation.Animation access$5(com.example.lifememory.fragments.FR_Bill_index) -> f
-    java.lang.String[] access$6(com.example.lifememory.fragments.FR_Bill_index) -> g
-    java.lang.String[] access$7(com.example.lifememory.fragments.FR_Bill_index) -> h
-    com.example.lifememory.activity.IndexActivity access$8(com.example.lifememory.fragments.FR_Bill_index) -> i
-    com.example.lifememory.activity.IndexActivity$MyOnTouchListener access$9(com.example.lifememory.fragments.FR_Bill_index) -> j
-    android.widget.ImageView access$10(com.example.lifememory.fragments.FR_Bill_index) -> k
-    android.view.animation.TranslateAnimation access$11(com.example.lifememory.fragments.FR_Bill_index) -> l
-    android.view.animation.TranslateAnimation access$12(com.example.lifememory.fragments.FR_Bill_index) -> m
+    void access$0(com.example.lifememory.fragments.FR_Bill_index) -> a
+    com.example.lifememory.db.service.BillInfoService access$1(com.example.lifememory.fragments.FR_Bill_index) -> b
+    void access$2(com.example.lifememory.fragments.FR_Bill_index,java.util.List) -> a
+    void access$3(com.example.lifememory.fragments.FR_Bill_index,java.util.List) -> b
+    void access$4(com.example.lifememory.fragments.FR_Bill_index,java.util.List) -> c
+    android.os.Handler access$5(com.example.lifememory.fragments.FR_Bill_index) -> c
+    android.widget.ViewFlipper access$6(com.example.lifememory.fragments.FR_Bill_index) -> d
+    android.view.animation.Animation access$7(com.example.lifememory.fragments.FR_Bill_index) -> e
+    android.view.animation.Animation access$8(com.example.lifememory.fragments.FR_Bill_index) -> f
+    android.widget.TextView access$9(com.example.lifememory.fragments.FR_Bill_index) -> g
+    android.view.animation.Animation access$10(com.example.lifememory.fragments.FR_Bill_index) -> h
+    android.view.animation.Animation access$11(com.example.lifememory.fragments.FR_Bill_index) -> i
+    java.lang.String[] access$12(com.example.lifememory.fragments.FR_Bill_index) -> j
+    java.lang.String[] access$13(com.example.lifememory.fragments.FR_Bill_index) -> k
+    com.example.lifememory.activity.IndexActivity access$14(com.example.lifememory.fragments.FR_Bill_index) -> l
+    com.example.lifememory.activity.IndexActivity$MyOnTouchListener access$15(com.example.lifememory.fragments.FR_Bill_index) -> m
+    android.widget.ImageView access$16(com.example.lifememory.fragments.FR_Bill_index) -> n
+    android.view.animation.TranslateAnimation access$17(com.example.lifememory.fragments.FR_Bill_index) -> o
+    android.view.animation.TranslateAnimation access$18(com.example.lifememory.fragments.FR_Bill_index) -> p
 com.example.lifememory.fragments.FR_Bill_index$1 -> com.example.lifememory.d.as:
     com.example.lifememory.fragments.FR_Bill_index this$0 -> a
-    boolean onTouch(android.view.MotionEvent) -> a
+    void handleMessage(android.os.Message) -> handleMessage
 com.example.lifememory.fragments.FR_Bill_index$2 -> com.example.lifememory.d.at:
     com.example.lifememory.fragments.FR_Bill_index this$0 -> a
-    void onOpen() -> a
+    boolean onTouch(android.view.MotionEvent) -> a
 com.example.lifememory.fragments.FR_Bill_index$3 -> com.example.lifememory.d.au:
     com.example.lifememory.fragments.FR_Bill_index this$0 -> a
-    void onClosed() -> a
+    void onOpen() -> a
 com.example.lifememory.fragments.FR_Bill_index$4 -> com.example.lifememory.d.av:
     com.example.lifememory.fragments.FR_Bill_index this$0 -> a
-    void onAnimationStart(android.view.animation.Animation) -> onAnimationStart
-    void onAnimationRepeat(android.view.animation.Animation) -> onAnimationRepeat
-    void onAnimationEnd(android.view.animation.Animation) -> onAnimationEnd
+    void onClosed() -> a
 com.example.lifememory.fragments.FR_Bill_index$5 -> com.example.lifememory.d.aw:
     com.example.lifememory.fragments.FR_Bill_index this$0 -> a
     void onAnimationStart(android.view.animation.Animation) -> onAnimationStart
     void onAnimationRepeat(android.view.animation.Animation) -> onAnimationRepeat
     void onAnimationEnd(android.view.animation.Animation) -> onAnimationEnd
-com.example.lifememory.fragments.FR_Bill_index$FlipperOnTouchListener -> com.example.lifememory.d.ax:
+com.example.lifememory.fragments.FR_Bill_index$6 -> com.example.lifememory.d.ax:
+    com.example.lifememory.fragments.FR_Bill_index this$0 -> a
+    void onAnimationStart(android.view.animation.Animation) -> onAnimationStart
+    void onAnimationRepeat(android.view.animation.Animation) -> onAnimationRepeat
+    void onAnimationEnd(android.view.animation.Animation) -> onAnimationEnd
+com.example.lifememory.fragments.FR_Bill_index$FlipperOnTouchListener -> com.example.lifememory.d.ay:
     float x1 -> a
     float x2 -> b
     com.example.lifememory.fragments.FR_Bill_index this$0 -> c
     boolean onTouch(android.view.View,android.view.MotionEvent) -> onTouch
-com.example.lifememory.fragments.FR_Bill_index$MyOnItemClickListener1 -> com.example.lifememory.d.ay:
+com.example.lifememory.fragments.FR_Bill_index$LoadDatasThread -> com.example.lifememory.d.az:
+    com.example.lifememory.fragments.FR_Bill_index this$0 -> a
+    void run() -> run
+com.example.lifememory.fragments.FR_Bill_index$MyOnItemClickListener1 -> com.example.lifememory.d.ba:
     com.example.lifememory.fragments.FR_Bill_index this$0 -> a
     void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
-com.example.lifememory.fragments.FR_Bill_index$MyOnItemClickListener2 -> com.example.lifememory.d.az:
+com.example.lifememory.fragments.FR_Bill_index$MyOnItemClickListener2 -> com.example.lifememory.d.bb:
     com.example.lifememory.fragments.FR_Bill_index this$0 -> a
     void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
-com.example.lifememory.fragments.FR_PregnancyDiary_JiShiBen_Grid -> com.example.lifememory.d.ba:
+com.example.lifememory.fragments.FR_PregnancyDiary_JiShiBen_Grid -> com.example.lifememory.d.bc:
     java.util.List jishibenItems -> R
     com.example.lifememory.db.service.PregnancyDiaryJiShiBenService dbService -> S
     java.util.List groupItems -> T
@@ -4166,13 +4525,13 @@ com.example.lifememory.fragments.FR_PregnancyDiary_JiShiBen_Grid -> com.example.
     android.widget.ExpandableListView access$2() -> C
     void access$3(com.example.lifememory.fragments.FR_PregnancyDiary_JiShiBen_Grid) -> b
     android.os.Handler access$4(com.example.lifememory.fragments.FR_PregnancyDiary_JiShiBen_Grid) -> c
-com.example.lifememory.fragments.FR_PregnancyDiary_JiShiBen_Grid$1 -> com.example.lifememory.d.bb:
+com.example.lifememory.fragments.FR_PregnancyDiary_JiShiBen_Grid$1 -> com.example.lifememory.d.bd:
     com.example.lifememory.fragments.FR_PregnancyDiary_JiShiBen_Grid this$0 -> a
     void handleMessage(android.os.Message) -> handleMessage
-com.example.lifememory.fragments.FR_PregnancyDiary_JiShiBen_Grid$InitDataThread -> com.example.lifememory.d.bc:
+com.example.lifememory.fragments.FR_PregnancyDiary_JiShiBen_Grid$InitDataThread -> com.example.lifememory.d.be:
     com.example.lifememory.fragments.FR_PregnancyDiary_JiShiBen_Grid this$0 -> a
     void run() -> run
-com.example.lifememory.fragments.FR_PregnancyDiary_JiShiBen_List -> com.example.lifememory.d.bd:
+com.example.lifememory.fragments.FR_PregnancyDiary_JiShiBen_List -> com.example.lifememory.d.bf:
     java.util.List jishibenItems -> R
     com.example.lifememory.db.service.PregnancyDiaryJiShiBenService dbService -> S
     java.util.List groupItems -> T
@@ -4195,16 +4554,16 @@ com.example.lifememory.fragments.FR_PregnancyDiary_JiShiBen_List -> com.example.
     android.widget.ExpandableListView access$2() -> C
     void access$3(com.example.lifememory.fragments.FR_PregnancyDiary_JiShiBen_List) -> b
     android.os.Handler access$4(com.example.lifememory.fragments.FR_PregnancyDiary_JiShiBen_List) -> c
-com.example.lifememory.fragments.FR_PregnancyDiary_JiShiBen_List$1 -> com.example.lifememory.d.be:
+com.example.lifememory.fragments.FR_PregnancyDiary_JiShiBen_List$1 -> com.example.lifememory.d.bg:
     com.example.lifememory.fragments.FR_PregnancyDiary_JiShiBen_List this$0 -> a
     void handleMessage(android.os.Message) -> handleMessage
-com.example.lifememory.fragments.FR_PregnancyDiary_JiShiBen_List$2 -> com.example.lifememory.d.bf:
+com.example.lifememory.fragments.FR_PregnancyDiary_JiShiBen_List$2 -> com.example.lifememory.d.bh:
     com.example.lifememory.fragments.FR_PregnancyDiary_JiShiBen_List this$0 -> a
     boolean onChildClick(android.widget.ExpandableListView,android.view.View,int,int,long) -> onChildClick
-com.example.lifememory.fragments.FR_PregnancyDiary_JiShiBen_List$InitDataThread -> com.example.lifememory.d.bg:
+com.example.lifememory.fragments.FR_PregnancyDiary_JiShiBen_List$InitDataThread -> com.example.lifememory.d.bi:
     com.example.lifememory.fragments.FR_PregnancyDiary_JiShiBen_List this$0 -> a
     void run() -> run
-com.example.lifememory.fragments.FR_PregnancyDiary_LuYinBi_Grid -> com.example.lifememory.d.bh:
+com.example.lifememory.fragments.FR_PregnancyDiary_LuYinBi_Grid -> com.example.lifememory.d.bj:
     com.example.lifememory.activity.IndexActivity indexActivity -> R
     android.widget.ExpandableListView listView -> S
     java.util.List groupItems -> T
@@ -4228,13 +4587,13 @@ com.example.lifememory.fragments.FR_PregnancyDiary_LuYinBi_Grid -> com.example.l
     void access$0(com.example.lifememory.fragments.FR_PregnancyDiary_LuYinBi_Grid) -> a
     void access$1(com.example.lifememory.fragments.FR_PregnancyDiary_LuYinBi_Grid) -> b
     android.os.Handler access$2(com.example.lifememory.fragments.FR_PregnancyDiary_LuYinBi_Grid) -> c
-com.example.lifememory.fragments.FR_PregnancyDiary_LuYinBi_Grid$1 -> com.example.lifememory.d.bi:
+com.example.lifememory.fragments.FR_PregnancyDiary_LuYinBi_Grid$1 -> com.example.lifememory.d.bk:
     com.example.lifememory.fragments.FR_PregnancyDiary_LuYinBi_Grid this$0 -> a
     void handleMessage(android.os.Message) -> handleMessage
-com.example.lifememory.fragments.FR_PregnancyDiary_LuYinBi_Grid$InitDatasThread -> com.example.lifememory.d.bj:
+com.example.lifememory.fragments.FR_PregnancyDiary_LuYinBi_Grid$InitDatasThread -> com.example.lifememory.d.bl:
     com.example.lifememory.fragments.FR_PregnancyDiary_LuYinBi_Grid this$0 -> a
     void run() -> run
-com.example.lifememory.fragments.FR_PregnancyDiary_LuYinBi_List -> com.example.lifememory.d.bk:
+com.example.lifememory.fragments.FR_PregnancyDiary_LuYinBi_List -> com.example.lifememory.d.bm:
     android.widget.ExpandableListView listView -> R
     java.util.List groupItems -> S
     com.example.lifememory.activity.model.PrenancyJiShiBenListViewExpandableGroupItem groupItem -> T
@@ -4258,16 +4617,16 @@ com.example.lifememory.fragments.FR_PregnancyDiary_LuYinBi_List -> com.example.l
     void access$1(com.example.lifememory.fragments.FR_PregnancyDiary_LuYinBi_List) -> b
     android.os.Handler access$2(com.example.lifememory.fragments.FR_PregnancyDiary_LuYinBi_List) -> c
     java.util.List access$3(com.example.lifememory.fragments.FR_PregnancyDiary_LuYinBi_List) -> d
-com.example.lifememory.fragments.FR_PregnancyDiary_LuYinBi_List$1 -> com.example.lifememory.d.bl:
+com.example.lifememory.fragments.FR_PregnancyDiary_LuYinBi_List$1 -> com.example.lifememory.d.bn:
     com.example.lifememory.fragments.FR_PregnancyDiary_LuYinBi_List this$0 -> a
     void handleMessage(android.os.Message) -> handleMessage
-com.example.lifememory.fragments.FR_PregnancyDiary_LuYinBi_List$2 -> com.example.lifememory.d.bm:
+com.example.lifememory.fragments.FR_PregnancyDiary_LuYinBi_List$2 -> com.example.lifememory.d.bo:
     com.example.lifememory.fragments.FR_PregnancyDiary_LuYinBi_List this$0 -> a
     boolean onChildClick(android.widget.ExpandableListView,android.view.View,int,int,long) -> onChildClick
-com.example.lifememory.fragments.FR_PregnancyDiary_LuYinBi_List$InitDatasThread -> com.example.lifememory.d.bn:
+com.example.lifememory.fragments.FR_PregnancyDiary_LuYinBi_List$InitDatasThread -> com.example.lifememory.d.bp:
     com.example.lifememory.fragments.FR_PregnancyDiary_LuYinBi_List this$0 -> a
     void run() -> run
-com.example.lifememory.fragments.LeftMenuFragment -> com.example.lifememory.d.bo:
+com.example.lifememory.fragments.LeftMenuFragment -> com.example.lifememory.d.bq:
     android.widget.ListView listView -> P
     android.support.v4.app.FragmentManager fm -> Q
     java.util.ArrayList fragments -> R
@@ -4281,10 +4640,10 @@ com.example.lifememory.fragments.LeftMenuFragment -> com.example.lifememory.d.bo
     void changeFragment(int) -> a
     com.example.lifememory.adapter.LeftMenuListViewAdapter access$0(com.example.lifememory.fragments.LeftMenuFragment) -> a
     void access$1(com.example.lifememory.fragments.LeftMenuFragment,int) -> a
-com.example.lifememory.fragments.LeftMenuFragment$1 -> com.example.lifememory.d.bp:
+com.example.lifememory.fragments.LeftMenuFragment$1 -> com.example.lifememory.d.br:
     com.example.lifememory.fragments.LeftMenuFragment this$0 -> a
     void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
-com.example.lifememory.fragments.PregnancyDiaryFragment -> com.example.lifememory.d.bq:
+com.example.lifememory.fragments.PregnancyDiaryFragment -> com.example.lifememory.d.bs:
     com.example.lifememory.activity.IndexActivity indexActivity -> P
     android.widget.ImageView leftmenuHandler -> Q
     android.widget.LinearLayout layout_jishiben -> R
@@ -4376,31 +4735,31 @@ com.example.lifememory.fragments.PregnancyDiaryFragment -> com.example.lifememor
     void access$39(com.example.lifememory.fragments.PregnancyDiaryFragment) -> C
     void access$40(com.example.lifememory.fragments.PregnancyDiaryFragment,boolean) -> d
     android.widget.LinearLayout access$41(com.example.lifememory.fragments.PregnancyDiaryFragment) -> D
-com.example.lifememory.fragments.PregnancyDiaryFragment$1 -> com.example.lifememory.d.br:
+com.example.lifememory.fragments.PregnancyDiaryFragment$1 -> com.example.lifememory.d.bt:
     com.example.lifememory.fragments.PregnancyDiaryFragment this$0 -> a
     void handleMessage(android.os.Message) -> handleMessage
-com.example.lifememory.fragments.PregnancyDiaryFragment$10 -> com.example.lifememory.d.bs:
+com.example.lifememory.fragments.PregnancyDiaryFragment$10 -> com.example.lifememory.d.bu:
     com.example.lifememory.fragments.PregnancyDiaryFragment this$0 -> a
     void onClick(android.view.View) -> onClick
-com.example.lifememory.fragments.PregnancyDiaryFragment$11 -> com.example.lifememory.d.bt:
+com.example.lifememory.fragments.PregnancyDiaryFragment$11 -> com.example.lifememory.d.bv:
     com.example.lifememory.fragments.PregnancyDiaryFragment this$0 -> a
     void onCheckedChanged(android.widget.CompoundButton,boolean) -> onCheckedChanged
-com.example.lifememory.fragments.PregnancyDiaryFragment$12 -> com.example.lifememory.d.bu:
+com.example.lifememory.fragments.PregnancyDiaryFragment$12 -> com.example.lifememory.d.bw:
     com.example.lifememory.fragments.PregnancyDiaryFragment this$0 -> a
     void onCheckedChanged(android.widget.CompoundButton,boolean) -> onCheckedChanged
-com.example.lifememory.fragments.PregnancyDiaryFragment$13 -> com.example.lifememory.d.bv:
+com.example.lifememory.fragments.PregnancyDiaryFragment$13 -> com.example.lifememory.d.bx:
     com.example.lifememory.fragments.PregnancyDiaryFragment this$0 -> a
     void onCheckedChanged(android.widget.CompoundButton,boolean) -> onCheckedChanged
-com.example.lifememory.fragments.PregnancyDiaryFragment$14 -> com.example.lifememory.d.bw:
+com.example.lifememory.fragments.PregnancyDiaryFragment$14 -> com.example.lifememory.d.by:
     com.example.lifememory.fragments.PregnancyDiaryFragment this$0 -> a
     boolean onTouch(android.view.MotionEvent) -> a
-com.example.lifememory.fragments.PregnancyDiaryFragment$15 -> com.example.lifememory.d.bx:
+com.example.lifememory.fragments.PregnancyDiaryFragment$15 -> com.example.lifememory.d.bz:
     com.example.lifememory.fragments.PregnancyDiaryFragment this$0 -> a
     void onOpen() -> a
-com.example.lifememory.fragments.PregnancyDiaryFragment$16 -> com.example.lifememory.d.by:
+com.example.lifememory.fragments.PregnancyDiaryFragment$16 -> com.example.lifememory.d.ca:
     com.example.lifememory.fragments.PregnancyDiaryFragment this$0 -> a
     void onClosed() -> a
-com.example.lifememory.fragments.PregnancyDiaryFragment$2 -> com.example.lifememory.d.bz:
+com.example.lifememory.fragments.PregnancyDiaryFragment$2 -> com.example.lifememory.d.cb:
     com.example.lifememory.fragments.PregnancyDiaryFragment this$0 -> a
     void onDialogUnSave(android.app.Dialog,java.lang.Object) -> e
     void onDialogSave(android.app.Dialog,java.lang.Object) -> d
@@ -4408,10 +4767,10 @@ com.example.lifememory.fragments.PregnancyDiaryFragment$2 -> com.example.lifemem
     void onDialogCreate(android.app.Dialog,java.lang.Object) -> b
     void onDialogCancel(android.app.Dialog,java.lang.Object) -> c
     com.example.lifememory.fragments.PregnancyDiaryFragment access$0(com.example.lifememory.fragments.PregnancyDiaryFragment$2) -> a
-com.example.lifememory.fragments.PregnancyDiaryFragment$2$1 -> com.example.lifememory.d.ca:
+com.example.lifememory.fragments.PregnancyDiaryFragment$2$1 -> com.example.lifememory.d.cc:
     com.example.lifememory.fragments.PregnancyDiaryFragment$2 this$1 -> a
     void run() -> run
-com.example.lifememory.fragments.PregnancyDiaryFragment$3 -> com.example.lifememory.d.cb:
+com.example.lifememory.fragments.PregnancyDiaryFragment$3 -> com.example.lifememory.d.cd:
     com.example.lifememory.fragments.PregnancyDiaryFragment this$0 -> a
     void onDialogUnSave(android.app.Dialog,java.lang.Object) -> e
     void onDialogSave(android.app.Dialog,java.lang.Object) -> d
@@ -4419,10 +4778,10 @@ com.example.lifememory.fragments.PregnancyDiaryFragment$3 -> com.example.lifemem
     void onDialogCreate(android.app.Dialog,java.lang.Object) -> b
     void onDialogCancel(android.app.Dialog,java.lang.Object) -> c
     com.example.lifememory.fragments.PregnancyDiaryFragment access$0(com.example.lifememory.fragments.PregnancyDiaryFragment$3) -> a
-com.example.lifememory.fragments.PregnancyDiaryFragment$3$1 -> com.example.lifememory.d.cc:
+com.example.lifememory.fragments.PregnancyDiaryFragment$3$1 -> com.example.lifememory.d.ce:
     com.example.lifememory.fragments.PregnancyDiaryFragment$3 this$1 -> a
     void run() -> run
-com.example.lifememory.fragments.PregnancyDiaryFragment$4 -> com.example.lifememory.d.cd:
+com.example.lifememory.fragments.PregnancyDiaryFragment$4 -> com.example.lifememory.d.cf:
     com.example.lifememory.fragments.PregnancyDiaryFragment this$0 -> a
     void onDialogUnSave(android.app.Dialog,java.lang.Object) -> e
     void onDialogSave(android.app.Dialog,java.lang.Object) -> d
@@ -4430,10 +4789,10 @@ com.example.lifememory.fragments.PregnancyDiaryFragment$4 -> com.example.lifemem
     void onDialogCreate(android.app.Dialog,java.lang.Object) -> b
     void onDialogCancel(android.app.Dialog,java.lang.Object) -> c
     com.example.lifememory.fragments.PregnancyDiaryFragment access$0(com.example.lifememory.fragments.PregnancyDiaryFragment$4) -> a
-com.example.lifememory.fragments.PregnancyDiaryFragment$4$1 -> com.example.lifememory.d.ce:
+com.example.lifememory.fragments.PregnancyDiaryFragment$4$1 -> com.example.lifememory.d.cg:
     com.example.lifememory.fragments.PregnancyDiaryFragment$4 this$1 -> a
     void run() -> run
-com.example.lifememory.fragments.PregnancyDiaryFragment$5 -> com.example.lifememory.d.cf:
+com.example.lifememory.fragments.PregnancyDiaryFragment$5 -> com.example.lifememory.d.ch:
     com.example.lifememory.fragments.PregnancyDiaryFragment this$0 -> a
     void onDialogUnSave(android.app.Dialog,java.lang.Object) -> e
     void onDialogSave(android.app.Dialog,java.lang.Object) -> d
@@ -4441,39 +4800,39 @@ com.example.lifememory.fragments.PregnancyDiaryFragment$5 -> com.example.lifemem
     void onDialogCreate(android.app.Dialog,java.lang.Object) -> b
     void onDialogCancel(android.app.Dialog,java.lang.Object) -> c
     com.example.lifememory.fragments.PregnancyDiaryFragment access$0(com.example.lifememory.fragments.PregnancyDiaryFragment$5) -> a
-com.example.lifememory.fragments.PregnancyDiaryFragment$5$1 -> com.example.lifememory.d.cg:
+com.example.lifememory.fragments.PregnancyDiaryFragment$5$1 -> com.example.lifememory.d.ci:
     com.example.lifememory.fragments.PregnancyDiaryFragment$5 this$1 -> a
     void run() -> run
-com.example.lifememory.fragments.PregnancyDiaryFragment$6 -> com.example.lifememory.d.ch:
+com.example.lifememory.fragments.PregnancyDiaryFragment$6 -> com.example.lifememory.d.cj:
     com.example.lifememory.fragments.PregnancyDiaryFragment this$0 -> a
     void onClick(android.view.View) -> onClick
-com.example.lifememory.fragments.PregnancyDiaryFragment$7 -> com.example.lifememory.d.ci:
+com.example.lifememory.fragments.PregnancyDiaryFragment$7 -> com.example.lifememory.d.ck:
     com.example.lifememory.fragments.PregnancyDiaryFragment this$0 -> a
     void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
-com.example.lifememory.fragments.PregnancyDiaryFragment$8 -> com.example.lifememory.d.cj:
+com.example.lifememory.fragments.PregnancyDiaryFragment$8 -> com.example.lifememory.d.cl:
     com.example.lifememory.fragments.PregnancyDiaryFragment this$0 -> a
     void onDismiss() -> onDismiss
-com.example.lifememory.fragments.PregnancyDiaryFragment$9 -> com.example.lifememory.d.ck:
+com.example.lifememory.fragments.PregnancyDiaryFragment$9 -> com.example.lifememory.d.cm:
     com.example.lifememory.fragments.PregnancyDiaryFragment this$0 -> a
     void onClick(android.view.View) -> onClick
     com.example.lifememory.fragments.PregnancyDiaryFragment access$0(com.example.lifememory.fragments.PregnancyDiaryFragment$9) -> a
-com.example.lifememory.fragments.PregnancyDiaryFragment$9$1 -> com.example.lifememory.d.cl:
+com.example.lifememory.fragments.PregnancyDiaryFragment$9$1 -> com.example.lifememory.d.cn:
     com.example.lifememory.fragments.PregnancyDiaryFragment$9 this$1 -> a
     void run() -> run
-com.example.lifememory.fragments.PregnancyDiaryFragment$9$2 -> com.example.lifememory.d.cm:
+com.example.lifememory.fragments.PregnancyDiaryFragment$9$2 -> com.example.lifememory.d.co:
     com.example.lifememory.fragments.PregnancyDiaryFragment$9 this$1 -> a
     void run() -> run
-com.example.lifememory.fragments.PregnancyDiaryFragment$9$3 -> com.example.lifememory.d.cn:
+com.example.lifememory.fragments.PregnancyDiaryFragment$9$3 -> com.example.lifememory.d.cp:
     com.example.lifememory.fragments.PregnancyDiaryFragment$9 this$1 -> a
     void run() -> run
-com.example.lifememory.fragments.PregnancyDiaryFragment$9$4 -> com.example.lifememory.d.co:
+com.example.lifememory.fragments.PregnancyDiaryFragment$9$4 -> com.example.lifememory.d.cq:
     com.example.lifememory.fragments.PregnancyDiaryFragment$9 this$1 -> a
     void run() -> run
-com.example.lifememory.fragments.PregnancyDiaryFragment$OnClickListenerImpl -> com.example.lifememory.d.cp:
+com.example.lifememory.fragments.PregnancyDiaryFragment$OnClickListenerImpl -> com.example.lifememory.d.cr:
     int index -> b
     com.example.lifememory.fragments.PregnancyDiaryFragment this$0 -> a
     void onClick(android.view.View) -> onClick
-com.example.lifememory.fragments.PregnancyDiaryFragment$OnPageChangerListenerImpl -> com.example.lifememory.d.cq:
+com.example.lifememory.fragments.PregnancyDiaryFragment$OnPageChangerListenerImpl -> com.example.lifememory.d.cs:
     com.example.lifememory.fragments.PregnancyDiaryFragment this$0 -> a
     void onPageScrollStateChanged(int) -> b
     void onPageScrolled(int,float,int) -> a
@@ -4528,51 +4887,166 @@ com.example.lifememory.utils.BillAccountCreator -> com.example.lifememory.utils.
 com.example.lifememory.utils.BillCatagoryCreator -> com.example.lifememory.utils.c:
     com.example.lifememory.activity.model.BillCatagoryItem item -> a
     void initCatagoryDatas(android.database.sqlite.SQLiteDatabase) -> a
-com.example.lifememory.utils.BillMemberCreator -> com.example.lifememory.utils.d:
+com.example.lifememory.utils.BillInCatagoryCreator -> com.example.lifememory.utils.d:
+    void initInCatagorys(android.database.sqlite.SQLiteDatabase) -> a
+com.example.lifememory.utils.BillMemberCreator -> com.example.lifememory.utils.e:
     void initMember(android.database.sqlite.SQLiteDatabase) -> a
-com.example.lifememory.utils.ConstantUtil -> com.example.lifememory.utils.e:
+com.example.lifememory.utils.ConstantUtil -> com.example.lifememory.utils.f:
     java.lang.String[] BILL_ACCOUNT_BIZHONG_NAMES1 -> a
     java.lang.String[] BILL_ACCOUNT_BIZHONG_NAMES2 -> b
     int[] BILL_ACCOUNT_BIZHONG_IMAGEIDS -> c
-com.example.lifememory.utils.CopyFileFromData -> com.example.lifememory.utils.f:
+com.example.lifememory.utils.CopyFileFromData -> com.example.lifememory.utils.g:
     com.example.lifememory.utils.CopyFileFromData instance -> a
     com.example.lifememory.utils.CopyFileFromData getInstance() -> a
     void copyDatabase(android.content.Context,java.lang.String) -> a
-com.example.lifememory.utils.DateFormater -> com.example.lifememory.utils.g:
+com.example.lifememory.utils.DateFormater -> com.example.lifememory.utils.h:
     com.example.lifememory.utils.DateFormater instance -> a
     com.example.lifememory.utils.DateFormater getInstatnce() -> a
     java.lang.String getCurrentDate() -> b
     java.lang.String getYMD() -> c
     java.lang.String getYM() -> d
-com.example.lifememory.utils.MutilRecodeManager -> com.example.lifememory.utils.h:
+    java.lang.String getY_M_D() -> e
+    java.lang.String getY_M() -> f
+    java.lang.String getWeekday(java.lang.String) -> a
+com.example.lifememory.utils.MutilRecodeManager -> com.example.lifememory.utils.i:
     com.example.lifememory.utils.MutilRecodeManager instance -> a
     com.example.lifememory.utils.MutilRecodeManager getInstance() -> a
     void mergeAllAmrFiles(java.util.List,java.lang.String) -> a
-com.example.lifememory.utils.MyAnimations -> com.example.lifememory.utils.i:
+com.example.lifememory.utils.MyAnimations -> com.example.lifememory.utils.j:
     int xOffset -> a
     int yOffset -> b
     void initOffset(android.content.Context) -> a
     android.view.animation.Animation getRotateAnimation(float,float,int) -> a
     void startAnimationsIn(android.view.ViewGroup,int) -> a
     void startAnimationsOut(android.view.ViewGroup,int) -> b
-com.example.lifememory.utils.MyAnimations$1 -> com.example.lifememory.utils.j:
+com.example.lifememory.utils.MyAnimations$1 -> com.example.lifememory.utils.k:
     android.widget.ImageButton val$inoutimagebutton -> a
     void onAnimationStart(android.view.animation.Animation) -> onAnimationStart
     void onAnimationRepeat(android.view.animation.Animation) -> onAnimationRepeat
     void onAnimationEnd(android.view.animation.Animation) -> onAnimationEnd
-com.example.lifememory.utils.SDCardManager -> com.example.lifememory.utils.k:
+com.example.lifememory.utils.SDCardManager -> com.example.lifememory.utils.l:
     java.lang.String homeFileName -> b
     com.example.lifememory.utils.SDCardManager instance -> a
     com.example.lifememory.utils.SDCardManager getInstance() -> a
     java.lang.String getPregnancyRecodePath() -> b
-com.example.lifememory.utils.SoundMeter -> com.example.lifememory.utils.l:
+com.example.lifememory.utils.SetListViewHeight -> com.example.lifememory.utils.m:
+    void setListViewHeightBasedOnChildren(android.widget.ListView) -> a
+com.example.lifememory.utils.SoundMeter -> com.example.lifememory.utils.n:
     android.media.MediaRecorder mRecorder -> a
     double mEMA -> b
     void start(java.lang.String,java.lang.String) -> a
     void stop() -> a
     double getAmplitude() -> b
-com.example.lifememory.utils.TimeSwitcher -> com.example.lifememory.utils.m:
+com.example.lifememory.utils.TimeSwitcher -> com.example.lifememory.utils.o:
     com.example.lifememory.utils.TimeSwitcher instance -> a
     com.example.lifememory.utils.TimeSwitcher getInstance() -> a
     java.lang.String formatLongToTimeStr(java.lang.Long) -> a
     java.lang.String formatLongToTimeStrEn(java.lang.Long) -> b
+com.example.lifememory.wheel.NumericWheelAdapter -> com.example.lifememory.wheel.a:
+    int minValue -> a
+    int maxValue -> b
+    java.lang.String format -> c
+    java.lang.String getItem(int) -> a
+    int getItemsCount() -> a
+    int getMaximumLength() -> b
+com.example.lifememory.wheel.OnWheelChangedListener -> com.example.lifememory.wheel.b:
+    void onChanged(com.example.lifememory.wheel.WheelView,int,int) -> a
+com.example.lifememory.wheel.OnWheelScrollListener -> com.example.lifememory.wheel.c:
+    void onScrollingStarted(com.example.lifememory.wheel.WheelView) -> a
+    void onScrollingFinished(com.example.lifememory.wheel.WheelView) -> b
+com.example.lifememory.wheel.WheelAdapter -> com.example.lifememory.wheel.d:
+    int getItemsCount() -> a
+    java.lang.String getItem(int) -> a
+    int getMaximumLength() -> b
+com.example.lifememory.wheel.WheelView -> com.example.lifememory.wheel.WheelView:
+    int[] SHADOWS_COLORS -> c
+    int TEXT_SIZE -> a
+    int ITEM_OFFSET -> d
+    com.example.lifememory.wheel.WheelAdapter adapter -> e
+    int currentItem -> f
+    int itemsWidth -> g
+    int labelWidth -> h
+    int visibleItems -> i
+    int itemHeight -> j
+    android.text.TextPaint itemsPaint -> k
+    android.text.TextPaint valuePaint -> l
+    android.text.StaticLayout itemsLayout -> m
+    android.text.StaticLayout labelLayout -> n
+    android.text.StaticLayout valueLayout -> o
+    java.lang.String label -> p
+    android.graphics.drawable.Drawable centerDrawable -> q
+    android.graphics.drawable.GradientDrawable topShadow -> r
+    android.graphics.drawable.GradientDrawable bottomShadow -> s
+    boolean isScrollingPerformed -> t
+    int scrollingOffset -> u
+    android.view.GestureDetector gestureDetector -> v
+    android.widget.Scroller scroller -> w
+    int lastScrollY -> x
+    boolean isCyclic -> b
+    java.util.List changingListeners -> y
+    java.util.List scrollingListeners -> z
+    android.view.GestureDetector$SimpleOnGestureListener gestureListener -> A
+    int MESSAGE_SCROLL -> B
+    int MESSAGE_JUSTIFY -> C
+    android.os.Handler animationHandler -> D
+    void initData(android.content.Context) -> a
+    com.example.lifememory.wheel.WheelAdapter getAdapter() -> getAdapter
+    void setAdapter(com.example.lifememory.wheel.WheelAdapter) -> setAdapter
+    void setInterpolator(android.view.animation.Interpolator) -> setInterpolator
+    int getVisibleItems() -> getVisibleItems
+    void setVisibleItems(int) -> setVisibleItems
+    java.lang.String getLabel() -> getLabel
+    void setLabel(java.lang.String) -> setLabel
+    void addChangingListener(com.example.lifememory.wheel.OnWheelChangedListener) -> a
+    void notifyChangingListeners(int,int) -> a
+    void notifyScrollingListenersAboutStart() -> a
+    void notifyScrollingListenersAboutEnd() -> b
+    int getCurrentItem() -> getCurrentItem
+    void setCurrentItem(int,boolean) -> a
+    void setCurrentItem(int) -> setCurrentItem
+    void setCyclic(boolean) -> setCyclic
+    void invalidateLayouts() -> d
+    void initResourcesIfNecessary() -> e
+    int getDesiredHeight(android.text.Layout) -> a
+    java.lang.String getTextItem(int) -> a
+    java.lang.String buildText(boolean) -> a
+    int getMaxTextLength() -> getMaxTextLength
+    int getItemHeight() -> getItemHeight
+    int calculateLayoutWidth(int,int) -> c
+    void createLayouts(int,int) -> d
+    void onMeasure(int,int) -> onMeasure
+    void onDraw(android.graphics.Canvas) -> onDraw
+    void drawShadows(android.graphics.Canvas) -> a
+    void drawValue(android.graphics.Canvas) -> b
+    void drawItems(android.graphics.Canvas) -> c
+    void drawCenterRect(android.graphics.Canvas) -> d
+    boolean onTouchEvent(android.view.MotionEvent) -> onTouchEvent
+    void doScroll(int) -> b
+    void setNextMessage(int) -> setNextMessage
+    void clearMessages() -> f
+    void justify() -> g
+    void startScrolling() -> h
+    void finishScrolling() -> c
+    void scroll(int,int) -> b
+    boolean access$0(com.example.lifememory.wheel.WheelView) -> a
+    android.widget.Scroller access$1(com.example.lifememory.wheel.WheelView) -> b
+    void access$2(com.example.lifememory.wheel.WheelView) -> c
+    void access$3(com.example.lifememory.wheel.WheelView) -> d
+    void access$4(com.example.lifememory.wheel.WheelView,int) -> a
+    int access$5(com.example.lifememory.wheel.WheelView) -> e
+    int access$6(com.example.lifememory.wheel.WheelView) -> f
+    int access$7(com.example.lifememory.wheel.WheelView) -> g
+    void access$8(com.example.lifememory.wheel.WheelView,int) -> b
+    com.example.lifememory.wheel.WheelAdapter access$9(com.example.lifememory.wheel.WheelView) -> h
+    int access$10(com.example.lifememory.wheel.WheelView) -> i
+    void access$11(com.example.lifememory.wheel.WheelView,int) -> c
+    android.os.Handler access$12(com.example.lifememory.wheel.WheelView) -> j
+    void access$13(com.example.lifememory.wheel.WheelView) -> k
+com.example.lifememory.wheel.WheelView$1 -> com.example.lifememory.wheel.e:
+    com.example.lifememory.wheel.WheelView this$0 -> a
+    boolean onDown(android.view.MotionEvent) -> onDown
+    boolean onScroll(android.view.MotionEvent,android.view.MotionEvent,float,float) -> onScroll
+    boolean onFling(android.view.MotionEvent,android.view.MotionEvent,float,float) -> onFling
+com.example.lifememory.wheel.WheelView$2 -> com.example.lifememory.wheel.f:
+    com.example.lifememory.wheel.WheelView this$0 -> a
+    void handleMessage(android.os.Message) -> handleMessage
