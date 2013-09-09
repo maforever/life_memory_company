@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.lifememory.R;
+import com.example.lifememory.activity.BillAccountDetailsActivity;
 import com.example.lifememory.activity.BillInputActivity;
 import com.example.lifememory.activity.BillMonthDetailsActivity;
 import com.example.lifememory.activity.IndexActivity;
@@ -303,7 +304,10 @@ public class FR_Bill_index extends Fragment {
 				Toast.makeText(getActivity(), secondPageTitle[position], 0).show();
 				break;
 			case 2:
-				Toast.makeText(getActivity(), secondPageTitle[position], 0).show();
+//				Toast.makeText(getActivity(), secondPageTitle[position], 0).show();
+				intent = new Intent(getActivity(), BillAccountDetailsActivity.class);
+				startActivity(intent);
+				getActivity().overridePendingTransition(R.anim.activity_up, R.anim.activity_steady);
 				break;
 			}
 		}

@@ -9,6 +9,7 @@ import com.example.lifememory.db.PregnancyDiaryOpenHelper;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class BillAccountService {
 	private SQLiteDatabase db = null;
@@ -32,6 +33,17 @@ public class BillAccountService {
 			items.add(item);
 		}
 		return items;
+	}
+	
+
+	
+	public double getJingZiChan() {
+		double jingzichan = 0;
+		Cursor cursor = db.rawQuery("select dangqianyue from bill_account", null);
+		while(cursor.moveToNext()) {
+			jingzichan += cursor.getDouble(0);
+		}
+		return jingzichan;
 	}
 	
 	
@@ -190,6 +202,26 @@ public class BillAccountService {
 	public void closeDB() {
 		db.close();
 	}
+	
+	/*
+	 * 根据账户类型查找相应的账户信息  // 1现金 ， 2信用卡， 3储蓄， 4网上支付
+	 */
+	//现金类型的账户
+	public List<BillAccountItem> findItemsByAccountCatagory(int catagoryType) {
+		List<BillAccountItem> items = new ArrayList<BillAccountItem>();
+		BillAccountItem item = null;
+		Cursor cursor = db.rawQuery("select * from bill_account where catagoryname = ?", new String[]{String.valueOf(catagoryType)});
+		while(cursor.moveToNext()) {
+			item = new BillAccountItem();
+			item.setName(cursor.getString(cursor.getColumnIndex("name")));
+			item.setBizhong(cursor.getString(cursor.getColumnIndex("bizhong")));
+			item.setDangqianyue(cursor.getDouble(cursor.getColumnIndex("dangqianyue")));
+			items.add(item);
+		}
+		Log.i("a", "items size =" + items.toString());
+		return items;
+	}
+	
 }
 
 

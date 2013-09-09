@@ -31,6 +31,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.PopupWindow.OnDismissListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -105,6 +106,13 @@ public class BillMonthDetailsActivity extends Activity {
 		tipPopWindow = new PopupWindow(contentView, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 		tipPopWindow.setFocusable(true);
 		tipPopWindow.setBackgroundDrawable(new ColorDrawable());
+		tipPopWindow.setAnimationStyle(R.style.popwindow_tip_animation);
+		tipPopWindow.setOnDismissListener(new OnDismissListener() {
+			@Override
+			public void onDismiss() {
+				handler.removeCallbacks(timeTask);
+			}
+		});
 	}
 	
 	public void btnClick(View view) {
@@ -138,9 +146,10 @@ public class BillMonthDetailsActivity extends Activity {
 			if(tipPopWindow.isShowing()) {
 				tipPopWindow.dismiss();
 			}
-			handler.removeCallbacks(this);
 		}
 	};
+	
+	
 	
 	private void back() {
 		BillMonthDetailsActivity.this.finish();

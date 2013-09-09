@@ -32,18 +32,43 @@ public class BillInfoService {
 		db.execSQL("insert into bill_info (jine, outcatagory, account, accountid, date, dateymd, member, beizhu, isCanBaoXiao, billType) values (?,?,?,?,?,?,?,?,?, ?)", 
 				new String[]{bill.getJine(), bill.getOutCatagory(), bill.getAccount(), String.valueOf(bill.getAccountid()), bill.getDate(),bill.getDateYMD(), bill.getMember(),
 				bill.getBeizhu(), String.valueOf(bill.isCanBaoXiao()), String.valueOf(bill.getBillType())});
+		double accountYue = 0;
+		Cursor cursor = db.rawQuery("select dangqianyue from bill_account where idx = ?", new String[]{String.valueOf(bill.getAccountid())});
+		cursor.moveToFirst();
+		accountYue = cursor.getDouble(0);
+		double currentAccountYue = accountYue - Float.parseFloat(bill.getJine());
+		db.execSQL("update bill_account set dangqianyue = ? where idx = ?", new String[]{String.valueOf(currentAccountYue), String.valueOf(bill.getAccountid())});
+		
 	}
 	//添加收入类型的账单信息
 	public void addInBill(Bill bill) {
 		db.execSQL("insert into bill_info (jine, incatagory, account, accountid, date,dateymd, member, beizhu, billType) values (?, ?,?, ?, ?, ?, ?, ?, ?)", 
 				new String[]{bill.getJine(), bill.getInCatagory(), bill.getAccount(), String.valueOf(bill.getAccountid()), bill.getDate(),bill.getDateYMD(), bill.getMember(),
 				bill.getBeizhu(), String.valueOf(bill.getBillType())});
+		double accountYue = 0;
+		Cursor cursor = db.rawQuery("select dangqianyue from bill_account where idx = ?", new String[]{String.valueOf(bill.getAccountid())});
+		cursor.moveToFirst();
+		accountYue = cursor.getDouble(0);
+		double currentAccountYue = accountYue + Float.parseFloat(bill.getJine());
+		db.execSQL("update bill_account set dangqianyue = ? where idx = ?", new String[]{String.valueOf(currentAccountYue), String.valueOf(bill.getAccountid())});
 	}
 	//添加转账类型的账单信息
 	public void addTransferBill(Bill bill) {
 		db.execSQL("insert into bill_info (jine, date, dateymd, transferIn, transferInAccountId, transferOut, transferOutAccountId, billType) values (?, ?, ?, ?, ?, ?, ?, ?)", new String[]{
 				bill.getJine(), bill.getDate(),bill.getDateYMD(), bill.getTransferIn(), String.valueOf(bill.getTransferInAccountId()), bill.getTransferOut(), String.valueOf(bill.getTransferOutAccountId()), String.valueOf(bill.getBillType())
 		});
+		double inAccountYue = 0;
+		double outAccountYue = 0;
+		Cursor cursor = db.rawQuery("select dangqianyue from bill_account where idx = ?", new String[]{String.valueOf(bill.getTransferInAccountId())});
+		cursor.moveToFirst();
+		inAccountYue = cursor.getDouble(0);
+		cursor = db.rawQuery("select dangqianyue from bill_account where idx = ?", new String[]{String.valueOf(bill.getTransferOutAccountId())});
+		cursor.moveToFirst();
+		outAccountYue = cursor.getDouble(0);
+		double IncurrentAccountYue = inAccountYue + Float.parseFloat(bill.getJine());
+		double outCurrentAccountYue = outAccountYue - Float.parseFloat(bill.getJine());
+		db.execSQL("update bill_account set dangqianyue = ? where idx = ?", new String[]{String.valueOf(IncurrentAccountYue), String.valueOf(bill.getTransferInAccountId())});
+		db.execSQL("update bill_account set dangqianyue = ? where idx = ?", new String[]{String.valueOf(outCurrentAccountYue), String.valueOf(bill.getTransferOutAccountId())});
 	}
 
 	
@@ -53,18 +78,54 @@ public class BillInfoService {
 		db.execSQL("update bill_info set jine = ?, outcatagory = ?, account = ?, accountid = ?,  date = ?, dateymd = ?, member = ?, beizhu = ?, isCanBaoXiao = ?, billType = ? where idx = ?", 
 				new String[]{bill.getJine(), bill.getOutCatagory(), bill.getAccount(), String.valueOf(bill.getAccountid()), bill.getDate(),bill.getDateYMD(), bill.getMember(),
 				bill.getBeizhu(), String.valueOf(bill.isCanBaoXiao()), String.valueOf(bill.getBillType()), String.valueOf(bill.getIdx())});
+		
+		//先将之前的idx指示的账户金额恢复
+		Cursor cursor = db.rawQuery("select dangqianyue from bill_account where idx = ?", new String[]{String.valueOf(bill.getLastIdx())});
+		cursor.moveToFirst();
+		double lastValue = cursor.getDouble(0) + Math.abs(Double.parseDouble(bill.getLastJine()));
+		db.execSQL("update bill_account set dangqianyue = ? where idx = ?", new String[]{String.valueOf(lastValue), String.valueOf(bill.getLastIdx())});
+		//修改现在实际的账户金额
+		cursor = db.rawQuery("select dangqianyue from bill_account where idx = ?", new String[]{String.valueOf(bill.getIdx())});
+		cursor.moveToFirst();
+		double currentValue = cursor.getDouble(0) - Math.abs(Double.parseDouble(bill.getJine()));
+		db.execSQL("update bill_account set dangqianyue = ? where idx = ?", new String[]{String.valueOf(currentValue), String.valueOf(bill.getIdx())});
 	}
 	//修改收入类型的账单信息
 	public void updateInBill(Bill bill) {
 		db.execSQL("update  bill_info set jine = ?, incatagory = ?, account = ?, accountid = ?, date = ?,dateymd = ?, member = ?, beizhu = ?, billType = ? where idx = ?", 
 				new String[]{bill.getJine(), bill.getInCatagory(), bill.getAccount(), String.valueOf(bill.getAccountid()), bill.getDate(),bill.getDateYMD(), bill.getMember(),
 				bill.getBeizhu(), String.valueOf(bill.getBillType()), String.valueOf(bill.getIdx())});
+		
+		//先将之前的idx指示的账户金额恢复
+		Cursor cursor = db.rawQuery("select dangqianyue from bill_account where idx = ?", new String[]{String.valueOf(bill.getLastIdx())});
+		cursor.moveToFirst();
+		double lastValue = cursor.getDouble(0) + Math.abs(Double.parseDouble(bill.getLastJine()));
+		db.execSQL("update bill_account set dangqianyue = ? where idx = ?", new String[]{String.valueOf(lastValue), String.valueOf(bill.getLastIdx())});
+		//修改现在实际的账户金额
+		cursor = db.rawQuery("select dangqianyue from bill_account where idx = ?", new String[]{String.valueOf(bill.getIdx())});
+		cursor.moveToFirst();
+		double currentValue = cursor.getDouble(0) + Math.abs(Double.parseDouble(bill.getJine()));
+		db.execSQL("update bill_account set dangqianyue = ? where idx = ?", new String[]{String.valueOf(currentValue), String.valueOf(bill.getIdx())});
 	}
 	//修改转账类型的账单信息
 	public void updateTransferBill(Bill bill) {
 		db.execSQL("update bill_info set jine = ?, date = ?, dateymd = ?, transferIn = ?, transferInAccountId = ?, transferOut = ?, transferOutAccountId = ?, billType = ? where idx = ?", new String[]{
 				bill.getJine(), bill.getDate(),bill.getDateYMD(), bill.getTransferIn(), String.valueOf(bill.getTransferInAccountId()), bill.getTransferOut(), String.valueOf(bill.getTransferOutAccountId()), String.valueOf(bill.getBillType()), String.valueOf(bill.getIdx())
 		});
+		
+		
+		
+		//先将之前的idx指示的账户金额恢复
+		Cursor cursor = db.rawQuery("select dangqianyue from bill_account where idx = ?", new String[]{String.valueOf(bill.getLastIdx())});
+		cursor.moveToFirst();
+		double lastValue = cursor.getDouble(0) + Math.abs(Double.parseDouble(bill.getLastJine()));
+		db.execSQL("update bill_account set dangqianyue = ? where idx = ?", new String[]{String.valueOf(lastValue), String.valueOf(bill.getLastIdx())});
+		//修改现在实际的账户金额
+		cursor = db.rawQuery("select dangqianyue from bill_account where idx = ?", new String[]{String.valueOf(bill.getIdx())});
+		cursor.moveToFirst();
+		double currentValue = cursor.getDouble(0) - Math.abs(Double.parseDouble(bill.getJine()));
+		db.execSQL("update bill_account set dangqianyue = ? where idx = ?", new String[]{String.valueOf(currentValue), String.valueOf(bill.getIdx())});		
+		
 	}
 	
 	
@@ -212,6 +273,8 @@ public class BillInfoService {
 			bill.setAccountid(cursor.getInt(cursor.getColumnIndex("accountid")));
 			bill.setTransferInAccountId(cursor.getInt(cursor.getColumnIndex("transferInAccountId")));
 			bill.setTransferOutAccountId(cursor.getInt(cursor.getColumnIndex("transferOutAccountId")));
+			bill.setLastJine(bill.getJine());
+			bill.setLastIdx(bill.getIdx());
 		}
 		return bill;
 	}
