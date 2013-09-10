@@ -246,6 +246,9 @@ public class BillMonthDetailsActivity extends Activity {
 			emptyNoticeLayout.setVisibility(ViewGroup.GONE);
 			dbYMDs = billService.findAllYMDInMonth(dateYM);
 			
+			
+			
+			
 			monthDetails = new ArrayList<BillMonthDetailsListViewModel>();
 			monthTotalIncome = 0;
 			monthTotalSpend = 0;

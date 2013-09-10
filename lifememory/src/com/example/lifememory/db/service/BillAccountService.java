@@ -3,6 +3,7 @@ package com.example.lifememory.db.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.lifememory.activity.model.Bill;
 import com.example.lifememory.activity.model.BillAccountItem;
 import com.example.lifememory.db.PregnancyDiaryOpenHelper;
 
@@ -82,8 +83,8 @@ public class BillAccountService {
 	
 	
 	public boolean addAccount(BillAccountItem item) {
-		
-		Cursor cursor = db.rawQuery("select count(*) from bill_account where name = ? and catagoryname = ?", new String[]{item.getName(), String.valueOf(item.getCatagoryname())});
+		String accountName = item.getName().trim();
+		Cursor cursor = db.rawQuery("select count(*) from bill_account where name = ? and catagoryname = ?", new String[]{accountName, String.valueOf(item.getCatagoryname())});
 		cursor.moveToFirst();
 		Long count = cursor.getLong(0);
 		if(count > 0) {
@@ -222,6 +223,75 @@ public class BillAccountService {
 		return items;
 	}
 	
+	
+	
+	/**
+	 * 当账单信息修改时，比如金额，类型（支出，收入，转账）， 账户的选择时，同时修改相关联的账户信息
+	 */
+	
+	public void updateOutAccount(Bill bill) {
+		double accountYue = 0;
+		Cursor cursor = db.rawQuery("select dangqianyue from bill_account where idx = ?", new String[]{String.valueOf(bill.getAccountid())});
+		cursor.moveToFirst();
+		accountYue = cursor.getDouble(0);
+		double currentAccountYue = accountYue - Float.parseFloat(bill.getJine());
+		db.execSQL("update bill_account set dangqianyue = ? where idx = ?", new String[]{String.valueOf(currentAccountYue), String.valueOf(bill.getAccountid())});
+		
+	}
+	
+	
+	public void updateInAccount(Bill bill) {
+		double accountYue = 0;
+		Cursor cursor = db.rawQuery("select dangqianyue from bill_account where idx = ?", new String[]{String.valueOf(bill.getAccountid())});
+		cursor.moveToFirst();
+		accountYue = cursor.getDouble(0);
+		double currentAccountYue = accountYue + Float.parseFloat(bill.getJine());
+		db.execSQL("update bill_account set dangqianyue = ? where idx = ?", new String[]{String.valueOf(currentAccountYue), String.valueOf(bill.getAccountid())});
+	}
+	
+	public void updateTransferAccount(Bill bill) {
+		double inAccountYue = 0;
+		double outAccountYue = 0;
+		Cursor cursor = db.rawQuery("select dangqianyue from bill_account where idx = ?", new String[]{String.valueOf(bill.getTransferInAccountId())});
+		cursor.moveToFirst();
+		inAccountYue = cursor.getDouble(0);
+		cursor = db.rawQuery("select dangqianyue from bill_account where idx = ?", new String[]{String.valueOf(bill.getTransferOutAccountId())});
+		cursor.moveToFirst();
+		outAccountYue = cursor.getDouble(0);
+		double IncurrentAccountYue = inAccountYue + Float.parseFloat(bill.getJine());
+		double outCurrentAccountYue = outAccountYue - Float.parseFloat(bill.getJine());
+		db.execSQL("update bill_account set dangqianyue = ? where idx = ?", new String[]{String.valueOf(IncurrentAccountYue), String.valueOf(bill.getTransferInAccountId())});
+		db.execSQL("update bill_account set dangqianyue = ? where idx = ?", new String[]{String.valueOf(outCurrentAccountYue), String.valueOf(bill.getTransferOutAccountId())});
+	}
+	
+	
+	public void updateLastInAccount(Bill bill) {
+		Cursor cursor = db.rawQuery("select dangqianyue from bill_account where idx = ?", new String[]{String.valueOf(bill.getAccountLastIdx())});
+		cursor.moveToFirst();
+		double lastValue = cursor.getDouble(0) + Math.abs(Double.parseDouble(bill.getLastJine()));
+		db.execSQL("update bill_account set dangqianyue = ? where idx = ?", new String[]{String.valueOf(lastValue), String.valueOf(bill.getAccountLastIdx())});
+	}
+	
+	public void updateLastOutAccount(Bill bill) {
+		Cursor cursor = db.rawQuery("select dangqianyue from bill_account where idx = ?", new String[]{String.valueOf(bill.getAccountLastIdx())});
+		cursor.moveToFirst();
+		double lastValue = cursor.getDouble(0) - Math.abs(Double.parseDouble(bill.getLastJine()));
+		db.execSQL("update bill_account set dangqianyue = ? where idx = ?", new String[]{String.valueOf(lastValue), String.valueOf(bill.getAccountLastIdx())});
+	}
+	
+	public void updateLastTransferInAccount(Bill bill) {
+		Cursor cursor = db.rawQuery("select dangqianyue from bill_account where idx = ?", new String[]{String.valueOf(bill.getLastTransferOutAccountId())});
+		cursor.moveToFirst();
+		double outLastValue = cursor.getDouble(0) + Math.abs(Double.parseDouble(bill.getLastJine()));
+		db.execSQL("update bill_account set dangqianyue  = ? where idx = ?", new String[]{String.valueOf(outLastValue) ,String.valueOf(bill.getLastTransferOutAccountId())});
+	}
+	
+	public void updateLastTransferOutAccount(Bill bill) {
+		Cursor cursor = db.rawQuery("select dangqianyue from bill_account where idx = ?", new String[]{String.valueOf(bill.getLastTransferInAccountId())});
+		cursor.moveToFirst();
+		double inLastValue = cursor.getDouble(0) - Math.abs(Double.parseDouble(bill.getLastJine()));
+		db.execSQL("update bill_account set dangqianyue = ? where idx = ?", new String[]{String.valueOf(inLastValue), String.valueOf(bill.getLastTransferInAccountId())});
+	}
 }
 
 

@@ -164,7 +164,6 @@ public class BillInputActivity extends Activity {
 		} else if ("view".equals(flag)) {
 			idx = this.getIntent().getIntExtra("idx", 0);
 			bill = billService.findBillByIdx(idx);
-
 			findViews();
 			initViewsByViewFlag(bill.getBillType());
 			initCalculator();

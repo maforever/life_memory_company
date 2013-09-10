@@ -288,7 +288,9 @@ public class BillAccountSettingActivity extends Activity {
 	protected void onDestroy() {
 		super.onDestroy();
 		dbService.closeDB();
+		infoService.closeDB();
 		dbService = null;
+		infoService = null;
 	}
 	
 	private void back() {

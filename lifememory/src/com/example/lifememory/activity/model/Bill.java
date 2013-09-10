@@ -3,7 +3,7 @@ package com.example.lifememory.activity.model;
 public class Bill {
 	
 	private int idx;
-	private int lastIdx;          //用于修改账户当前余额，lastjine存放修改前的id，首先将该id的账户金额恢复 ： 当前的加上或减去lashJine，再将
+	private int accountLastIdx;          //用于修改账户当前余额，lastjine存放修改前的accountid，首先将该id的账户金额恢复 ： 当前的加上或减去lashJine，再将
 								  //idx所指的账单奖赏或减去
 	private String jine;          //本次实际的金额，与数据库管理
 	private String lastJine;      //用于修改账户当前余额，lastjine存放修改钱的金额，用lastjine减去jine得到改动的差值，在相应的做加减操作
@@ -19,9 +19,12 @@ public class Bill {
 	private boolean isBaoxiaoed;
 	private String TransferIn;     //转入     现金
 	private int transferInAccountId;
+	private int lastTransferInAccountId;
 	private int transferOutAccountId;
+	private int lastTransferOutAccountId;
 	private String TransferOut;    //转出   银行卡
 	private int billType;    //1 支出 2 收入 3 转账
+	private int lastBillType; //记录变换类型前的类型
 	public int getIdx() {
 		return idx;
 	}
@@ -29,12 +32,6 @@ public class Bill {
 		this.idx = idx;
 	}
 	
-	public int getLastIdx() {
-		return lastIdx;
-	}
-	public void setLastIdx(int lastIdx) {
-		this.lastIdx = lastIdx;
-	}
 	public String getJine() {
 		return jine;
 	}
@@ -137,35 +134,67 @@ public class Bill {
 	public void setLastJine(String lastJine) {
 		this.lastJine = lastJine;
 	}
+	public int getAccountLastIdx() {
+		return accountLastIdx;
+	}
+	public void setAccountLastIdx(int accountLastIdx) {
+		this.accountLastIdx = accountLastIdx;
+	}
+	public int getLastTransferInAccountId() {
+		return lastTransferInAccountId;
+	}
+	public void setLastTransferInAccountId(int lastTransferInAccountId) {
+		this.lastTransferInAccountId = lastTransferInAccountId;
+	}
+	public int getLastTransferOutAccountId() {
+		return lastTransferOutAccountId;
+	}
+	public void setLastTransferOutAccountId(int lastTransferOutAccountId) {
+		this.lastTransferOutAccountId = lastTransferOutAccountId;
+	}
+	public int getLastBillType() {
+		return lastBillType;
+	}
+	public void setLastBillType(int lastBillType) {
+		this.lastBillType = lastBillType;
+	}
 	@Override
 	public String toString() {
-		return "Bill [idx=" + idx + ", lastIdx=" + lastIdx + ", jine=" + jine
-				+ ", lastJine=" + lastJine + ", outCatagory=" + outCatagory
-				+ ", inCatagory=" + inCatagory + ", account=" + account
-				+ ", accountid=" + accountid + ", member=" + member + ", date="
-				+ date + ", dateYMD=" + dateYMD + ", beizhu=" + beizhu
-				+ ", isCanBaoXiao=" + isCanBaoXiao + ", isBaoxiaoed="
-				+ isBaoxiaoed + ", TransferIn=" + TransferIn
-				+ ", transferInAccountId=" + transferInAccountId
-				+ ", transferOutAccountId=" + transferOutAccountId
-				+ ", TransferOut=" + TransferOut + ", billType=" + billType
-				+ ", getIdx()=" + getIdx() + ", getLastIdx()=" + getLastIdx()
-				+ ", getJine()=" + getJine() + ", getOutCatagory()="
-				+ getOutCatagory() + ", getInCatagory()=" + getInCatagory()
-				+ ", getAccount()=" + getAccount() + ", getAccountid()="
-				+ getAccountid() + ", getMember()=" + getMember()
-				+ ", getDate()=" + getDate() + ", getDateYMD()=" + getDateYMD()
-				+ ", getBeizhu()=" + getBeizhu() + ", isCanBaoXiao()="
-				+ isCanBaoXiao() + ", isBaoxiaoed()=" + isBaoxiaoed()
-				+ ", getTransferIn()=" + getTransferIn()
-				+ ", getTransferOut()=" + getTransferOut() + ", getBillType()="
-				+ getBillType() + ", getTransferInAccountId()="
-				+ getTransferInAccountId() + ", getTransferOutAccountId()="
-				+ getTransferOutAccountId() + ", getLastJine()="
-				+ getLastJine() + ", getClass()=" + getClass()
+		return "Bill [idx=" + idx + ", accountLastIdx=" + accountLastIdx
+				+ ", jine=" + jine + ", lastJine=" + lastJine
+				+ ", outCatagory=" + outCatagory + ", inCatagory=" + inCatagory
+				+ ", account=" + account + ", accountid=" + accountid
+				+ ", member=" + member + ", date=" + date + ", dateYMD="
+				+ dateYMD + ", beizhu=" + beizhu + ", isCanBaoXiao="
+				+ isCanBaoXiao + ", isBaoxiaoed=" + isBaoxiaoed
+				+ ", TransferIn=" + TransferIn + ", transferInAccountId="
+				+ transferInAccountId + ", lastTransferInAccountId="
+				+ lastTransferInAccountId + ", transferOutAccountId="
+				+ transferOutAccountId + ", lastTransferOutAccountId="
+				+ lastTransferOutAccountId + ", TransferOut=" + TransferOut
+				+ ", billType=" + billType + ", lastBillType=" + lastBillType
+				+ ", getIdx()=" + getIdx() + ", getJine()=" + getJine()
+				+ ", getOutCatagory()=" + getOutCatagory()
+				+ ", getInCatagory()=" + getInCatagory() + ", getAccount()="
+				+ getAccount() + ", getAccountid()=" + getAccountid()
+				+ ", getMember()=" + getMember() + ", getDate()=" + getDate()
+				+ ", getDateYMD()=" + getDateYMD() + ", getBeizhu()="
+				+ getBeizhu() + ", isCanBaoXiao()=" + isCanBaoXiao()
+				+ ", isBaoxiaoed()=" + isBaoxiaoed() + ", getTransferIn()="
+				+ getTransferIn() + ", getTransferOut()=" + getTransferOut()
+				+ ", getBillType()=" + getBillType()
+				+ ", getTransferInAccountId()=" + getTransferInAccountId()
+				+ ", getTransferOutAccountId()=" + getTransferOutAccountId()
+				+ ", getLastJine()=" + getLastJine() + ", getAccountLastIdx()="
+				+ getAccountLastIdx() + ", getLastTransferInAccountId()="
+				+ getLastTransferInAccountId()
+				+ ", getLastTransferOutAccountId()="
+				+ getLastTransferOutAccountId() + ", getLastBillType()="
+				+ getLastBillType() + ", getClass()=" + getClass()
 				+ ", hashCode()=" + hashCode() + ", toString()="
 				+ super.toString() + "]";
 	}
+	
 
 	
 	

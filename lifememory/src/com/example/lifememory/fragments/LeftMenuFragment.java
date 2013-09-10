@@ -57,6 +57,7 @@ public class LeftMenuFragment extends Fragment {
 		View view = inflater.inflate(R.layout.fr_left_menu, container, false);
 		listView = (ListView) view.findViewById(R.id.listView);
 		
+		initDatas();
 		
 		adapter = new LeftMenuListViewAdapter(getActivity(), menuItems);
 		listView.setAdapter(adapter);
