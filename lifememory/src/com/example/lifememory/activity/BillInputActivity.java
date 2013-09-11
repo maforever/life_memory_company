@@ -834,6 +834,12 @@ public class BillInputActivity extends Activity {
 
 
 			break;
+		case R.id.savetemplate:
+			intent = new Intent(BillInputActivity.this, BillTemplateNameInputDialogActivity.class);
+			startActivity(intent);
+			break;
+		case R.id.next:
+			break;
 		}
 	}
 	

@@ -7,6 +7,7 @@ import com.example.lifememory.R;
 import com.example.lifememory.activity.BillAccountDetailsActivity;
 import com.example.lifememory.activity.BillInputActivity;
 import com.example.lifememory.activity.BillMonthDetailsActivity;
+import com.example.lifememory.activity.BillTempleteSelectActivity;
 import com.example.lifememory.activity.IndexActivity;
 import com.example.lifememory.activity.model.Bill;
 import com.example.lifememory.activity.slidingmenu.menulib.SlidingMenu.OnClosedListener;
@@ -124,26 +125,26 @@ public class FR_Bill_index extends Fragment {
 				return false;
 			}
 		};
-
-		this.indexActivity.registerMyOnTouchListener(myOnTouchListener);
+		
+		((IndexActivity)getActivity()).registerMyOnTouchListener(myOnTouchListener);
 
 		// 显示leftmenufragment时注销掉PregnancyDiaryFragment的ontouch事件
-		indexActivity.getSlidingMenu().setOnOpenListener(new OnOpenListener() {
+		((IndexActivity)getActivity()).getSlidingMenu().setOnOpenListener(new OnOpenListener() {
 
 			@Override
 			public void onOpen() {
-				indexActivity.getSlidingMenu().setSlidingEnabled(true);
-				indexActivity.unregisterMyOnTouchListener(myOnTouchListener);
+				((IndexActivity)getActivity()).getSlidingMenu().setSlidingEnabled(true);
+				((IndexActivity)getActivity()).unregisterMyOnTouchListener(myOnTouchListener);
 			}
 		});
 		// 当隐藏左侧的leftmenuframent的时候注册ontouch时间
-		indexActivity.getSlidingMenu().setOnClosedListener(
+		((IndexActivity)getActivity()).getSlidingMenu().setOnClosedListener(
 				new OnClosedListener() {
 
 					@Override
 					public void onClosed() {
-						indexActivity.getSlidingMenu().setSlidingEnabled(true);
-						indexActivity
+						((IndexActivity)getActivity()).getSlidingMenu().setSlidingEnabled(true);
+						((IndexActivity)getActivity())
 								.registerMyOnTouchListener(myOnTouchListener);
 					}
 				});
@@ -271,7 +272,10 @@ public class FR_Bill_index extends Fragment {
 				long id) {
 			switch (position) {
 			case 0:
-				Toast.makeText(getActivity(), firstPageTitle[position], 0).show();
+//				Toast.makeText(getActivity(), firstPageTitle[position], 0).show();
+				intent = new Intent(getActivity(), BillTempleteSelectActivity.class);
+				getActivity().startActivity(intent);
+				getActivity().overridePendingTransition(R.anim.activity_up, R.anim.activity_steady);
 				break;
 			case 1:
 				Intent intent = new Intent(getActivity(), BillInputActivity.class);

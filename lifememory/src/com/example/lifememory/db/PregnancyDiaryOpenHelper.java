@@ -58,7 +58,7 @@ public class PregnancyDiaryOpenHelper extends SQLiteOpenHelper {
 		db.execSQL("create table if not exists bill_catagory(idx integer primary key autoincrement, name text, imageid integer, parentid integer)");
 		db.execSQL("create table if not exists bill_account(idx integer primary key autoincrement, catagoryname text ,name text, bizhong text, dangqianyue text, isnotice text, noticevalue text, imageid integer, beizhu text)");
 		db.execSQL("create table if not exists bill_member(idx integer primary key autoincrement, name text)");
-		db.execSQL("create tbale if not exists bill_template(idx integer primary key autoincrement, name text,incatagoryname text, outcatagoryname text, accountid integer, member text, canbaoxiao, transferinaccountdid integer, transferoutaccountid integer, billtype integer)");
+		db.execSQL("create table if not exists bill_template(idx integer primary key autoincrement, name text,incatagoryname text, outcatagoryname text, accountid integer, member text, canbaoxiao, transferinaccountdid integer, transferoutaccountid integer, billtype integer)");
 		
 		
 		//这个地方如果使用线程会报错 database is locked

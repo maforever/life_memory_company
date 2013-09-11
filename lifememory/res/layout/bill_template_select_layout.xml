@@ -40,8 +40,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:numColumns="3"
-        android:verticalSpacing="3dp"
-        android:horizontalSpacing="3dp" 
+        android:verticalSpacing="5dp"
+        android:horizontalSpacing="5dp"
+        android:listSelector="#00000000"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="20dp" 
         />
     
     

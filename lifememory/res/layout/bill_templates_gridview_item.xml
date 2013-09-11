@@ -7,18 +7,17 @@
     >
     
     <LinearLayout
-        android:id="@+id/backgound"
+        android:id="@+id/background"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"         
-        android:background="@drawable/earn_template"
         android:gravity="center"
         >
         
 		<TextView
+		    android:layout_marginTop="10dp"
 		    android:id="@+id/name"
 		    android:layout_width="100dp"
 		    android:layout_height="wrap_content"
-		    android:text="购物逛街"
 		    android:singleLine="true"
 		    android:textSize="20dp"
 		    android:ellipsize="end"
