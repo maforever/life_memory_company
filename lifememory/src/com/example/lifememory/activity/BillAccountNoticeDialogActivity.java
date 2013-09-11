@@ -13,6 +13,7 @@ public class BillAccountNoticeDialogActivity extends Activity {
 	private String accountYue;
 	private TextView contentTv;
 	private int accountId;
+	private String content;
 	private BillAccountService accountService;
 	
 	@Override
@@ -35,7 +36,8 @@ public class BillAccountNoticeDialogActivity extends Activity {
 		accountName = this.getIntent().getStringExtra("accountName");
 		accountYue = this.getIntent().getStringExtra("accountYue");
 		accountId = this.getIntent().getIntExtra("accountId", 0);
-		String content = "您的账户" + accountName + "当前的余额已经小于或等于" + accountYue + "元";
+//		String content = "您的账户" + accountName + "当前的余额已经小于或等于" + accountYue + "元";
+		String content = this.getIntent().getStringExtra("content");
 		contentTv.setText(content);
 	}
 	

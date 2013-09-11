@@ -671,16 +671,6 @@ public class BillInputActivity extends Activity {
 					Toast.makeText(BillInputActivity.this, "请输入金额!", 0).show();
 				} else {
 					
-					if(accountService.ifShowNotice(bill)) {
-						intent = new Intent(BillInputActivity.this, BillAccountNoticeDialogActivity.class);
-						BillAccountItem bai = accountService.findItemDetailById(bill.getAccountid());
-						String accountName = bai.getName();
-						String accountYue = bai.getNoticeValue() + "";
-						intent.putExtra("accountName", accountName);
-						intent.putExtra("accountYue", accountYue);
-						intent.putExtra("accountId", bai.getIdx());
-						startActivity(intent);
-					}
 					
 					
 					currentBeizhuTextView = (TextView) viewFlipper
@@ -699,6 +689,7 @@ public class BillInputActivity extends Activity {
 						// 支出
 						bill.setBillType(1);
 						if(bill.getAccountid() > 0) {
+							showNoticeDialog(bill);
 							billService.addOutBill(bill);
 							saveOrUpdateOk();
 						}else {
@@ -710,6 +701,7 @@ public class BillInputActivity extends Activity {
 						// 收入
 						bill.setBillType(2);
 						if(bill.getAccountid() > 0) {
+							showNoticeDialog(bill);
 							billService.addInBill(bill);
 							saveOrUpdateOk();
 						}else {
@@ -721,6 +713,7 @@ public class BillInputActivity extends Activity {
 						// 转账
 						bill.setBillType(3);
 						if(bill.getTransferInAccountId() > 0 && bill.getTransferOutAccountId() > 0) {
+							showNoticeDialog(bill);
 							billService.addTransferBill(bill);
 							saveOrUpdateOk();
 						}else {
@@ -737,8 +730,11 @@ public class BillInputActivity extends Activity {
 						|| "0".equals(currentJinETextView.getText().toString())) {
 					Toast.makeText(BillInputActivity.this, "请输入金额!", 0).show();
 				} else {
+					
 					bill.setJine(currentJinETextView.getText().toString());
 					bill.setBeizhu(currentBeizhuTextView.getText().toString());
+					
+
 					switch (bill.getBillType()) {
 					case 1:
 						if (baoxiaoCb.isChecked()) {
@@ -747,6 +743,7 @@ public class BillInputActivity extends Activity {
 							bill.setCanBaoXiao(false);
 						}
 						if(bill.getAccountid() > 0) {
+							showNoticeDialog(bill);
 							billService.updateOutBill(bill);
 							saveOrUpdateOk();
 						}else {
@@ -757,6 +754,7 @@ public class BillInputActivity extends Activity {
 						break;
 					case 2:
 						if(bill.getAccountid() > 0) {
+							showNoticeDialog(bill);
 							billService.updateInBill(bill);
 							saveOrUpdateOk();
 						}else {
@@ -766,6 +764,7 @@ public class BillInputActivity extends Activity {
 						break;
 					case 3:
 						if(bill.getTransferInAccountId() > 0 && bill.getTransferOutAccountId() > 0) {
+							showNoticeDialog(bill);
 							billService.updateTransferBill(bill);
 							saveOrUpdateOk();
 						}else {
@@ -782,6 +781,11 @@ public class BillInputActivity extends Activity {
 						|| "0".equals(currentJinETextView.getText().toString())) {
 					Toast.makeText(BillInputActivity.this, "请输入金额!", 0).show();
 				} else {
+					
+
+					
+					
+					
 					bill.setJine(currentJinETextView.getText().toString());
 					bill.setBeizhu(currentBeizhuTextView.getText().toString());
 					switch (bill.getBillType()) {
@@ -792,6 +796,7 @@ public class BillInputActivity extends Activity {
 							bill.setCanBaoXiao(false);
 						}
 						if(bill.getAccountid() > 0) {
+							showNoticeDialog(bill);
 							billService.updateOutBill(bill);
 							saveOrUpdateOk();
 						}else {
@@ -801,6 +806,7 @@ public class BillInputActivity extends Activity {
 						break;
 					case 2:
 						if(bill.getAccountid() > 0) {
+							showNoticeDialog(bill);
 							billService.updateInBill(bill);
 							saveOrUpdateOk();
 						}else {
@@ -810,6 +816,7 @@ public class BillInputActivity extends Activity {
 						break;
 					case 3:
 						if(bill.getTransferInAccountId() > 0 && bill.getTransferOutAccountId() > 0) {
+							showNoticeDialog(bill);
 							billService.updateTransferBill(bill);
 							saveOrUpdateOk();
 						}else {
@@ -828,6 +835,25 @@ public class BillInputActivity extends Activity {
 
 			break;
 		}
+	}
+	
+	
+	private void showNoticeDialog(Bill bill) {
+		
+		String noticeContent = accountService.ifShowNotice(bill);
+//		Log.i("a", "dialog content = " + noticeContent);
+		if(noticeContent != null && noticeContent.length() > 0) {
+			intent = new Intent(BillInputActivity.this, BillAccountNoticeDialogActivity.class);
+			BillAccountItem bai = accountService.findItemDetailById(bill.getAccountid());
+			String accountName = bai.getName();
+			String accountYue = bai.getNoticeValue() + "";
+			intent.putExtra("accountName", accountName);
+			intent.putExtra("accountYue", accountYue);
+			intent.putExtra("accountId", bai.getIdx());
+			intent.putExtra("content", noticeContent);
+			startActivity(intent);
+		}
+		
 	}
 	
 	private void saveOrUpdateOk() {

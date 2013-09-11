@@ -219,18 +219,80 @@ public class BillAccountService {
 			item.setDangqianyue(cursor.getDouble(cursor.getColumnIndex("dangqianyue")));
 			items.add(item);
 		}
-		Log.i("a", "items size =" + items.toString());
+//		Log.i("a", "items size =" + items.toString());
 		return items;
 	}
 	
 	//是否显示余额警告先提示对话框
-	public boolean ifShowNotice(Bill bill) {
+	public String ifShowNotice(Bill bill) {
+		StringBuilder content = new StringBuilder();
 		int accountId = bill.getAccountid();
 		BillAccountItem item = this.findItemDetailById(accountId);
-		if(item.isNotice() && (item.getDangqianyue() < item.getNoticeValue())) {
-			return true;
+		double accountYue = item.getDangqianyue();
+		double jine = Double.parseDouble(bill.getJine());
+		double resultValue = 0;
+		double inValue = 0;
+		double outValue = 0;
+		double inResultValue = 0;
+		double outResultValue = 0;
+		double inNoticeValue = 0;
+		double outNoticeValue = 0;
+		String inName, outName;
+		if(bill.getBillType() == 1) {
+			//支出
+			resultValue = accountYue - jine;
+			if(item.isNotice() && (resultValue <= item.getNoticeValue())) {
+				content.append("您的账户").append(item.getName()).append("的当前余额已经小于或等于").append(item.getNoticeValue());
+				return content.toString();
+			}
+			
+		}else if(bill.getBillType() == 2) {
+			//收入
+			resultValue = accountYue + jine;
+			if(item.isNotice() && (resultValue <= item.getNoticeValue())) {
+				content.append("您的账户").append(item.getName()).append("的当前余额已经小于或等于").append(item.getNoticeValue());
+				return content.toString();
+			}
+		}else if(bill.getBillType() == 3) {
+			//转账
+			item = this.findItemDetailById(bill.getTransferInAccountId());
+			inValue = item.getDangqianyue();
+			inNoticeValue = item.getNoticeValue();
+			inName = item.getName();
+			item = this.findItemDetailById(bill.getTransferOutAccountId());
+			outValue = item.getDangqianyue();
+			outNoticeValue = item.getNoticeValue();
+			outName = item.getName();
+			inResultValue = inValue + accountYue;
+			outResultValue = outValue - accountYue;
+			String inAccountStr = "";
+			String outAccountStr = "";
+			if(item.isNotice() && (inResultValue <= inNoticeValue)) {
+				inAccountStr = inName;
+				content.append("您转入的账户").append(inAccountStr).append("的余额已经小于或等于").append(inNoticeValue);
+			}
+			if(item.isNotice() && (outResultValue <= outNoticeValue)) {
+				outAccountStr = outName;
+				if(content.length() > 0) {
+					content.append(",转出的账户").append(outAccountStr).append("的余额已经小于或等于").append(outNoticeValue);
+				}else {
+					content.append("您转出的账户").append(outAccountStr).append("的余额已经小于或等于").append(outNoticeValue);
+				}
+			}
+			
+//			Log.i("a", "invalue = " + inValue + " inNoticeValue = " + inNoticeValue + " inname = " + inName);
+//			Log.i("a", "outvalue = " + outValue + " outNoticeValue = " + outNoticeValue + " outname = " + outName);
+//			Log.i("a", "inResultValue = " + inResultValue + " outResultValue = " + outResultValue);
+			
+			return content.toString();
+			
 		}
-		return false;
+		
+		Log.i("a", "billtype = " + bill.getBillType() + " resultValue = " + resultValue + " noticeValue = " + item.getNoticeValue());
+		
+		
+		
+		return content.toString();
 	}
 	
 	//取消余额警告

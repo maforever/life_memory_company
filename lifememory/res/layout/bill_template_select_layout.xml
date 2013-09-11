@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="@drawable/bill_bg_src">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bill_title_bar_bg" >
+
+        <TextView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="返回"
+            android:textColor="#ffffff"
+            android:textSize="20dp" 
+            android:background="@drawable/bill_common_bar_back_btn_selector"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:clickable="true"
+            android:onClick="btnClick"
+            />
+        
+        <TextView
+            android:text="模版选择" 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"
+            android:textColor="#ffffff"
+            android:layout_centerInParent="true"
+            />
+    </RelativeLayout>
+
+    <GridView
+        android:gravity="center"
+        android:id="@+id/gridView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="3"
+        android:verticalSpacing="3dp"
+        android:horizontalSpacing="3dp" 
+        />
+    
+    
+    
+</LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
