@@ -110,23 +110,26 @@ public class BillAccountExpandableListAdapter extends BaseExpandableListAdapter 
 			boolean isLastChild, View convertView, ViewGroup parent) {
 		ImageView selectedTag;
 		TextView name;
+		TextView yue;
 		ViewHolder vh;
 		if(convertView == null) {
 			convertView = inflater.inflate(R.layout.bill_account_listview_item, null);
 			selectedTag = (ImageView) convertView.findViewById(R.id.selectedTag);
 			name = (TextView) convertView.findViewById(R.id.name);
+			yue = (TextView) convertView.findViewById(R.id.yue);
 			vh = new ViewHolder();
 			vh.selectedTag = selectedTag;
 			vh.name = name;
+			vh.yue = yue;
 			convertView.setTag(vh);
 		}else {
 			vh = (ViewHolder) convertView.getTag();
 			selectedTag = vh.selectedTag;
 			name = vh.name;
-//			selectedTag = (ImageView) convertView.findViewById(R.id.selectedTag);
-//			name = (TextView) convertView.findViewById(R.id.name);
+			yue = vh.yue;
 		}
 		name.setText(this.expandableItems.get(groupPosition).getAccountItems().get(childPosition).getName());
+		yue.setText(this.expandableItems.get(groupPosition).getAccountItems().get(childPosition).getDangqianyue() + "");
 		selectedTag.setVisibility(ViewGroup.GONE);
 		
 		if(currentGroupId == groupPosition && currentChildId == childPosition) {
@@ -147,6 +150,7 @@ public class BillAccountExpandableListAdapter extends BaseExpandableListAdapter 
 		ImageView selectedTag;
 		TextView title;
 		TextView name;
+		TextView yue;
 	}
 	
 	

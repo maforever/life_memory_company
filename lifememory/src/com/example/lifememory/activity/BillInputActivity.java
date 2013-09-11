@@ -670,6 +670,19 @@ public class BillInputActivity extends Activity {
 						|| "0".equals(currentJinETextView.getText().toString())) {
 					Toast.makeText(BillInputActivity.this, "«Î ‰»ÎΩ∂Ó!", 0).show();
 				} else {
+					
+					if(accountService.ifShowNotice(bill)) {
+						intent = new Intent(BillInputActivity.this, BillAccountNoticeDialogActivity.class);
+						BillAccountItem bai = accountService.findItemDetailById(bill.getAccountid());
+						String accountName = bai.getName();
+						String accountYue = bai.getNoticeValue() + "";
+						intent.putExtra("accountName", accountName);
+						intent.putExtra("accountYue", accountYue);
+						intent.putExtra("accountId", bai.getIdx());
+						startActivity(intent);
+					}
+					
+					
 					currentBeizhuTextView = (TextView) viewFlipper
 							.getCurrentView().findViewById(R.id.beizhu);
 					bill.setBeizhu(currentBeizhuTextView.getText().toString());

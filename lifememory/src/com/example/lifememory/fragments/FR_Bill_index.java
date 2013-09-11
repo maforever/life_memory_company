@@ -51,7 +51,7 @@ public class FR_Bill_index extends Fragment {
 	private int[] firstPageImageIds = new int[]{R.drawable.metro_drawable_flashbook, R.drawable.metro_drawable_book, R.drawable.metro_drawable_coupon, 1};
 	private int[] secondPageImageIds = new int[]{R.drawable.metro_drawable_card, R.drawable.metro_drawable_calendar, R.drawable.metro_drawable_account};
 	private BillIndexGridViewAdapter firstAdapter, secondAdapter;
-	private IndexActivity indexActivity = null;
+	private static IndexActivity indexActivity = null;
 	private IndexActivity.MyOnTouchListener myOnTouchListener = null; // 添加滑动事件
 	private int currentIndex = 0; // 用于记录当前滑动到的界面，根据界面适时的设置是否可滑动
 	private ViewFlipper viewFlipper = null;

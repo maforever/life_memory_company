@@ -30,7 +30,7 @@ public class BillAccountService {
 			item.setCatagoryname(cursor.getInt(cursor.getColumnIndex("catagoryname")));
 			item.setName(cursor.getString(cursor.getColumnIndex("name")));
 			item.setImageId(cursor.getInt(cursor.getColumnIndex("imageid")));
-			
+			item.setDangqianyue(cursor.getDouble(cursor.getColumnIndex("dangqianyue")));
 			items.add(item);
 		}
 		return items;
@@ -223,6 +223,20 @@ public class BillAccountService {
 		return items;
 	}
 	
+	//是否显示余额警告先提示对话框
+	public boolean ifShowNotice(Bill bill) {
+		int accountId = bill.getAccountid();
+		BillAccountItem item = this.findItemDetailById(accountId);
+		if(item.isNotice() && (item.getDangqianyue() < item.getNoticeValue())) {
+			return true;
+		}
+		return false;
+	}
+	
+	//取消余额警告
+	public void cancelNotice(int idx) {
+		db.execSQL("update bill_account set isnotice = ? where idx = ?", new String[]{String.valueOf(false), String.valueOf(idx)});
+	}
 	
 	
 	/**
@@ -292,6 +306,8 @@ public class BillAccountService {
 		double inLastValue = cursor.getDouble(0) - Math.abs(Double.parseDouble(bill.getLastJine()));
 		db.execSQL("update bill_account set dangqianyue = ? where idx = ?", new String[]{String.valueOf(inLastValue), String.valueOf(bill.getLastTransferInAccountId())});
 	}
+	
+
 }
 
 

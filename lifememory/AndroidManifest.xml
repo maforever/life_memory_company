@@ -134,14 +134,14 @@
             android:name=".activity.BillLiuShuiSettingDialogActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/dialog" />
-        
         <activity
             android:name=".activity.BillAccountDetailsActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@android:style/Theme.Black.NoTitleBar" />
-        
-        
-        
+        <activity
+            android:name=".activity.BillAccountNoticeDialogActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/dialog" />
     </application>
 
 </manifest>
