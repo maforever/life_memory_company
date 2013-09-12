@@ -1401,6 +1401,11 @@ public class BillInputActivity extends Activity {
 				jie_txt = jie_txt.substring(0, jie_txt.length() - 1);
 				isFloat = false;
 			}
+			
+			if("-".equals(jie_txt)) {
+				jie_txt = "0";
+			}
+			
 		} else {
 			jie_txt = "0";
 		}

@@ -8,6 +8,7 @@ import com.example.lifememory.utils.ConstantUtil;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +37,11 @@ public class BillCalculatorActivity extends Activity {
 		
 		findViews();
 		initDatasAndViews();
+		this.setFinishOnTouchOutside(false);     //点击外部不关闭activity
+		
+		
 	}
+	
 	
 	private void findViews() {
 		numTv = (TextView) this.findViewById(R.id.num);
@@ -178,13 +183,18 @@ public class BillCalculatorActivity extends Activity {
 	// 点击了计算器上的删除
 	private void onClickDel() {
 		String jie_str = numTv.getText().toString();
-		if (jie_str.length() > 1) {
+		if (jie_str.length() > 1 ) {
 			numString = jie_str.substring(0, jie_str.length() - 1); // 去掉最后一个字符
 			if (numString.endsWith(".")) {
 				// 如果以小数点结尾
 				numString = numString.substring(0, numString.length() - 1);
 				isFloat = false;
 			}
+			
+			if("-".equals(numString)) {
+				numString = "0";
+			}
+			
 		} else {
 			numString = "0";
 		}
@@ -299,4 +309,8 @@ public class BillCalculatorActivity extends Activity {
 		}
 		return true;
 	}
+	
+	
+	
+	
 }
