@@ -6,6 +6,7 @@ import java.util.List;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.lifememory.activity.model.BillTemplate;
 import com.example.lifememory.db.PregnancyDiaryOpenHelper;
@@ -62,7 +63,45 @@ public class BillTemplateService {
 		return templates;
 	}
 	
+	public boolean isExists(String name) {
+		Cursor cursor = db.rawQuery("select count(*) from bill_template where name = ?", new String[]{name});
+		cursor.moveToFirst();
+		Long count = cursor.getLong(0);
+		return count > 0 ? true : false;
+	}
 	
+	public void deleteTemplatesByIds(List<Integer> ids) {
+		for(Integer id : ids) {
+			Log.i("a", "id = " + id);
+			db.execSQL("delete from bill_template where idx = ?", new String[]{String.valueOf(id)});
+		}
+	}
+	
+	
+	
+	
+	public void closeDB() {
+		this.db.close();
+	}
+
 	
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

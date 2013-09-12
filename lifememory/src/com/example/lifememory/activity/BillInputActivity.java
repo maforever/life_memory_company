@@ -7,6 +7,7 @@ import java.util.Date;
 import com.example.lifememory.R;
 import com.example.lifememory.activity.model.Bill;
 import com.example.lifememory.activity.model.BillAccountItem;
+import com.example.lifememory.activity.model.BillTemplate;
 import com.example.lifememory.db.service.BillAccountService;
 import com.example.lifememory.db.service.BillCatagoryService;
 import com.example.lifememory.db.service.BillInfoService;
@@ -88,6 +89,7 @@ public class BillInputActivity extends Activity {
 	private BillAccountItem commonAccount;
 	private BillAccountItem commonTransferInAccount;
 	private BillAccountItem commonTransferOutAccount;
+	private BillTemplate template;
 	/*
 	 * 用于纪录等号按钮是否点击了,当每次点击的+,-,*,/按钮后，将isEqualBtnClick=false
 	 * 这样每当点击popwindow之外的或点击back关闭popwindow的时候
@@ -836,6 +838,31 @@ public class BillInputActivity extends Activity {
 			break;
 		case R.id.savetemplate:
 			intent = new Intent(BillInputActivity.this, BillTemplateNameInputDialogActivity.class);
+			
+			template = new BillTemplate();
+			template.setAccountid(bill.getAccountid());
+			template.setCanBaoXiao(bill.isCanBaoXiao());
+			template.setInCatagoryName(bill.getInCatagory());
+			template.setOutCatagoryName(bill.getOutCatagory());
+			template.setMember(bill.getMember());
+			template.setTransferInAccountId(bill.getTransferInAccountId());
+			template.setTransferOutAccountId(bill.getTransferOutAccountId());
+			intent.putExtra("template", template);
+			
+			switch (viewFlipper.getDisplayedChild()) {
+			case 0:
+				template.setBillType(1);
+				break;
+			case 1:
+				template.setBillType(2);
+				break;
+			case 2:
+				template.setBillType(3);
+				break;
+			}
+			
+			
+			
 			startActivity(intent);
 			break;
 		case R.id.next:

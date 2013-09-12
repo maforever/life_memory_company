@@ -6,11 +6,10 @@
     android:gravity="center" 
     >
     
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/background"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"         
-        android:gravity="center"
         >
         
 		<TextView
@@ -25,13 +24,24 @@
 		    android:layout_marginLeft="10dp"
 		    android:layout_marginRight="10dp"
 		    android:gravity="center"
+		    android:text="dkjflsjf"
+		    android:layout_centerInParent="true"
 		    />
         
-      	
+      	<CheckBox
+      	    android:id="@+id/deleteTag"
+      	    android:layout_marginTop="10dp"
+      	    android:layout_width="wrap_content"
+      	    android:layout_height="wrap_content"
+      	    android:layout_centerInParent="true"
+      	    android:background="@drawable/pregnancy_jishiben_list_deletetag"
+      	    android:button="@null"
+      	    android:visibility="gone"
+      	    />
         
         
         
-    </LinearLayout>
+    </RelativeLayout>
     
 
 </LinearLayout>

@@ -49,6 +49,7 @@ public class BillTemplateCreator {
 		template.setBillType(2);
 		templates.add(template);
 		
+		
 		//转账模版信息
 		template = new BillTemplate();
 		template.setName("取现");

@@ -1,5 +1,7 @@
 package com.example.lifememory.activity.model;
 
+import java.io.Serializable;
+
 
 /**
  * idx integer primary key autoincrement, 
@@ -9,8 +11,12 @@ package com.example.lifememory.activity.model;
  *    transferoutaccountid integer, billtype integer
  *
  */
-public class BillTemplate {
+public class BillTemplate implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int idx;
 	private String name;
 	private String inCatagoryName;
