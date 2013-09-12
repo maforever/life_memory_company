@@ -88,4 +88,17 @@ public class BillTemplate implements Serializable{
 	public void setBillType(int billType) {
 		this.billType = billType;
 	}
+	@Override
+	public String toString() {
+		return "BillTemplate [idx=" + idx + ", name=" + name
+				+ ", inCatagoryName=" + inCatagoryName + ", outCatagoryName="
+				+ outCatagoryName + ", accountid=" + accountid + ", member="
+				+ member + ", canBaoXiao=" + canBaoXiao
+				+ ", transferInAccountId=" + transferInAccountId
+				+ ", transferOutAccountId=" + transferOutAccountId
+				+ ", billType=" + billType + "]";
+	}
+	
+	
+	
 }

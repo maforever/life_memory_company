@@ -9,6 +9,7 @@ import com.example.lifememory.activity.model.BillAccountItem;
 import com.example.lifememory.adapter.BillAccountExpandableListAdapter;
 import com.example.lifememory.db.service.BillAccountService;
 import com.example.lifememory.db.service.BillInfoService;
+import com.example.lifememory.db.service.BillTemplateService;
 import com.example.lifememory.dialog.DialogAlertBill;
 import com.example.lifememory.dialog.DialogAlertListener;
 
@@ -37,6 +38,7 @@ public class BillAccountSettingActivity extends Activity {
 	private CheckBox updateCb, deleteCb;
 	private BillAccountService dbService;
 	private BillInfoService infoService;
+	private BillTemplateService templateService;
 	private List<BillAccountItem> accountItems =  new ArrayList<BillAccountItem>();
 	private List<BillAccountItem> accountItems1 = new ArrayList<BillAccountItem>();  //存放现金数据
 	private List<BillAccountItem> accountItems2 = new ArrayList<BillAccountItem>();	 //存放信用卡数据
@@ -58,7 +60,7 @@ public class BillAccountSettingActivity extends Activity {
 				break;
 			case 1:
 				//删除失败
-				Toast.makeText(BillAccountSettingActivity.this, "账户信息不允许删除，清先清空该账户有关的账单记录!", 0).show();
+				Toast.makeText(BillAccountSettingActivity.this, "账户信息不允许删除，清先清空使用了该账户的账单记录或模版信息!", 0).show();
 				break;
 			case 2:
 				//删除成功
@@ -74,6 +76,7 @@ public class BillAccountSettingActivity extends Activity {
 		
 		dbService = new BillAccountService(this);
 		infoService = new BillInfoService(this);
+		templateService = new BillTemplateService(this);
 		this.currentGroupSelectedIndex = this.getIntent().getIntExtra("currentGroupSelectedIndex", 0);
 		this.currentChildSelectedIndex = this.getIntent().getIntExtra("currentChildSelectedIndex", 0);
 		accountFlag = this.getIntent().getStringExtra("accountFlag");
@@ -159,7 +162,8 @@ public class BillAccountSettingActivity extends Activity {
 				
 				@Override
 				public void run() {
-					if(infoService.isRelatedWithAccount(expandableItems.get(groupLocation).getAccountItems().get(childLocation).getIdx())) {
+					int accountIdx = expandableItems.get(groupLocation).getAccountItems().get(childLocation).getIdx();
+					if(infoService.isRelatedWithAccount(accountIdx) || templateService.isRelatedWithAccount(accountIdx)) {
 						handler.sendEmptyMessage(1);
 					}else {
 						dbService.deleteItemById(expandableItems.get(groupLocation).getAccountItems().get(childLocation).getIdx());
@@ -289,8 +293,10 @@ public class BillAccountSettingActivity extends Activity {
 		super.onDestroy();
 		dbService.closeDB();
 		infoService.closeDB();
+		templateService.closeDB();
 		dbService = null;
 		infoService = null;
+		templateService = null;
 	}
 	
 	private void back() {

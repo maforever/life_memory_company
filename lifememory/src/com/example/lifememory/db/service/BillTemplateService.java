@@ -70,6 +70,7 @@ public class BillTemplateService {
 		return count > 0 ? true : false;
 	}
 	
+	//根据idx批量删除数据
 	public void deleteTemplatesByIds(List<Integer> ids) {
 		for(Integer id : ids) {
 			Log.i("a", "id = " + id);
@@ -77,7 +78,13 @@ public class BillTemplateService {
 		}
 	}
 	
-	
+	//传入的账户是否被模版使用，如果使用就无法删除
+	public boolean isRelatedWithAccount(int accountId) {
+		Cursor cursor = db.rawQuery("select count(*) from bill_template where accountid = ? or transferinaccountdid = ? or transferoutaccountid = ?", new String[]{String.valueOf(accountId),String.valueOf(accountId),String.valueOf(accountId)});
+		cursor.moveToFirst();
+		Long count = cursor.getLong(0);
+		return count > 0 ? true : false;
+	}
 	
 	
 	public void closeDB() {

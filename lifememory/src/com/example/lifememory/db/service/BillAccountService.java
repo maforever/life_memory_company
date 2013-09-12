@@ -226,9 +226,8 @@ public class BillAccountService {
 	//是否显示余额警告先提示对话框
 	public String ifShowNotice(Bill bill) {
 		StringBuilder content = new StringBuilder();
-		int accountId = bill.getAccountid();
-		BillAccountItem item = this.findItemDetailById(accountId);
-		double accountYue = item.getDangqianyue();
+		BillAccountItem item = null;
+		
 		double jine = Double.parseDouble(bill.getJine());
 		double resultValue = 0;
 		double inValue = 0;
@@ -240,6 +239,9 @@ public class BillAccountService {
 		String inName, outName;
 		if(bill.getBillType() == 1) {
 			//支出
+			int accountId = bill.getAccountid();
+			item = this.findItemDetailById(accountId);
+			double accountYue = item.getDangqianyue();
 			resultValue = accountYue - jine;
 			if(item.isNotice() && (resultValue <= item.getNoticeValue())) {
 				content.append("您的账户").append(item.getName()).append("的当前余额已经小于或等于").append(item.getNoticeValue());
@@ -248,6 +250,9 @@ public class BillAccountService {
 			
 		}else if(bill.getBillType() == 2) {
 			//收入
+			int accountId = bill.getAccountid();
+			item = this.findItemDetailById(accountId);
+			double accountYue = item.getDangqianyue();
 			resultValue = accountYue + jine;
 			if(item.isNotice() && (resultValue <= item.getNoticeValue())) {
 				content.append("您的账户").append(item.getName()).append("的当前余额已经小于或等于").append(item.getNoticeValue());
@@ -263,8 +268,8 @@ public class BillAccountService {
 			outValue = item.getDangqianyue();
 			outNoticeValue = item.getNoticeValue();
 			outName = item.getName();
-			inResultValue = inValue + accountYue;
-			outResultValue = outValue - accountYue;
+			inResultValue = inValue + jine;
+			outResultValue = outValue - jine;
 			String inAccountStr = "";
 			String outAccountStr = "";
 			if(item.isNotice() && (inResultValue <= inNoticeValue)) {

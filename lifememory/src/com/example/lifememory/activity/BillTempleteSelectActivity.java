@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -32,6 +33,7 @@ public class BillTempleteSelectActivity extends Activity {
 	private BillTemplateGridViewAdapter adapter;
 	public List<Integer> templateIdx = new ArrayList<Integer>();     //ÕËµ¥Ä£°æµÄidx
 	private CheckBox deleteCheckBox;
+	private Intent intent;
 	private Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
@@ -60,6 +62,14 @@ public class BillTempleteSelectActivity extends Activity {
 		new InitDatasThread().start();
 	}
 	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if(templateService != null) {
+			new InitDatasThread().start();
+		}
+	}
+	
 	private void findViews() {
 		gridView = (GridView) this.findViewById(R.id.gridView);
 		deleteCheckBox = (CheckBox) this.findViewById(R.id.deleteCheckBox);
@@ -83,7 +93,11 @@ public class BillTempleteSelectActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				
+				intent = new Intent(BillTempleteSelectActivity.this, BillInputActivity.class);
+				intent.putExtra("flag", "template");
+				intent.putExtra("template", templates.get(position));
+				startActivity(intent);
+				overridePendingTransition(R.anim.activity_up, R.anim.activity_steady);
 			}
 		});
 	}
