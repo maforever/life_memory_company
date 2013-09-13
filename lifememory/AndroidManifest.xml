@@ -24,7 +24,8 @@
         <activity
             android:name=".activity.WelcomeActivity"
             android:label="@string/title_activity_main"
-            android:theme="@android:style/Theme.Black.NoTitleBar" >
+            android:theme="@android:style/Theme.Black.NoTitleBar" 
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -153,6 +154,13 @@
             android:name=".activity.BillTemplateNameInputDialogActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/dialog" />
+        
+                <activity
+            android:name=".activity.BillBudgetSettingActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.Black.NoTitleBar" />
+        
+        
     </application>
 
    <instrumentation

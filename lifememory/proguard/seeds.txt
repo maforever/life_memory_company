@@ -63,6 +63,8 @@ com.example.lifememory.R$anim: int flipper_left_out
 com.example.lifememory.R$anim: int flipper_right_in
 com.example.lifememory.R$anim: int flipper_right_out
 com.example.lifememory.R$anim: int out
+com.example.lifememory.R$anim: int popwindow_tips_in
+com.example.lifememory.R$anim: int popwindow_tips_out
 com.example.lifememory.R$anim: int scale_in
 com.example.lifememory.R$anim: int scale_out
 com.example.lifememory.R$anim: int splash_anim
@@ -115,6 +117,7 @@ com.example.lifememory.R$dimen: int title_hight
 com.example.lifememory.R$dimen: int title_text_size
 com.example.lifememory.R$dimen: int yygh_item_toleft
 com.example.lifememory.R$dimen: int yygh_item_toright
+com.example.lifememory.R$drawable: int account_listview_title_bg
 com.example.lifememory.R$drawable: int account_merge_separate_line
 com.example.lifememory.R$drawable: int add_icon
 com.example.lifememory.R$drawable: int app_icon
@@ -127,13 +130,18 @@ com.example.lifememory.R$drawable: int bill_account_bizhong_checked
 com.example.lifememory.R$drawable: int bill_account_delete_or_update_cb_checked
 com.example.lifememory.R$drawable: int bill_account_delete_or_update_cb_selector
 com.example.lifememory.R$drawable: int bill_account_delete_or_update_cb_unchecked
+com.example.lifememory.R$drawable: int bill_account_details_blue
+com.example.lifememory.R$drawable: int bill_account_details_brown
 com.example.lifememory.R$drawable: int bill_account_expandable_indacator_down
 com.example.lifememory.R$drawable: int bill_account_expandable_indacator_up
 com.example.lifememory.R$drawable: int bill_account_indicator_down
 com.example.lifememory.R$drawable: int bill_account_indicator_up
 com.example.lifememory.R$drawable: int bill_account_notice_checkbox_selector
+com.example.lifememory.R$drawable: int bill_account_notice_green_selector
 com.example.lifememory.R$drawable: int bill_account_setting_catagorybar
 com.example.lifememory.R$drawable: int bill_bg_src
+com.example.lifememory.R$drawable: int bill_budget_listview_selector
+com.example.lifememory.R$drawable: int bill_budget_totalbudget_edit_selecor
 com.example.lifememory.R$drawable: int bill_calculater_common_selector
 com.example.lifememory.R$drawable: int bill_calculater_sure_selector
 com.example.lifememory.R$drawable: int bill_catagory_image_select_bg
@@ -160,15 +168,19 @@ com.example.lifememory.R$drawable: int bill_help_middle_normal
 com.example.lifememory.R$drawable: int bill_help_middle_selected
 com.example.lifememory.R$drawable: int bill_help_top_normal
 com.example.lifememory.R$drawable: int bill_help_top_selected
+com.example.lifememory.R$drawable: int bill_in_template_selector
+com.example.lifememory.R$drawable: int bill_input_drawable
 com.example.lifememory.R$drawable: int bill_list_bottom_selector
 com.example.lifememory.R$drawable: int bill_list_center_selector
 com.example.lifememory.R$drawable: int bill_list_top_selector
 com.example.lifememory.R$drawable: int bill_monthdetals_arrowleft_selector
 com.example.lifememory.R$drawable: int bill_monthdetals_arrowright_selector
+com.example.lifememory.R$drawable: int bill_out_template_selector
 com.example.lifememory.R$drawable: int bill_red_delete_selector
 com.example.lifememory.R$drawable: int bill_tip
 com.example.lifememory.R$drawable: int bill_tip_btn_selector
 com.example.lifememory.R$drawable: int bill_title_bar_bg
+com.example.lifememory.R$drawable: int bill_transfer_template_selector
 com.example.lifememory.R$drawable: int blue
 com.example.lifememory.R$drawable: int bluebg
 com.example.lifememory.R$drawable: int bt_alert
@@ -182,6 +194,11 @@ com.example.lifememory.R$drawable: int btn_red_delete_down
 com.example.lifememory.R$drawable: int btn_red_delete_up
 com.example.lifememory.R$drawable: int btn_setting
 com.example.lifememory.R$drawable: int btn_yellow
+com.example.lifememory.R$drawable: int budget_empty_iv_bg
+com.example.lifememory.R$drawable: int budget_header_edit_normal
+com.example.lifememory.R$drawable: int budget_header_edit_pressed
+com.example.lifememory.R$drawable: int budget_second_lv_header_bg_normal
+com.example.lifememory.R$drawable: int budget_second_lv_header_bg_pressed
 com.example.lifememory.R$drawable: int canyin
 com.example.lifememory.R$drawable: int chajiukafei
 com.example.lifememory.R$drawable: int changyong
@@ -205,6 +222,7 @@ com.example.lifememory.R$drawable: int color_select_icon
 com.example.lifememory.R$drawable: int color_yellow_icon
 com.example.lifememory.R$drawable: int common_icon_income
 com.example.lifememory.R$drawable: int common_icon_payout
+com.example.lifememory.R$drawable: int common_list_item_arrow
 com.example.lifememory.R$drawable: int common_lv_empty_tips
 com.example.lifememory.R$drawable: int commonbtn_selector
 com.example.lifememory.R$drawable: int composer_button
@@ -257,6 +275,8 @@ com.example.lifememory.R$drawable: int delete_selected
 com.example.lifememory.R$drawable: int delete_unselected
 com.example.lifememory.R$drawable: int dianqi
 com.example.lifememory.R$drawable: int dianying
+com.example.lifememory.R$drawable: int earn_template
+com.example.lifememory.R$drawable: int earn_template_dash
 com.example.lifememory.R$drawable: int exit_demo_mode_btn_normal
 com.example.lifememory.R$drawable: int exit_demo_mode_btn_pressed
 com.example.lifememory.R$drawable: int expandable_arrow
@@ -265,6 +285,8 @@ com.example.lifememory.R$drawable: int fangwudaikuan
 com.example.lifememory.R$drawable: int function_icon14
 com.example.lifememory.R$drawable: int gongjiaoditie
 com.example.lifememory.R$drawable: int gouwu
+com.example.lifememory.R$drawable: int green_btn_n
+com.example.lifememory.R$drawable: int green_btn_p
 com.example.lifememory.R$drawable: int greenlight
 com.example.lifememory.R$drawable: int grid_bg
 com.example.lifememory.R$drawable: int grid_bg_h
@@ -295,6 +317,10 @@ com.example.lifememory.R$drawable: int icon_income
 com.example.lifememory.R$drawable: int icon_jjwy_wygl
 com.example.lifememory.R$drawable: int icon_jjwy_yxby
 com.example.lifememory.R$drawable: int icon_lyyp_hwzb
+com.example.lifememory.R$drawable: int icon_manage_creditcard
+com.example.lifememory.R$drawable: int icon_manage_depositcard
+com.example.lifememory.R$drawable: int icon_manage_money
+com.example.lifememory.R$drawable: int icon_manage_net
 com.example.lifememory.R$drawable: int icon_num0
 com.example.lifememory.R$drawable: int icon_num1
 com.example.lifememory.R$drawable: int icon_num2
@@ -418,6 +444,8 @@ com.example.lifememory.R$drawable: int pregnancyjishiben_btn_selector
 com.example.lifememory.R$drawable: int pregnancyjishiben_grid_selector
 com.example.lifememory.R$drawable: int pregnancyjishiben_list_selector
 com.example.lifememory.R$drawable: int pregnancyjishiben_toolbarselector
+com.example.lifememory.R$drawable: int progress_bar_background
+com.example.lifememory.R$drawable: int progress_color_horizontal
 com.example.lifememory.R$drawable: int pwd_keyboard_backspace
 com.example.lifememory.R$drawable: int qiuyimaiyao
 com.example.lifememory.R$drawable: int recoder_bg_anim
@@ -456,6 +484,8 @@ com.example.lifememory.R$drawable: int shuhuayishu
 com.example.lifememory.R$drawable: int shuidianranqi
 com.example.lifememory.R$drawable: int shuifei
 com.example.lifememory.R$drawable: int shumachanpin
+com.example.lifememory.R$drawable: int spend_template
+com.example.lifememory.R$drawable: int spend_template_dash
 com.example.lifememory.R$drawable: int text_flag_icon
 com.example.lifememory.R$drawable: int thumb
 com.example.lifememory.R$drawable: int thums_model
@@ -474,6 +504,8 @@ com.example.lifememory.R$drawable: int toolbar_save_icon
 com.example.lifememory.R$drawable: int toolbar_share_icon
 com.example.lifememory.R$drawable: int toolbar_timer_icon
 com.example.lifememory.R$drawable: int touzi
+com.example.lifememory.R$drawable: int transfer_template
+com.example.lifememory.R$drawable: int transfer_template_dash
 com.example.lifememory.R$drawable: int user_guide_btn_normal
 com.example.lifememory.R$drawable: int user_guide_btn_pressed
 com.example.lifememory.R$drawable: int waihui
@@ -519,6 +551,7 @@ com.example.lifememory.R$id: int accountyueLayout
 com.example.lifememory.R$id: int add
 com.example.lifememory.R$id: int addImage
 com.example.lifememory.R$id: int anim_bg_image
+com.example.lifememory.R$id: int arrowIndicator
 com.example.lifememory.R$id: int arrowLeft
 com.example.lifememory.R$id: int arrowRight
 com.example.lifememory.R$id: int back
@@ -534,10 +567,12 @@ com.example.lifememory.R$id: int benyueincomeicon
 com.example.lifememory.R$id: int benyuespendaccount
 com.example.lifememory.R$id: int benyuespendicon
 com.example.lifememory.R$id: int bg
+com.example.lifememory.R$id: int bizhong
 com.example.lifememory.R$id: int bottom
 com.example.lifememory.R$id: int btn
 com.example.lifememory.R$id: int btn2
 com.example.lifememory.R$id: int btn_start
+com.example.lifememory.R$id: int budget
 com.example.lifememory.R$id: int cal_add
 com.example.lifememory.R$id: int cal_del
 com.example.lifememory.R$id: int cal_divide
@@ -559,6 +594,7 @@ com.example.lifememory.R$id: int cal_zero
 com.example.lifememory.R$id: int cancel
 com.example.lifememory.R$id: int catagoryName
 com.example.lifememory.R$id: int catagory_txt
+com.example.lifememory.R$id: int catagoryname
 com.example.lifememory.R$id: int center
 com.example.lifememory.R$id: int changetoincome
 com.example.lifememory.R$id: int changetoincomelayout
@@ -583,6 +619,10 @@ com.example.lifememory.R$id: int composer_buttons_show_hide_button_icon
 com.example.lifememory.R$id: int composer_buttons_wrapper
 com.example.lifememory.R$id: int content
 com.example.lifememory.R$id: int createDate
+com.example.lifememory.R$id: int creditCardListView
+com.example.lifememory.R$id: int creditcard
+com.example.lifememory.R$id: int creditcardLayout
+com.example.lifememory.R$id: int creditcardicon
 com.example.lifememory.R$id: int currentTime
 com.example.lifememory.R$id: int date
 com.example.lifememory.R$id: int day
@@ -590,9 +630,14 @@ com.example.lifememory.R$id: int del
 com.example.lifememory.R$id: int delete
 com.example.lifememory.R$id: int deleteBtn
 com.example.lifememory.R$id: int deleteCb
+com.example.lifememory.R$id: int deleteCheckBox
 com.example.lifememory.R$id: int deleteTag
 com.example.lifememory.R$id: int delete_cancle
 com.example.lifememory.R$id: int delete_tag
+com.example.lifememory.R$id: int depositListView
+com.example.lifememory.R$id: int depositcard
+com.example.lifememory.R$id: int depositcardLayout
+com.example.lifememory.R$id: int depositcardicon
 com.example.lifememory.R$id: int diaryContent
 com.example.lifememory.R$id: int diaryDate
 com.example.lifememory.R$id: int diaryTitle
@@ -618,6 +663,7 @@ com.example.lifememory.R$id: int iv_bottom_line
 com.example.lifememory.R$id: int jieyujine
 com.example.lifememory.R$id: int jine
 com.example.lifememory.R$id: int jinelayout
+com.example.lifememory.R$id: int jingzichan
 com.example.lifememory.R$id: int keyboardRelativeLayout
 com.example.lifememory.R$id: int layout
 com.example.lifememory.R$id: int layout_jishiben
@@ -636,6 +682,9 @@ com.example.lifememory.R$id: int menu_luyinbi
 com.example.lifememory.R$id: int menu_settings
 com.example.lifememory.R$id: int mins
 com.example.lifememory.R$id: int money
+com.example.lifememory.R$id: int moneyLayout
+com.example.lifememory.R$id: int moneyListView
+com.example.lifememory.R$id: int moneyicon
 com.example.lifememory.R$id: int month
 com.example.lifememory.R$id: int msg
 com.example.lifememory.R$id: int msgLayout
@@ -643,6 +692,12 @@ com.example.lifememory.R$id: int name
 com.example.lifememory.R$id: int name1
 com.example.lifememory.R$id: int name2
 com.example.lifememory.R$id: int name_txt
+com.example.lifememory.R$id: int net
+com.example.lifememory.R$id: int netLayout
+com.example.lifememory.R$id: int netListView
+com.example.lifememory.R$id: int neticon
+com.example.lifememory.R$id: int next
+com.example.lifememory.R$id: int nextLayout
 com.example.lifememory.R$id: int noticeCheckbox
 com.example.lifememory.R$id: int num
 com.example.lifememory.R$id: int ok
@@ -650,6 +705,7 @@ com.example.lifememory.R$id: int parentPopWindow
 com.example.lifememory.R$id: int point_layout
 com.example.lifememory.R$id: int popParentView
 com.example.lifememory.R$id: int popWinParent
+com.example.lifememory.R$id: int progressBar
 com.example.lifememory.R$id: int recodPage
 com.example.lifememory.R$id: int recode_tag
 com.example.lifememory.R$id: int rename
@@ -658,6 +714,7 @@ com.example.lifememory.R$id: int riqilayout
 com.example.lifememory.R$id: int rl1
 com.example.lifememory.R$id: int run_image
 com.example.lifememory.R$id: int save
+com.example.lifememory.R$id: int savetemplate
 com.example.lifememory.R$id: int scrollView
 com.example.lifememory.R$id: int search
 com.example.lifememory.R$id: int secondGridView
@@ -673,6 +730,7 @@ com.example.lifememory.R$id: int shouru
 com.example.lifememory.R$id: int slidingmenumain
 com.example.lifememory.R$id: int spend
 com.example.lifememory.R$id: int stop
+com.example.lifememory.R$id: int stopNotice
 com.example.lifememory.R$id: int style_checkboxs
 com.example.lifememory.R$id: int subTitle
 com.example.lifememory.R$id: int sure
@@ -687,6 +745,9 @@ com.example.lifememory.R$id: int titleTv
 com.example.lifememory.R$id: int tool_delete
 com.example.lifememory.R$id: int tool_main
 com.example.lifememory.R$id: int top
+com.example.lifememory.R$id: int totalBudget
+com.example.lifememory.R$id: int totalBudgetBtn
+com.example.lifememory.R$id: int totalBudgetLayout
 com.example.lifememory.R$id: int totalTime
 com.example.lifememory.R$id: int tv_page
 com.example.lifememory.R$id: int unsave
@@ -699,6 +760,7 @@ com.example.lifememory.R$id: int viewPager
 com.example.lifememory.R$id: int views
 com.example.lifememory.R$id: int week
 com.example.lifememory.R$id: int year
+com.example.lifememory.R$id: int yue
 com.example.lifememory.R$id: int zhanghu
 com.example.lifememory.R$id: int zhanghulayout
 com.example.lifememory.R$id: int zhichu
@@ -707,14 +769,19 @@ com.example.lifememory.R$id: int zhuanchulayout
 com.example.lifememory.R$id: int zhuanru
 com.example.lifememory.R$id: int zhuanrulayout
 com.example.lifememory.R$id: int zhuanzhang
+com.example.lifememory.R$id: int zongzichanLayout
 com.example.lifememory.R$layout: int bill_account_add_layout
 com.example.lifememory.R$layout: int bill_account_bizhong_list_item
 com.example.lifememory.R$layout: int bill_account_bizhong_select_layout
 com.example.lifememory.R$layout: int bill_account_catagoryname_select_layout
+com.example.lifememory.R$layout: int bill_account_details_layout
+com.example.lifememory.R$layout: int bill_account_details_listview_item
 com.example.lifememory.R$layout: int bill_account_expandablelist_parentitem
 com.example.lifememory.R$layout: int bill_account_listview_item
 com.example.lifememory.R$layout: int bill_account_setting_layout
 com.example.lifememory.R$layout: int bill_account_update_layout
+com.example.lifememory.R$layout: int bill_budget_listiew_item
+com.example.lifememory.R$layout: int bill_budget_settting_layout
 com.example.lifememory.R$layout: int bill_calculator_layout
 com.example.lifememory.R$layout: int bill_catagory_add_layout
 com.example.lifememory.R$layout: int bill_catagory_image_select_gridview_item
@@ -728,14 +795,18 @@ com.example.lifememory.R$layout: int bill_member_select_layout
 com.example.lifememory.R$layout: int bill_month_details_layout
 com.example.lifememory.R$layout: int bill_monthdetails_listview_item
 com.example.lifememory.R$layout: int bill_monthdetails_listview_listview_item
+com.example.lifememory.R$layout: int bill_template_select_layout
+com.example.lifememory.R$layout: int bill_templates_gridview_item
 com.example.lifememory.R$layout: int bill_text_input_layout
 com.example.lifememory.R$layout: int bill_tip_layout
 com.example.lifememory.R$layout: int color_gridview_item
 com.example.lifememory.R$layout: int colorselect_popupwindow
 com.example.lifememory.R$layout: int dialog_alert
 com.example.lifememory.R$layout: int dialog_backunsave_alert
+com.example.lifememory.R$layout: int dialog_bill_account_noticevalue
 com.example.lifememory.R$layout: int dialog_bill_alert
 com.example.lifememory.R$layout: int dialog_bill_liushui
+com.example.lifememory.R$layout: int dialog_bill_template_name_input
 com.example.lifememory.R$layout: int dialog_rename
 com.example.lifememory.R$layout: int expandable_gridview_child
 com.example.lifememory.R$layout: int expandable_list_child
@@ -786,6 +857,9 @@ com.example.lifememory.R$string: int title_activity_main
 com.example.lifememory.R$style: int AppBaseTheme
 com.example.lifememory.R$style: int AppTheme
 com.example.lifememory.R$style: int dialog
+com.example.lifememory.R$style: int popwindow_tip_animation
+com.example.lifememory.R$style: int progressBarHorizontal_color
+com.example.lifememory.R$style: int progressBar_Horizontal_color
 com.example.lifememory.R$styleable: int[] SlidingMenu
 com.example.lifememory.R$styleable: int SlidingMenu_behindOffset
 com.example.lifememory.R$styleable: int SlidingMenu_behindScrollScale
@@ -827,12 +901,21 @@ com.example.lifememory.activity.BillAccountBiZhongSettingActivity: void btnClick
 com.example.lifememory.activity.BillAccountCatagoryNameSelectActivity
 com.example.lifememory.activity.BillAccountCatagoryNameSelectActivity: BillAccountCatagoryNameSelectActivity()
 com.example.lifememory.activity.BillAccountCatagoryNameSelectActivity: void btnClick(android.view.View)
+com.example.lifememory.activity.BillAccountDetailsActivity
+com.example.lifememory.activity.BillAccountDetailsActivity: BillAccountDetailsActivity()
+com.example.lifememory.activity.BillAccountDetailsActivity: void btnClick(android.view.View)
+com.example.lifememory.activity.BillAccountNoticeDialogActivity
+com.example.lifememory.activity.BillAccountNoticeDialogActivity: BillAccountNoticeDialogActivity()
+com.example.lifememory.activity.BillAccountNoticeDialogActivity: void btnClick(android.view.View)
 com.example.lifememory.activity.BillAccountSettingActivity
 com.example.lifememory.activity.BillAccountSettingActivity: BillAccountSettingActivity()
 com.example.lifememory.activity.BillAccountSettingActivity: void btnClick(android.view.View)
 com.example.lifememory.activity.BillAccountUpdateActivity
 com.example.lifememory.activity.BillAccountUpdateActivity: BillAccountUpdateActivity()
 com.example.lifememory.activity.BillAccountUpdateActivity: void btnClick(android.view.View)
+com.example.lifememory.activity.BillBudgetSettingActivity
+com.example.lifememory.activity.BillBudgetSettingActivity: BillBudgetSettingActivity()
+com.example.lifememory.activity.BillBudgetSettingActivity: void btnClick(android.view.View)
 com.example.lifememory.activity.BillCalculatorActivity
 com.example.lifememory.activity.BillCalculatorActivity: BillCalculatorActivity()
 com.example.lifememory.activity.BillCalculatorActivity: void btnClick(android.view.View)
@@ -862,6 +945,12 @@ com.example.lifememory.activity.BillMemberSelectActivity: void btnClick(android.
 com.example.lifememory.activity.BillMonthDetailsActivity
 com.example.lifememory.activity.BillMonthDetailsActivity: BillMonthDetailsActivity()
 com.example.lifememory.activity.BillMonthDetailsActivity: void btnClick(android.view.View)
+com.example.lifememory.activity.BillTemplateNameInputDialogActivity
+com.example.lifememory.activity.BillTemplateNameInputDialogActivity: BillTemplateNameInputDialogActivity()
+com.example.lifememory.activity.BillTemplateNameInputDialogActivity: void btnClick(android.view.View)
+com.example.lifememory.activity.BillTempleteSelectActivity
+com.example.lifememory.activity.BillTempleteSelectActivity: BillTempleteSelectActivity()
+com.example.lifememory.activity.BillTempleteSelectActivity: void btnClick(android.view.View)
 com.example.lifememory.activity.BillTextInputActivity
 com.example.lifememory.activity.BillTextInputActivity: BillTextInputActivity()
 com.example.lifememory.activity.BillTextInputActivity: void btnClick(android.view.View)
@@ -997,6 +1086,10 @@ com.example.lifememory.activity.views.ScrollLayout: void setToScreen(int)
 com.example.lifememory.activity.views.ScrollLayout: int getCurScreen()
 com.example.lifememory.activity.views.ScrollLayout: int getPage()
 com.example.lifememory.activity.views.ScrollLayout: void setPageListener(com.example.lifememory.activity.views.ScrollLayout$PageListener)
+com.example.lifememory.activity.views.VoteProgressBar
+com.example.lifememory.activity.views.VoteProgressBar: VoteProgressBar(android.content.Context,android.util.AttributeSet,int)
+com.example.lifememory.activity.views.VoteProgressBar: VoteProgressBar(android.content.Context,android.util.AttributeSet)
+com.example.lifememory.activity.views.VoteProgressBar: VoteProgressBar(android.content.Context)
 com.example.lifememory.adapter.BillInCatagoryListViewAdapter$1: void onClick(android.view.View)
 com.example.lifememory.adapter.BillMemberListViewAdapter$1: void onClick(android.view.View)
 com.example.lifememory.dialog.DialogAlert: void onClick(android.view.View)

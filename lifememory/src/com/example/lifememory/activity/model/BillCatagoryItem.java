@@ -6,8 +6,9 @@ public class BillCatagoryItem {
 	private int idx;
 	private String name;
 	private int imageId;
-	private double bugget;
+	private double bugget;           //预算值
 	private int parentId; 
+	private double spendValue;       //以消费值
 	
 	public BillCatagoryItem() {};
 	
@@ -52,11 +53,20 @@ public class BillCatagoryItem {
 		this.parentId = parentId;
 	}
 
+	public double getSpendValue() {
+		return spendValue;
+	}
+
+	public void setSpendValue(double spendValue) {
+		this.spendValue = spendValue;
+	}
+
 	@Override
 	public String toString() {
 		return "BillCatagoryItem [idx=" + idx + ", name=" + name + ", imageId="
 				+ imageId + ", bugget=" + bugget + ", parentId=" + parentId
-				+ "]";
+				+ ", spendValue=" + spendValue + "]";
 	}
+
 	
 }

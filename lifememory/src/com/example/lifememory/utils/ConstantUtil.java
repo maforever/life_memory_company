@@ -21,6 +21,7 @@ public class ConstantUtil {
 	public final static int SELECTED_DATE_FINISHED = 90;   //选择日期完成
 	public final static int SELECTED_INCATAGORY_FINISHED = 89;  //选择收入类别完成
 	public final static int EDIT_INCATAGORY_FINISHED = 88;      //编辑收入类别完成
+	public final static int EDIT_BUDGET_FINISHED = 87;          //编辑预算值完成
 	public final static int EDIT_NOCHANGE_BACK = 10; // 直接点击back不保存信息
 
 	/**

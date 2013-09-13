@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.example.lifememory.R;
 import com.example.lifememory.activity.BillAccountDetailsActivity;
+import com.example.lifememory.activity.BillBudgetSettingActivity;
 import com.example.lifememory.activity.BillInputActivity;
 import com.example.lifememory.activity.BillMonthDetailsActivity;
 import com.example.lifememory.activity.BillTempleteSelectActivity;
@@ -284,7 +285,10 @@ public class FR_Bill_index extends Fragment {
 				getActivity().overridePendingTransition(R.anim.activity_up, R.anim.activity_steady);
 				break;
 			case 2:
-				Toast.makeText(getActivity(), firstPageTitle[position], 0).show();
+//				Toast.makeText(getActivity(), firstPageTitle[position], 0).show();
+				intent = new Intent(getActivity(), BillBudgetSettingActivity.class);
+				getActivity().startActivity(intent);
+				getActivity().overridePendingTransition(R.anim.activity_up, R.anim.activity_steady);
 				break;
 			case 3:
 				intent = new Intent(getActivity(), BillMonthDetailsActivity.class);

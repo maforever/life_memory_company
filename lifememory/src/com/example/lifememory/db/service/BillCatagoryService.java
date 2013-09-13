@@ -116,7 +116,37 @@ public class BillCatagoryService {
 //	}
 //	
 	
-	
+	//查找所有父类别的信息，名称，预算，图片，已消费金额作为预算listview信息
+	public List<BillCatagoryItem> findBudgetInfos() {
+		List<BillCatagoryItem> items = new ArrayList<BillCatagoryItem>();
+		BillCatagoryItem item;
+		Cursor cursor = db.rawQuery("select * from bill_catagory where parentid = 0", null);
+		while(cursor.moveToNext()) {
+			double totalSpendValue = 0;
+			item = new BillCatagoryItem();
+			item.setIdx(cursor.getInt(cursor.getColumnIndex("idx")));
+//			Log.i("a", "" + item.getIdx());
+			item.setName(cursor.getString(cursor.getColumnIndex("name")));
+			item.setParentId(0);
+			item.setBugget(cursor.getDouble(cursor.getColumnIndex("budget")));
+			item.setImageId(cursor.getInt(cursor.getColumnIndex("imageid")));
+			
+			Cursor cursor2 = db.rawQuery("select jine from bill_info where outcatagoryparentid = ? and billType = 1", new String[]{String.valueOf(item.getIdx())});
+			double spendValue = 0;
+			while(cursor2.moveToNext()) {
+				spendValue = cursor2.getDouble(0);
+				totalSpendValue += spendValue;
+			}
+			item.setSpendValue(totalSpendValue);
+			items.add(item);
+		}
+		
+		return items;
+	}
+	//根据idx修改预算值
+	public void updateBudgetByIdx(int idx, double budgetValue) {
+		db.execSQL("update bill_catagory set budget = ? where idx = ?", new String[]{String.valueOf(budgetValue), String.valueOf(idx)});
+	}
 }
 
 

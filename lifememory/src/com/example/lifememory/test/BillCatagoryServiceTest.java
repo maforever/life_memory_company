@@ -1,5 +1,7 @@
 package com.example.lifememory.test;
 
+import java.util.List;
+
 import com.example.lifememory.activity.model.BillCatagoryItem;
 import com.example.lifememory.db.service.BillCatagoryService;
 
@@ -19,5 +21,12 @@ public class BillCatagoryServiceTest extends AndroidTestCase {
 	public void testFindDeafaultCatagoryItem() {
 //		BillCatagoryItem item= dbService.findDeafaultCatagoryItem();
 //		Log.i("a", item.toString());
+	}
+	
+	public void testFindBudgetInfos() {
+		List<BillCatagoryItem> items = dbService.findBudgetInfos();
+		for(BillCatagoryItem item : items) {
+			Log.i("a", item.toString());
+		}
 	}
 }
