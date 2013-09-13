@@ -53,12 +53,12 @@ public class PregnancyDiaryOpenHelper extends SQLiteOpenHelper {
 		 * isNotice   是否设置警戒线
 		 * noticeValue  警戒线金额
 		 */
-		db.execSQL("create table if not exists bill_info(idx integer primary key autoincrement, jine text, incatagory text, outcatagory text , account text, accountid integer, date text, dateymd text, member text, beizhu text, isCanBaoXiao text, isBaoxiaoed text, transferIn text, transferInAccountId integer, transferOut text, transferOutAccountId, billType integer)");
+		db.execSQL("create table if not exists bill_info(idx integer primary key autoincrement, jine text, incatagory text, outcatagory text , outcatagorychildid integer, outcatagoryparentid integer, account text, accountid integer, date text, dateymd text, member text, beizhu text, isCanBaoXiao text, isBaoxiaoed text, transferIn text, transferInAccountId integer, transferOut text, transferOutAccountId, billType integer)");
 		db.execSQL("create table if not exists bill_incatagory(idx integer primary key autoincrement, name text)");
-		db.execSQL("create table if not exists bill_catagory(idx integer primary key autoincrement, name text, imageid integer, parentid integer)");
+		db.execSQL("create table if not exists bill_catagory(idx integer primary key autoincrement, name text, imageid integer, budget text,  parentid integer)");
 		db.execSQL("create table if not exists bill_account(idx integer primary key autoincrement, catagoryname text ,name text, bizhong text, dangqianyue text, isnotice text, noticevalue text, imageid integer, beizhu text)");
 		db.execSQL("create table if not exists bill_member(idx integer primary key autoincrement, name text)");
-		db.execSQL("create table if not exists bill_template(idx integer primary key autoincrement, name text,incatagoryname text, outcatagoryname text, accountid integer, member text, canbaoxiao, transferinaccountdid integer, transferoutaccountid integer, billtype integer)");
+		db.execSQL("create table if not exists bill_template(idx integer primary key autoincrement, name text,incatagoryname text, outcatagoryname text, outcatagorychildid integer, outcatagoryparentid integer, accountid integer, member text, canbaoxiao, transferinaccountdid integer, transferoutaccountid integer, billtype integer)");
 		
 		
 		//这个地方如果使用线程会报错 database is locked

@@ -6,6 +6,7 @@ public class BillCatagoryItem {
 	private int idx;
 	private String name;
 	private int imageId;
+	private double bugget;
 	private int parentId; 
 	
 	public BillCatagoryItem() {};
@@ -37,11 +38,25 @@ public class BillCatagoryItem {
 	public void setImageId(int imageId) {
 		this.imageId = imageId;
 	}
+	public double getBugget() {
+		return bugget;
+	}
+	public void setBugget(double bugget) {
+		this.bugget = bugget;
+	}
+
 	public int getParentId() {
 		return parentId;
 	}
 	public void setParentId(int parentId) {
 		this.parentId = parentId;
+	}
+
+	@Override
+	public String toString() {
+		return "BillCatagoryItem [idx=" + idx + ", name=" + name + ", imageId="
+				+ imageId + ", bugget=" + bugget + ", parentId=" + parentId
+				+ "]";
 	}
 	
 }

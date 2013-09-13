@@ -144,6 +144,8 @@ public class BillInputActivity extends Activity {
 			}
 
 			bill.setOutCatagory("常用-打的");
+			bill.setOutCatagoryParentId(1);    //默认选择常用父类别
+			bill.setOutCatagoryChildId(10);     //默认选择打的子类别
 //			bill.setAccount("现金");
 			bill.setMember("自己");
 			bill.setInCatagory("工资");
@@ -224,6 +226,8 @@ public class BillInputActivity extends Activity {
 			Log.i("a", "template = " + template.toString());
 			bill.setAccountid(template.getAccountid());
 			bill.setOutCatagory(template.getOutCatagoryName());
+			bill.setOutCatagoryChildId(template.getOutCatagoryChildId());
+			bill.setOutCatagoryParentId(template.getOutCatagoryParentId());
 			bill.setInCatagory(template.getInCatagoryName());
 			bill.setMember(template.getMember());
 			bill.setCanBaoXiao(template.isCanBaoXiao());
@@ -386,6 +390,8 @@ public class BillInputActivity extends Activity {
 			viewFlipper.setDisplayedChild(0);
 			outCatagoryTextView.setText("常用-打的");
 			bill.setOutCatagory("常用-打的");
+			bill.setOutCatagoryChildId(10);
+			bill.setOutCatagoryParentId(1);
 			currentAccountTextView = (TextView) viewFlipper.getCurrentView()
 					.findViewById(R.id.zhanghu);
 			currentMemberTextView = (TextView) viewFlipper.getCurrentView()
@@ -523,6 +529,11 @@ public class BillInputActivity extends Activity {
 			outCatagorySelectedChildId = data.getIntExtra(
 					"catagorySelectedChildId", 0);
 			catagoryStr = dbService.getCatagoryStr(catagoryChildId);
+			int catagoryChildId = data.getIntExtra("catagoryChildId", 0);
+			int catagoryParentId = data.getIntExtra("catagoryParentId", 0);
+			Log.i("a", "catagoryChildId = " + catagoryChildId + " catagoryParentId = " + catagoryParentId);
+			bill.setOutCatagoryChildId(catagoryChildId);
+			bill.setOutCatagoryParentId(catagoryParentId);
 			// Log.i("a",
 			// "BillInputActivity onActivityResult catagorySelectedId = " +
 			// catagorySelectedId + " catagorySelectedChildId = " +
@@ -775,6 +786,8 @@ public class BillInputActivity extends Activity {
 			template.setCanBaoXiao(baoxiaoCb.isChecked());
 			template.setInCatagoryName(bill.getInCatagory());
 			template.setOutCatagoryName(bill.getOutCatagory());
+			template.setOutCatagoryChildId(bill.getOutCatagoryChildId());
+			template.setOutCatagoryParentId(bill.getOutCatagoryParentId());
 			template.setMember(bill.getMember());
 			template.setTransferInAccountId(bill.getTransferInAccountId());
 			template.setTransferOutAccountId(bill.getTransferOutAccountId());

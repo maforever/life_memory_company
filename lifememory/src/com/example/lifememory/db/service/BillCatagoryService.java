@@ -9,6 +9,7 @@ import com.example.lifememory.db.PregnancyDiaryOpenHelper;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class BillCatagoryService {
 	
@@ -51,7 +52,7 @@ public class BillCatagoryService {
 	}
 	//添加类别信息
 	public boolean addCatagory(BillCatagoryItem item) {
-		Cursor cursor = db.rawQuery("select count(*) from bill_catagory where name = ? and parentid = ?", new String[]{item.getName(), String.valueOf(item.getParentId())});
+		Cursor cursor = db.rawQuery("select count(*) from bill_catagory where name = ? and parentid = ?", new String[]{item.getName().trim(), String.valueOf(item.getParentId())});
 		cursor.moveToFirst();
 		Long count = cursor.getLong(0);
 		if(count > 0) {
@@ -80,6 +81,41 @@ public class BillCatagoryService {
 		sb.append(parentName).append("-").append(childName);
 		return sb.toString();
 	}
+	
+	
+	/*
+	 * 目前由于没有删除类型的功能，这个方法可以舍去，因为可以直接固定写死父类别为0， 子类别为1
+	 * 此方法的主要功能是超找默认类别的父类别idx与子类别idx
+	 */
+//	public BillCatagoryItem findDeafaultCatagoryItem() {
+//		BillCatagoryItem item = new BillCatagoryItem();
+//		List<Integer> parentIds = new ArrayList<Integer>();
+//		
+//		//按idx的降序查找所有父类别的idx  , 如果parentIds的大小小于等于0，就是没有父类别，提示不能添加账单信息
+//		Cursor cursor = db.rawQuery("select idx from bill_catagory where parentid = 0 order by idx asc", null);
+//		while(cursor.moveToNext()) {
+//			parentIds.add(cursor.getInt(0));
+//		}
+//		
+//		if(parentIds.size() <= 0) {
+//			return item;
+//		}
+//		
+//		for(Integer parentId : parentIds) {
+//			cursor = db.rawQuery("select * from bill_catagory where parentid = ?", new String[]{String.valueOf(parentId)});
+//			if(cursor.moveToFirst()) {
+//				item.setIdx(cursor.getInt(cursor.getColumnIndex("idx")));
+//				item.setName(cursor.getString(cursor.getColumnIndex("name")));
+//				item.setParentId(cursor.getInt(cursor.getColumnIndex("parentid")));
+//				return item;
+//			}else {
+//				return item;
+//			}
+//		}
+//		return item;
+//	}
+//	
+	
 	
 }
 

@@ -21,14 +21,16 @@ public class BillTemplateService {
 
 	/**
 	 * idx integer primary key autoincrement, name text,incatagoryname text, outcatagoryname text,
+	 * outcatagorychildid integer, outcatagoryparentid integer
 	 * accountid integer, member text, canbaoxiao, transferinaccountdid integer,
 	 * transferoutaccountid integer, billtype integer
 	 * 
 	 */
 	public void addTemplate(BillTemplate template) {
 		db.execSQL(
-				"insert into bill_template (name, incatagoryname, outcatagoryname, accountid, member, canbaoxiao, transferinaccountdid, transferoutaccountid, billtype) values (?,?,?,?,?,?,?,?,?)",
+				"insert into bill_template (name, incatagoryname, outcatagoryname,outcatagorychildid,outcatagoryparentid,  accountid, member, canbaoxiao, transferinaccountdid, transferoutaccountid, billtype) values (?,?,?,?,?,?,?,?,?,?,?)",
 				new String[] { template.getName(), template.getInCatagoryName(), template.getOutCatagoryName(),
+						String.valueOf(template.getOutCatagoryChildId()), String.valueOf(template.getOutCatagoryParentId()),
 						String.valueOf(template.getAccountid()),
 						template.getMember(),
 						String.valueOf(template.isCanBaoXiao()),
@@ -58,6 +60,8 @@ public class BillTemplateService {
 			template.setTransferInAccountId(cursor.getInt(cursor.getColumnIndex("transferinaccountdid")));
 			template.setTransferOutAccountId(cursor.getInt(cursor.getColumnIndex("transferoutaccountid")));
 			template.setBillType(cursor.getInt(cursor.getColumnIndex("billtype")));
+			template.setOutCatagoryChildId(cursor.getInt(cursor.getColumnIndex("outcatagorychildid")));
+			template.setOutCatagoryParentId(cursor.getInt(cursor.getColumnIndex("outcatagoryparentid")));
 			templates.add(template);
 		}
 		return templates;

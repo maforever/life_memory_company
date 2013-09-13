@@ -21,6 +21,8 @@ public class BillTemplate implements Serializable{
 	private String name;
 	private String inCatagoryName;
 	private String outCatagoryName;
+	private int outCatagoryChildId;        //支出类型的子id
+	private int outCatagoryParentId;	   //支出类型的父id
 	private int accountid;
 	private String member;
 	private boolean canBaoXiao;
@@ -51,6 +53,22 @@ public class BillTemplate implements Serializable{
 	}
 	public void setOutCatagoryName(String outCatagoryName) {
 		this.outCatagoryName = outCatagoryName;
+	}
+	
+	public int getOutCatagoryChildId() {
+		return outCatagoryChildId;
+	}
+	public void setOutCatagoryChildId(int outCatagoryChildId) {
+		this.outCatagoryChildId = outCatagoryChildId;
+	}
+	public int getOutCatagoryParentId() {
+		return outCatagoryParentId;
+	}
+	public void setOutCatagoryParentId(int outCatagoryParentId) {
+		this.outCatagoryParentId = outCatagoryParentId;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 	public int getAccountid() {
 		return accountid;
@@ -92,12 +110,15 @@ public class BillTemplate implements Serializable{
 	public String toString() {
 		return "BillTemplate [idx=" + idx + ", name=" + name
 				+ ", inCatagoryName=" + inCatagoryName + ", outCatagoryName="
-				+ outCatagoryName + ", accountid=" + accountid + ", member="
-				+ member + ", canBaoXiao=" + canBaoXiao
+				+ outCatagoryName + ", outCatagoryChildId="
+				+ outCatagoryChildId + ", outCatagoryParentId="
+				+ outCatagoryParentId + ", accountid=" + accountid
+				+ ", member=" + member + ", canBaoXiao=" + canBaoXiao
 				+ ", transferInAccountId=" + transferInAccountId
 				+ ", transferOutAccountId=" + transferOutAccountId
 				+ ", billType=" + billType + "]";
 	}
+	
 	
 	
 	

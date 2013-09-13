@@ -22,10 +22,12 @@ public class BillInfoService {
 	}
 	
 	/**bill数据库属性
-	 * jine text, incatagory text, outcatagory text , 
-	 * account text, date text, dateymd text, member text, 
-	 * beizhu text, isCanBaoXiao text, isBaoxiaoed text, 
-	 * transferIn text, transferOut text, billType integer
+	 *idx integer primary key autoincrement, jine text, incatagory text,
+	 * outcatagory text , outcatagorychildid integer, outcatagoryparentid integer,
+	 *  account text, accountid integer, date text, dateymd text,
+	 *   member text, beizhu text, isCanBaoXiao text, isBaoxiaoed text,
+	 *    transferIn text, transferInAccountId integer, transferOut text, 
+	 *    transferOutAccountId, billType integer
 	 */
 	
 	
@@ -33,8 +35,8 @@ public class BillInfoService {
 	//添加支出类型的账单信息
 	public void addOutBill(Bill bill) {
 //		Log.i("a", bill.toString());
-		db.execSQL("insert into bill_info (jine, outcatagory, account, accountid, date, dateymd, member, beizhu, isCanBaoXiao, billType) values (?,?,?,?,?,?,?,?,?, ?)", 
-				new String[]{bill.getJine(), bill.getOutCatagory(), bill.getAccount(), String.valueOf(bill.getAccountid()), bill.getDate(),bill.getDateYMD(), bill.getMember(),
+		db.execSQL("insert into bill_info (jine, outcatagory, outcatagorychildid, outcatagoryparentid, account, accountid, date, dateymd, member, beizhu, isCanBaoXiao, billType) values (?,?,?,?,?,?,?,?,?,?,?, ?)", 
+				new String[]{bill.getJine(), bill.getOutCatagory(),String.valueOf(bill.getOutCatagoryChildId()), String.valueOf(bill.getOutCatagoryParentId()), bill.getAccount(), String.valueOf(bill.getAccountid()), bill.getDate(),bill.getDateYMD(), bill.getMember(),
 				bill.getBeizhu(), String.valueOf(bill.isCanBaoXiao()), String.valueOf(bill.getBillType())});
 //		double accountYue = 0;
 //		Cursor cursor = db.rawQuery("select dangqianyue from bill_account where idx = ?", new String[]{String.valueOf(bill.getAccountid())});
@@ -135,8 +137,8 @@ public class BillInfoService {
 			accountService.updateOutAccount(bill);
 		}
 		
-		db.execSQL("update bill_info set jine = ?, outcatagory = ?, account = ?, accountid = ?,  date = ?, dateymd = ?, member = ?, beizhu = ?, isCanBaoXiao = ?, billType = ? where idx = ?", 
-				new String[]{bill.getJine(), bill.getOutCatagory(), bill.getAccount(), String.valueOf(bill.getAccountid()), bill.getDate(),bill.getDateYMD(), bill.getMember(),
+		db.execSQL("update bill_info set jine = ?, outcatagory = ?,outcatagorychildid = ?,  outcatagoryparentid = ?, account = ?, accountid = ?,  date = ?, dateymd = ?, member = ?, beizhu = ?, isCanBaoXiao = ?, billType = ? where idx = ?", 
+				new String[]{bill.getJine(), bill.getOutCatagory(), String.valueOf(bill.getOutCatagoryChildId()), String.valueOf(bill.getOutCatagoryParentId()), bill.getAccount(), String.valueOf(bill.getAccountid()), bill.getDate(),bill.getDateYMD(), bill.getMember(),
 				bill.getBeizhu(), String.valueOf(bill.isCanBaoXiao()), String.valueOf(bill.getBillType()), String.valueOf(bill.getIdx())});
 		
 		
@@ -348,6 +350,8 @@ public class BillInfoService {
 			bill.setAccountid(cursor.getInt(cursor.getColumnIndex("accountid")));
 			bill.setTransferInAccountId(cursor.getInt(cursor.getColumnIndex("transferInAccountId")));
 			bill.setTransferOutAccountId(cursor.getInt(cursor.getColumnIndex("transferOutAccountId")));
+			bill.setOutCatagoryChildId(cursor.getInt(cursor.getColumnIndex("outcatagorychildid")));
+			bill.setOutCatagoryParentId(cursor.getInt(cursor.getColumnIndex("outcatagoryparentid")));
 			bills.add(bill);
 		}
 		return bills;
@@ -411,6 +415,8 @@ public class BillInfoService {
 			bill.setJine(cursor.getString(cursor.getColumnIndex("jine")));
 			bill.setInCatagory(cursor.getString(cursor.getColumnIndex("incatagory")));
 			bill.setOutCatagory(cursor.getString(cursor.getColumnIndex("outcatagory")));
+			bill.setOutCatagoryChildId(cursor.getInt(cursor.getColumnIndex("outcatagorychildid")));
+			bill.setOutCatagoryParentId(cursor.getInt(cursor.getColumnIndex("outcatagoryparentid")));
 			bill.setAccount(cursor.getString(cursor.getColumnIndex("account")));
 			bill.setDate(cursor.getString(cursor.getColumnIndex("date")));
 			bill.setDateYMD(cursor.getString(cursor.getColumnIndex("dateymd")));

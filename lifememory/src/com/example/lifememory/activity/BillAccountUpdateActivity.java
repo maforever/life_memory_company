@@ -8,7 +8,6 @@ import com.example.lifememory.db.service.BillAccountService;
 import com.example.lifememory.utils.ConstantUtil;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.ClipData.Item;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;

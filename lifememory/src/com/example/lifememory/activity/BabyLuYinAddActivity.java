@@ -21,7 +21,6 @@ import com.example.lifememory.utils.TimeSwitcher;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.ClipData.Item;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;

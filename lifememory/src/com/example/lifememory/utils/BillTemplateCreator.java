@@ -15,6 +15,8 @@ public class BillTemplateCreator {
 		//支出 模版信息
 		template.setName("逛街购物");
 		template.setOutCatagoryName("购物-衣服鞋帽");
+		template.setOutCatagoryChildId(33);
+		template.setOutCatagoryParentId(4);
 		template.setAccountid(1);
 		template.setMember("自己");
 		template.setCanBaoXiao(false);
@@ -24,6 +26,8 @@ public class BillTemplateCreator {
 	    template = new BillTemplate();
 		template.setName("午饭");
 		template.setOutCatagoryName("餐饮-午饭");
+		template.setOutCatagoryChildId(12);
+		template.setOutCatagoryParentId(2);
 		template.setAccountid(1);
 		template.setMember("自己");
 		template.setCanBaoXiao(false);
@@ -34,6 +38,8 @@ public class BillTemplateCreator {
 		template.setName("外出打车");
 		template.setOutCatagoryName("交通-打的");
 		template.setAccountid(1);
+		template.setOutCatagoryChildId(10);
+		template.setOutCatagoryParentId(3);
 		template.setMember("自己");
 		template.setCanBaoXiao(false);
 		template.setBillType(1);
@@ -60,8 +66,9 @@ public class BillTemplateCreator {
 		
 		for(BillTemplate t : templates) {
 			db.execSQL(
-					"insert into bill_template (name, incatagoryname, outcatagoryname, accountid, member, canbaoxiao, transferinaccountdid, transferoutaccountid, billtype) values (?,?,?,?,?,?,?,?,?)",
+					"insert into bill_template (name, incatagoryname, outcatagoryname,outcatagorychildid , outcatagoryparentid , accountid, member, canbaoxiao, transferinaccountdid, transferoutaccountid, billtype) values (?,?,?,?,?,?,?,?,?,?,?)",
 					new String[] { t.getName(), t.getInCatagoryName(), t.getOutCatagoryName(),
+							String.valueOf(t.getOutCatagoryChildId()), String.valueOf(t.getOutCatagoryParentId()),
 							String.valueOf(t.getAccountid()),
 							t.getMember(),
 							String.valueOf(t.isCanBaoXiao()),

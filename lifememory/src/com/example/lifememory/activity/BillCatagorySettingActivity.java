@@ -40,6 +40,8 @@ public class BillCatagorySettingActivity extends Activity {
 	private int catagorySelectedId = 0;
 	private int catagorySelectedChildId = 0;
 	private int currentSatagorySelectedId = 0;
+	private int catagoryChildId = 0;
+	private int catagoryParentId = 1;
 	private Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
@@ -128,6 +130,7 @@ public class BillCatagorySettingActivity extends Activity {
 						secondaryLevelAdapter.setSelected(catagorySelectedChildId);
 					}
 					catagorySelectedId = position;
+					catagoryParentId = firstLevelItems.get(position).getIdx();
 					
 				}else {
 					Intent intent = new Intent(BillCatagorySettingActivity.this, BillCatatoryAddActivity.class);
@@ -147,11 +150,15 @@ public class BillCatagorySettingActivity extends Activity {
 				if(position != secondaryLevelItems.size() - 1) {
 //					secondaryLevelAdapter.setSelected(position);
 					catagorySelectedChildId = position;
+					catagoryChildId = secondaryLevelItems.get(position).getIdx();
 					Intent intent = new Intent();
 					intent.putExtra("parentId", parentId);
 					intent.putExtra("catagoryid", secondaryLevelItems.get(position).getIdx());
 					intent.putExtra("catagorySelectedId", catagorySelectedId);
 					intent.putExtra("catagorySelectedChildId", catagorySelectedChildId);
+					intent.putExtra("catagoryParentId", catagoryParentId);
+					intent.putExtra("catagoryChildId", catagoryChildId);
+					Log.i("a", "setting catagoryChildId = " + catagoryChildId + " catagoryParentId = " + catagoryParentId);
 //					Log.i("a", "BillCatagorySettingActivity onItemClick catagorySelectedId = " + catagorySelectedId + " catagorySelectedChildId = " + catagorySelectedChildId);
 					BillCatagorySettingActivity.this.setResult(99, intent);
 					BillCatagorySettingActivity.this.finish();

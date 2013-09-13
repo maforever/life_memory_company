@@ -8,6 +8,8 @@ public class Bill {
 	private String jine;          //本次实际的金额，与数据库管理
 	private String lastJine;      //用于修改账户当前余额，lastjine存放修改钱的金额，用lastjine减去jine得到改动的差值，在相应的做加减操作
 	private String outCatagory;   //支出类型catagoryname
+	private int outCatagoryChildId;        //支出类型的子id
+	private int outCatagoryParentId;	   //支出类型的父id
 	private String inCatagory;    //收入类型catagoryname;
 	private String account;   //accountname
 	private int accountid;
@@ -43,6 +45,18 @@ public class Bill {
 	}
 	public void setOutCatagory(String outCatagory) {
 		this.outCatagory = outCatagory;
+	}
+	public int getOutCatagoryChildId() {
+		return outCatagoryChildId;
+	}
+	public void setOutCatagoryChildId(int outCatagoryChildId) {
+		this.outCatagoryChildId = outCatagoryChildId;
+	}
+	public int getOutCatagoryParentId() {
+		return outCatagoryParentId;
+	}
+	public void setOutCatagoryParentId(int outCatagoryParentId) {
+		this.outCatagoryParentId = outCatagoryParentId;
 	}
 	public String getInCatagory() {
 		return inCatagory;
