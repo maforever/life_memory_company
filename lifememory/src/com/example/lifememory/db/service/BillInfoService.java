@@ -490,10 +490,22 @@ public class BillInfoService {
 		db.execSQL("delete from bill_info where idx = ?", new String[]{String.valueOf(idx)});
 	}
 	
+	//统计所有billType = 1 支出账单的花费金额
+	public String findTotalSpendValue() {
+		Cursor cursor = db.rawQuery("select jine from bill_info where billType = 1", null);
+		double totalSpendValue = 0;
+		while(cursor.moveToNext()) {
+			double currentSpendValue = cursor.getDouble(0);
+			totalSpendValue += currentSpendValue;
+		}
+		return String.valueOf(totalSpendValue);
+	}
+	
 	public void closeDB() {
 		accountService.closeDB();
 		db.close();
 	}
+	
 }
 
 

@@ -147,6 +147,19 @@ public class BillCatagoryService {
 	public void updateBudgetByIdx(int idx, double budgetValue) {
 		db.execSQL("update bill_catagory set budget = ? where idx = ?", new String[]{String.valueOf(budgetValue), String.valueOf(idx)});
 	}
+	
+	//统计总预算值
+	public double findTotalBudget() {
+		double totalBudget = 0;
+		
+		Cursor cursor = db.rawQuery("select budget from bill_catagory", null);
+		while(cursor.moveToNext()) {
+			double currentBudget = cursor.getDouble(0);
+			totalBudget += currentBudget;
+		}
+		
+		return totalBudget;
+	}
 }
 
 

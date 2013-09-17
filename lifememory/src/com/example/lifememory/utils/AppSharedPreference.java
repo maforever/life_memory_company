@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.text.Editable;
+import android.widget.ShareActionProvider;
 
 public class AppSharedPreference {
 	private Context context = null;
@@ -23,4 +24,35 @@ public class AppSharedPreference {
 		return sp.getBoolean("isFirstUse", false);
 		
 	}
+	
+	public void setTotalBudget(String budget) {
+		SharedPreferences sp = context.getSharedPreferences("app_info", Context.MODE_PRIVATE);
+		Editor editor = sp.edit();
+		editor.putString("totalBudget", budget);
+		editor.commit();
+	}
+	
+	public String getTotalBudget() {
+		SharedPreferences sp = context.getSharedPreferences("app_info", Context.MODE_PRIVATE);
+		String totalBudget = sp.getString("totalBudget", "0");
+		return totalBudget;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

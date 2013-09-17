@@ -52,8 +52,12 @@ public class BillCalculatorActivity extends Activity {
 	
 	private void initDatasAndViews() {
 		numString = this.getIntent().getStringExtra("num");
-		if(numString == null || "".equals(numString)) {
+		Log.i("a", numString);
+		if(numString == null || "".equals(numString) || "0.0".equals(numString)) {
 			numTv.setText("0");
+		}if(numString.endsWith(".0")) {
+			numString = numString.substring(0, numString.length() - 2);
+			numTv.setText(numString);
 		}else {
 			numTv.setText(numString);
 		}
