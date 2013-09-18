@@ -501,6 +501,23 @@ public class BillInfoService {
 		return String.valueOf(totalSpendValue);
 	}
 	
+	//查找本月是否有收入账单
+	public boolean isHaveIncomeDatas(String ym) {
+		String dateParam = "%" + ym + "%";
+		Cursor cursor = db.rawQuery("select count(*) from bill_info where dateymd like ? and billType = 2", new String[]{dateParam});
+		cursor.moveToFirst();
+		long count = cursor.getLong(0);
+		return count > 0 ? true : false;
+	}
+	//查找本月是否有支出账单
+	public boolean isHaveSpendDatas(String ym) {
+		String dateParam = "%" + ym + "%";
+		Cursor cursor = db.rawQuery("select count(*) from bill_info where dateymd like ? and billType = 1", new String[]{dateParam});
+		cursor.moveToFirst();
+		long count = cursor.getLong(0);
+		return count > 0 ? true : false;
+	}
+	
 	public void closeDB() {
 		accountService.closeDB();
 		db.close();

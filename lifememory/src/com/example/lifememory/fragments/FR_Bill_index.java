@@ -6,6 +6,7 @@ import java.util.List;
 import com.example.lifememory.R;
 import com.example.lifememory.activity.BillAccountDetailsActivity;
 import com.example.lifememory.activity.BillBudgetSettingActivity;
+import com.example.lifememory.activity.BillChartIndexActivity;
 import com.example.lifememory.activity.BillInputActivity;
 import com.example.lifememory.activity.BillMonthDetailsActivity;
 import com.example.lifememory.activity.BillTempleteSelectActivity;
@@ -49,9 +50,9 @@ public class FR_Bill_index extends Fragment {
 	private ArrayList<ArrayList<String>> lists = new ArrayList<ArrayList<String>>();// 全部数据的集合集lists.size()==countpage;
 	private TextView tv_page = null;
 	private String[] firstPageTitle = new String[]{"闪电记", "记一笔", "预算平衡表", "今日"};
-	private String[] secondPageTitle = new String[]{"信用卡", "翻日历", "查账户"};
+	private String[] secondPageTitle = new String[]{"信用卡", "翻日历", "查账户","看报表"};
 	private int[] firstPageImageIds = new int[]{R.drawable.metro_drawable_flashbook, R.drawable.metro_drawable_book, R.drawable.metro_drawable_coupon, 1};
-	private int[] secondPageImageIds = new int[]{R.drawable.metro_drawable_card, R.drawable.metro_drawable_calendar, R.drawable.metro_drawable_account};
+	private int[] secondPageImageIds = new int[]{R.drawable.metro_drawable_card, R.drawable.metro_drawable_calendar, R.drawable.metro_drawable_account, R.drawable.metro_drawable_report};
 	private BillIndexGridViewAdapter firstAdapter, secondAdapter;
 	private static IndexActivity indexActivity = null;
 	private IndexActivity.MyOnTouchListener myOnTouchListener = null; // 添加滑动事件
@@ -314,6 +315,11 @@ public class FR_Bill_index extends Fragment {
 			case 2:
 //				Toast.makeText(getActivity(), secondPageTitle[position], 0).show();
 				intent = new Intent(getActivity(), BillAccountDetailsActivity.class);
+				startActivity(intent);
+				getActivity().overridePendingTransition(R.anim.activity_up, R.anim.activity_steady);
+				break;
+			case 3:
+				intent = new Intent(getActivity(), BillChartIndexActivity.class);
 				startActivity(intent);
 				getActivity().overridePendingTransition(R.anim.activity_up, R.anim.activity_steady);
 				break;

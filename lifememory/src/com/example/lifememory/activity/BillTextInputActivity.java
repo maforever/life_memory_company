@@ -44,6 +44,10 @@ public class BillTextInputActivity extends Activity {
 				break;
 			case 1:
 				//添加收入类别
+				boolean flag = (Boolean) msg.obj;
+				if(!flag) {
+					Toast.makeText(BillTextInputActivity.this, "收入类别重名，请另取名称!", 0).show();
+				}
 				Toast.makeText(BillTextInputActivity.this, "成员类别成功!", 0).show();
 				break;
 				
@@ -150,8 +154,8 @@ public class BillTextInputActivity extends Activity {
 				new Thread(new Runnable() {
 					@Override
 					public void run() {
-						inCatagoryService.addItem(ic);
-						handler.sendEmptyMessage(1);
+						boolean flag = inCatagoryService.addItem(ic);
+						handler.sendMessage(handler.obtainMessage(1, flag));
 					}
 				}).start();
 			}else {

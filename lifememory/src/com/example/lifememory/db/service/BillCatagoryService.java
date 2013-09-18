@@ -140,7 +140,59 @@ public class BillCatagoryService {
 			item.setSpendValue(totalSpendValue);
 			items.add(item);
 		}
-		
+		return items;
+	}
+	
+	
+	//查找当前月ym的花费
+	public List<BillCatagoryItem> findSpendValueByYMForChart(String ym) {
+		List<BillCatagoryItem> items = new ArrayList<BillCatagoryItem>();
+		BillCatagoryItem item;
+		Cursor cursor = db.rawQuery("select idx, name from bill_catagory where parentid = 0", null);
+		String dateParam = "%" + ym + "%";
+		while(cursor.moveToNext()) {
+			double totalValue = 0;
+			item = new BillCatagoryItem();
+			item.setIdx(cursor.getInt(0));
+			item.setName(cursor.getString(1));
+			
+			Cursor cursor2 = db.rawQuery("select jine from bill_info where outcatagoryparentid = ? and billType = 1 and dateymd like ?", new String[]{String.valueOf(item.getIdx()), dateParam});
+			double spendValue = 0;
+			while(cursor2.moveToNext()) {
+				spendValue = cursor2.getDouble(0);
+				totalValue += spendValue;
+			}
+			if(totalValue > 0) {
+				item.setSpendValue(totalValue);
+				items.add(item);
+			}
+		}
+		return items;
+	}
+	
+	//查找当前月ym的收入
+	public List<BillCatagoryItem> findIncomeValueByYMForChart(String ym) {
+		List<BillCatagoryItem> items = new ArrayList<BillCatagoryItem>();
+		BillCatagoryItem item;
+		Cursor cursor = db.rawQuery("select idx, name from bill_incatagory", null);
+		String dateParam = "%" + ym + "%";
+		while(cursor.moveToNext()) {
+			double totalValue = 0;
+			item = new BillCatagoryItem();
+			item.setIdx(cursor.getInt(0));
+			item.setName(cursor.getString(1));
+			
+			Cursor cursor2 = db.rawQuery("select jine from bill_info where incatagory = ? and billType = 2 and dateymd like ?", new String[]{item.getName(), dateParam});
+			double spendValue = 0;
+			while(cursor2.moveToNext()) {
+				spendValue = cursor2.getDouble(0);
+				totalValue += spendValue;
+			}
+			if(totalValue > 0) {
+				item.setSpendValue(totalValue);
+				items.add(item);
+			}
+		}
 		return items;
 	}
 	//根据idx修改预算值

@@ -32,8 +32,16 @@ public class BillInCatagoryService {
 	}
 	
 	//添加收入类别信息
-	public void addItem(BillInCatagory item) {
+	public boolean addItem(BillInCatagory item) {
+		String name = item.getName().trim();
+		Cursor cursor = db.rawQuery("select count(*) from bill_incatagory where name = ?", new String[]{name});
+		cursor.moveToFirst();
+		long count = cursor.getLong(0);
+		if(count > 0) {
+			return false;
+		}
 		db.execSQL("insert into bill_incatagory (name) values (?)", new String[]{item.getName()});
+		return true;
 	}
 	
 	//删除收入类别信息
