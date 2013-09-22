@@ -502,9 +502,9 @@ public class BillInfoService {
 	}
 	
 	//查找本月是否有收入账单
-	public boolean isHaveIncomeDatas(String ym) {
+	public boolean isHaveIncomeDatas(String ym, int billType) {
 		String dateParam = "%" + ym + "%";
-		Cursor cursor = db.rawQuery("select count(*) from bill_info where dateymd like ? and billType = 2", new String[]{dateParam});
+		Cursor cursor = db.rawQuery("select count(*) from bill_info where dateymd like ? and billType = ?", new String[]{dateParam, String.valueOf(billType)});
 		cursor.moveToFirst();
 		long count = cursor.getLong(0);
 		return count > 0 ? true : false;

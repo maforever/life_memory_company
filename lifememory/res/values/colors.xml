@@ -32,4 +32,10 @@
     <item name="color20" type="color">#c0c0c0</item>
     <item name="color21" type="color">#ffffff</item>
     <item name="color22" type="color">#0000a0</item>
+    
+    
+    <item name="chartBackground" type="color">#00FFFFFF</item>
+    
+    
+    
 </resources>

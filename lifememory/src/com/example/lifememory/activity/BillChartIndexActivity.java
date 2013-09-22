@@ -85,7 +85,7 @@ public class BillChartIndexActivity extends FragmentActivity {
 				break;
 			case 1: 
 				//柱状型
-				fragment = new FR_BillBarChartFragment();
+				fragment = new FR_BillBarChartFragment(dateYM, billType);
 				ft = fm.beginTransaction();
 				ft.replace(R.id.container, fragment);
 				ft.commit();
@@ -118,7 +118,7 @@ public class BillChartIndexActivity extends FragmentActivity {
 		pieBtn.setBackgroundResource(R.drawable.catagory_pie_press);
 		Log.i("a", "activity " + dateYM);
 		initPopWindow();
-		new isHaveIncomeDatas().start();
+		new isHaveDatas().start();
 	}
 	
 	private void initPopWindow() {
@@ -143,7 +143,7 @@ public class BillChartIndexActivity extends FragmentActivity {
 				if(popWindow.isShowing()) {
 					popWindow.dismiss();
 					billType = 2;
-					new isHaveIncomeDatas().start();
+					new isHaveDatas().start();
 				}
 //				Toast.makeText(BillChartIndexActivity.this, "incomeChart", 0).show();
 				break;
@@ -151,7 +151,7 @@ public class BillChartIndexActivity extends FragmentActivity {
 				if(popWindow.isShowing()) {
 					popWindow.dismiss();
 					billType = 1;
-					new isHaveIncomeDatas().start();
+					new isHaveDatas().start();
 				}
 //				Toast.makeText(BillChartIndexActivity.this, "spendChart", 0).show();
 				break;
@@ -159,11 +159,17 @@ public class BillChartIndexActivity extends FragmentActivity {
 		}
 	}
 	
-	
-	private class isHaveIncomeDatas extends Thread {
+	/**
+	 * 判断当前月份是否有数据，
+	 * 首先判断时候有收入，在判断时候有支出，如果都没有，就跳转到没信息的fragment
+	 * @author Administrator
+	 *
+	 */
+	private class isHaveDatas extends Thread {
 		@Override
 		public void run() {
-			if(billService.isHaveIncomeDatas(dateYM)) {
+			if(billService.isHaveIncomeDatas(dateYM, billType)) {
+				Log.i("a", "dateYM = " + dateYM + " haveDatas");
 				switch (chartType) {
 				case 1:
 					//饼形图
@@ -213,13 +219,13 @@ public class BillChartIndexActivity extends FragmentActivity {
 			freshTabBarBackGround();
 			pieBtn.setBackgroundResource(R.drawable.catagory_pie_press); 
 			chartType = 1;
-			new isHaveIncomeDatas().start();
+			new isHaveDatas().start();
 			break;
 		case R.id.barBtn:
 			freshTabBarBackGround();
 			barBtn.setBackgroundResource(R.drawable.catagory_bar_press);
 			chartType = 2;
-			new isHaveIncomeDatas().start();
+			new isHaveDatas().start();
 //			setContainerView(CHART_BAR_ACTIVITY, BillChartBarActivity.class);
 			break;
 		case R.id.lineBtn:
@@ -286,9 +292,9 @@ public class BillChartIndexActivity extends FragmentActivity {
 		} else {
 			dateYM = year + "-" + month;
 		}
-		// Log.i("a", "dataYM = " + dataYM);
+		 Log.i("a", "dataYM = " + dateYM);
 		title.setText(dateTitleStr);
-		new isHaveIncomeDatas().start();
+		new isHaveDatas().start();
 	}
 
 	private void arrowRightDonw() {
@@ -306,9 +312,9 @@ public class BillChartIndexActivity extends FragmentActivity {
 		}
 		dateTitleStr = year + "年" + month + "月流水";
 		title.setText(dateTitleStr);
-		// Log.i("a", "dataYM = " + dataYM);
+		 Log.i("a", "dataYM = " + dateYM);
 
-		new isHaveIncomeDatas().start();
+		new isHaveDatas().start();
 	}
 
 	private void back() {

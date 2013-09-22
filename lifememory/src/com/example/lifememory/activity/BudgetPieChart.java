@@ -118,7 +118,7 @@ public class BudgetPieChart extends AbstractDemoChart {
 			values = new double[items.size()];
 			colors = new int[items.size()];
 			for(int i=0; i<titles.length; i++) {
-				int value = (int) ((items.get(i).getSpendValue() / totalValue) * 100);
+				int value = (int)(Math.rint((items.get(i).getSpendValue() / totalValue) * 100));
 				titles[i] = items.get(i).getName() + value + "%";
 				values[i] = value;
 				colors[i] = totalColors[i];
