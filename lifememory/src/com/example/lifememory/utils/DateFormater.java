@@ -66,11 +66,4 @@ public class DateFormater {
 		}
 		return sdw.format(d);
 	}
-	//»ñµÃÄê yyyy
-	public String getYear() {
-		Date date = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
-		String dateStr = sdf.format(date);
-		return dateStr;
-	}
 }

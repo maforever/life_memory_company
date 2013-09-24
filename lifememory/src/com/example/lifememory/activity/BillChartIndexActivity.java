@@ -8,16 +8,12 @@ import com.example.lifememory.R;
 import com.example.lifememory.activity.model.BillCatagoryItem;
 import com.example.lifememory.db.service.BillCatagoryService;
 import com.example.lifememory.db.service.BillInfoService;
-import com.example.lifememory.fragments.chart.Activity_BillLineCharActivity;
-import com.example.lifememory.fragments.chart.Activity_BillLineChartActivity2;
 import com.example.lifememory.fragments.chart.FR_BillBarChartFragment;
-import com.example.lifememory.fragments.chart.FR_BillListChartFragment;
 import com.example.lifememory.fragments.chart.FR_BillNoDataChartFragment;
 import com.example.lifememory.fragments.chart.FR_BillPieChartFragment;
 import com.example.lifememory.utils.AbstractMyActivityGroup;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -94,20 +90,6 @@ public class BillChartIndexActivity extends FragmentActivity {
 				ft.replace(R.id.container, fragment);
 				ft.commit();
 				break;
-//			case 2:
-//				//曲线图
-////				Intent intent = new Intent(BillChartIndexActivity.this, Activity_BillLineCharActivity.class);  //这个是用achartengine中的折线图
-////				Intent intent = new Intent(BillChartIndexActivity.this, BillLineChartActivity.class);
-//				Intent intent = new Intent(BillChartIndexActivity.this, Activity_BillLineChartActivity2.class);
-//				startActivity(intent);
-//				overridePendingTransition(R.anim.activity_up, R.anim.activity_steady);
-//				break;
-			case 3:
-				fragment = new FR_BillListChartFragment(dateYM, billType);
-				ft = fm.beginTransaction();
-				ft.replace(R.id.container, fragment);
-				ft.commit();
-				break;
 			case 10:
 				//没有数据显示没数据提示的activity
 //				setContainerView(CHART_NODATA_ACTIVITY, BillChartNoDataActivity.class);
@@ -146,10 +128,9 @@ public class BillChartIndexActivity extends FragmentActivity {
 		popWindow.setBackgroundDrawable(new BitmapDrawable());
 		TextView incomeChart = (TextView) contentView.findViewById(R.id.incomeChart);
 		TextView spendChart = (TextView) contentView.findViewById(R.id.spendChart);
-		TextView inAndOutLineChart = (TextView) contentView.findViewById(R.id.inAndoutLineChart);
 		incomeChart.setOnClickListener(new PopwindowBtnClickListener());
 		spendChart.setOnClickListener(new PopwindowBtnClickListener());
-		inAndOutLineChart.setOnClickListener(new PopwindowBtnClickListener());
+		
 		
 	}
 	
@@ -173,11 +154,6 @@ public class BillChartIndexActivity extends FragmentActivity {
 					new isHaveDatas().start();
 				}
 //				Toast.makeText(BillChartIndexActivity.this, "spendChart", 0).show();
-				break;
-			case R.id.inAndoutLineChart:
-				Intent intent = new Intent(BillChartIndexActivity.this, Activity_BillLineChartActivity2.class);
-				startActivity(intent);
-				overridePendingTransition(R.anim.activity_up, R.anim.activity_steady);
 				break;
 			}
 		}
@@ -203,13 +179,11 @@ public class BillChartIndexActivity extends FragmentActivity {
 					//柱状图
 					handler.sendEmptyMessage(1);
 					break;
-//				case 3:
-//					//曲线图
-//					handler.sendEmptyMessage(2);
-//					break;
+				case 3:
+					//线形图
+					break;
 				case 4:
 					//列表
-					handler.sendEmptyMessage(3);
 					break;
 				}
 			}else {
@@ -217,7 +191,7 @@ public class BillChartIndexActivity extends FragmentActivity {
 			}
 		}
 	}
-	
+
 //	/**
 //	 * 找到自定义id的加载Activity的View
 //	 */
@@ -254,18 +228,15 @@ public class BillChartIndexActivity extends FragmentActivity {
 			new isHaveDatas().start();
 //			setContainerView(CHART_BAR_ACTIVITY, BillChartBarActivity.class);
 			break;
-//		case R.id.lineBtn:
-//			freshTabBarBackGround();
-//			lineBtn.setBackgroundResource(R.drawable.catagory_line_press);
-//			chartType = 3;
-//			handler.sendEmptyMessage(2);
-////			setContainerView(CHART_LINE_ACTIVITY, BillChartLineActivity.class);
-//			break;
+		case R.id.lineBtn:
+			freshTabBarBackGround();
+			lineBtn.setBackgroundResource(R.drawable.catagory_line_press);
+			chartType = 3;
+//			setContainerView(CHART_LINE_ACTIVITY, BillChartLineActivity.class);
+			break;
 		case R.id.listBtn:
 			freshTabBarBackGround();
 			listBtn.setBackgroundResource(R.drawable.catagory_list_press);
-			chartType = 4;
-			new isHaveDatas().start();
 //			setContainerView(CHART_LIST_ACTIVITY, BillChartListActivity.class);
 			break;
 		}
@@ -274,7 +245,7 @@ public class BillChartIndexActivity extends FragmentActivity {
 	private void freshTabBarBackGround() {
 		pieBtn.setBackgroundResource(R.drawable.bill_chart_pie_selector); 
 		barBtn.setBackgroundResource(R.drawable.bill_chart_bar_selector);
-//		lineBtn.setBackgroundResource(R.drawable.bill_chart_line_selector);
+		lineBtn.setBackgroundResource(R.drawable.bill_chart_line_selector);
 		listBtn.setBackgroundResource(R.drawable.bill_chart_list_selector);
 	}
 
@@ -282,7 +253,7 @@ public class BillChartIndexActivity extends FragmentActivity {
 		title = (TextView) this.findViewById(R.id.title);
 		pieBtn = (ImageView) this.findViewById(R.id.pieBtn);
 		barBtn = (ImageView) this.findViewById(R.id.barBtn);
-//		lineBtn = (ImageView) this.findViewById(R.id.lineBtn);
+		lineBtn = (ImageView) this.findViewById(R.id.lineBtn);
 		listBtn = (ImageView) this.findViewById(R.id.listBtn);
 		popWindowParent = (RelativeLayout) this.findViewById(R.id.popwindowParent);
 	}

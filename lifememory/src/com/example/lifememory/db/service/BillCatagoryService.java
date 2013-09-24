@@ -212,8 +212,6 @@ public class BillCatagoryService {
 		
 		return totalBudget;
 	}
-	
-	
 }
 
 

@@ -11,16 +11,12 @@ import com.example.lifememory.dialog.DialogAlertListener;
 import com.example.lifememory.dialog.DialogInputListener;
 import com.example.lifememory.dialog.DialogPregnancyJiShiBenReNameDialog;
 import com.example.lifememory.utils.MyAnimations;
-import com.iflytek.ui.SynthesizerDialog;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -32,37 +28,34 @@ import android.widget.Toast;
 
 public class PregnancyJiShiBenReadActivity extends Activity{
 	private TextView contentEt = null;
-	private int[] textSize = {20, 25, 30}; //å­—ä½“æ•°æ®
+	private int[] textSize = {20, 25, 30}; //×ÖÌåÊı¾İ
 	private  int[] colors = new int[6];
-	private PregnancyJiShiBen jishibenItem; //å­•æœŸè®°äº‹æœ¬
+	private PregnancyJiShiBen jishibenItem; //ÔĞÆÚ¼ÇÊÂ±¾
 	private int itemId = 0;
 	private TextView titleTv = null;
 	private PregnancyDiaryJiShiBenService dbService = null;
-	//ä»¿Path
+	//·ÂPath
 	private boolean areButtonsShowing;
 	private RelativeLayout composerButtonsWrapper;
 	private ImageView composerButtonsShowHideButtonIcon;
 	private RelativeLayout composerButtonsShowHideButton;
-	//è¯»
-	//åˆæˆDialog
-	private SynthesizerDialog ttsDialog;
-	private SharedPreferences mSharedPreferences;
+	
 	private Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
-			//è¯»å–
+			//¶ÁÈ¡
 			case 0:
 				initViews();
 				break;
-			//åˆ é™¤
+			//É¾³ı
 			case 1:
 				PregnancyJiShiBenReadActivity.this.finish();
 				overridePendingTransition(R.anim.activity_steady, R.anim.activity_down);
-				Toast.makeText(PregnancyJiShiBenReadActivity.this, "åˆ é™¤æ—¥è®°æˆåŠŸ!", 0).show();
+				Toast.makeText(PregnancyJiShiBenReadActivity.this, "É¾³ıÈÕ¼Ç³É¹¦!", 0).show();
 				break;
-			//é‡å‘½å
+			//ÖØÃüÃû
 			case 2:
-				Toast.makeText(PregnancyJiShiBenReadActivity.this, "æ—¥è®°é‡å‘½åæˆåŠŸ!", 0).show();
+				Toast.makeText(PregnancyJiShiBenReadActivity.this, "ÈÕ¼ÇÖØÃüÃû³É¹¦!", 0).show();
 				break;
 		
 			}
@@ -75,18 +68,16 @@ public class PregnancyJiShiBenReadActivity extends Activity{
 		setContentView(R.layout.pregnancydiray_jishiben_read);
 		
 		dbService = new PregnancyDiaryJiShiBenService(this);
-		mSharedPreferences = getSharedPreferences(getPackageName(),
-				MODE_PRIVATE);
+		
 		MyAnimations.initOffset(PregnancyJiShiBenReadActivity.this);
 		
-		initColors();   //åˆå§‹åŒ–é¢œè‰²æ•°ç»„
-		findViews();    //å®ä¾‹åŒ–è§†å›¾
+		initColors();   //³õÊ¼»¯ÑÕÉ«Êı×é
+		findViews();    //ÊµÀı»¯ÊÓÍ¼
 		
-
 		
-		new InitDatasThread().start(); //åœ¨çº¿ç¨‹ä¸­åˆå§‹åŒ–æ•°æ®ï¼Œåœ¨ä¸»çº¿ç¨‹ä¸­æ¸²æŸ“è§†å›¾
-//		initDatas();    //åˆå§‹åŒ–æ•°æ®
-//		initViews();	//å¡«å……è§†å›¾å†…å®¹
+		new InitDatasThread().start(); //ÔÚÏß³ÌÖĞ³õÊ¼»¯Êı¾İ£¬ÔÚÖ÷Ïß³ÌÖĞäÖÈ¾ÊÓÍ¼
+//		initDatas();    //³õÊ¼»¯Êı¾İ
+//		initViews();	//Ìî³äÊÓÍ¼ÄÚÈİ
 		
 		
 		composerButtonsShowHideButton.setOnClickListener(new OnClickListener() {
@@ -113,31 +104,23 @@ public class PregnancyJiShiBenReadActivity extends Activity{
 						@Override
 						public void onClick(View view) {
 							switch (view.getId()) {
-							//ä¿®æ”¹
+							//ĞŞ¸Ä
 							case R.id.composer_button_edit:
 								Intent intent = new Intent(PregnancyJiShiBenReadActivity.this, PregnancyJiShiBenEditActivity.class);
 								intent.putExtra("itemId", itemId);
 								PregnancyJiShiBenReadActivity.this.startActivity(intent);
 								overridePendingTransition(R.anim.activity_up, R.anim.activity_steady);
 								break;
-							//åˆ†äº«
-							case R.id.composer_button_read:
-								MyAnimations
-								.startAnimationsOut(composerButtonsWrapper, 300);
-						composerButtonsShowHideButtonIcon
-								.startAnimation(MyAnimations.getRotateAnimation(
-										-270, 0, 300));
-								showSynDialog();
-								
-								
+							//·ÖÏí
+							case R.id.composer_button_share:
 								break;
-							//é‡å‘½å
+							//ÖØÃüÃû
 							case R.id.composer_button_rename:
 								new DialogPregnancyJiShiBenReNameDialog(PregnancyJiShiBenReadActivity.this, listener2, titleTv.getText().toString()).show();
 								break;
-							//åˆ é™¤
+							//É¾³ı
 							case R.id.composer_button_del:
-								new DialogAlert(PregnancyJiShiBenReadActivity.this, listener, "æ‚¨ç¡®å®šåˆ é™¤æ­¤æ¡æ—¥è®°å—?").show();
+								new DialogAlert(PregnancyJiShiBenReadActivity.this, listener, "ÄúÈ·¶¨É¾³ı´ËÌõÈÕ¼ÇÂğ?").show();
 								break;
 								
 							}
@@ -147,42 +130,6 @@ public class PregnancyJiShiBenReadActivity extends Activity{
 		
 		composerButtonsShowHideButton.startAnimation(MyAnimations
 				.getRotateAnimation(0, 360, 200));
-	}
-	
-	
-	public void showSynDialog()
-	{
-
-		String source = contentEt.getText().toString();
-		//è®¾ç½®åˆæˆæ–‡æœ¬.
-		ttsDialog.setText(source, null);
-
-		//è®¾ç½®å‘éŸ³ï¿½?
-		String role = mSharedPreferences.getString(
-				getString(R.string.preference_key_tts_role),
-				getString(R.string.preference_default_tts_role));
-		ttsDialog.setVoiceName(role);
-
-		//è®¾ç½®è¯­ï¿½?.
-		int speed = mSharedPreferences.getInt(
-				getString(R.string.preference_key_tts_speed),
-				50);
-		ttsDialog.setSpeed(speed);
-
-		//è®¾ç½®éŸ³é‡.
-		int volume = mSharedPreferences.getInt(
-				getString(R.string.preference_key_tts_volume),
-				50);
-		ttsDialog.setVolume(volume);
-
-		//è®¾ç½®èƒŒæ™¯ï¿½?
-		String music = mSharedPreferences.getString(
-				getString(R.string.preference_key_tts_music),
-				getString(R.string.preference_default_tts_music));
-		ttsDialog.setBackgroundSound(music);
-
-		//å¼¹å‡ºåˆæˆDialog
-		ttsDialog.show();
 	}
 	
 	private class RenameThread extends Thread {
@@ -310,15 +257,12 @@ public class PregnancyJiShiBenReadActivity extends Activity{
 			break;
 		}
 	}
-	//å¡«å……è§†å›¾
+	//Ìî³äÊÓÍ¼
 	private void initViews() {
 		contentEt.setTextColor(colors[jishibenItem.getTextColorIndex()]);
 		contentEt.setTextSize(textSize[jishibenItem.getTextSizeIndex()]);
 		contentEt.setText(jishibenItem.getContent());
 		titleTv.setText(jishibenItem.getTitle());
-		
-		//åˆå§‹åŒ–åˆæˆDialog.
-		ttsDialog = new SynthesizerDialog(this, "appid=" + getString(R.string.app_id));
 	}
 	
 	@Override
@@ -329,17 +273,17 @@ public class PregnancyJiShiBenReadActivity extends Activity{
 		}
 	}
 	
-	//è·å¾—æ—¶é—´
+	//»ñµÃÊ±¼ä
 	private String getDate() {
 		Date date = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyå¹´MMæœˆddæ—¥ HHæ—¶mmåˆ†ssç§’");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyÄêMMÔÂddÈÕ HHÊ±mm·ÖssÃë");
 		String dateStr = sdf.format(date); 
 		return dateStr;
 	}
-	//è·å–å¹´æœˆæ—¥
+	//»ñÈ¡ÄêÔÂÈÕ
 	private String getYMD() {
 		Date date = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyå¹´MMæœˆddæ—¥");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyÄêMMÔÂddÈÕ");
 		String dateStr = sdf.format(date); 
 		return dateStr;
 	}
