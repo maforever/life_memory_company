@@ -518,6 +518,31 @@ public class BillInfoService {
 		return count > 0 ? true : false;
 	}
 	
+	//查找指定年份如2013的所有支出/收入， 按月归类
+	public int[] findIncomeOrSpendByYear(int billType, String year) {
+		int[] values = new int[12];
+		String dataParam;
+		Cursor cursor;
+		double totalValue;
+		for(int i=1; i<= 12; i++) {
+			totalValue = 0;
+			if(i<10) {
+				dataParam = "%" + year + "-0" + i + "%";
+			}else {
+				dataParam = "%" + year + "-" + i + "%";
+			}
+			
+			cursor = db.rawQuery("select jine from bill_info where dateymd like ? and billType = ?", new String[]{dataParam, String.valueOf(billType)});
+			while(cursor.moveToNext()) {
+				totalValue += cursor.getDouble(0);
+			}
+			values[i-1] = (int) Math.rint(totalValue);
+			
+		}
+		return values;
+	}
+	
+	
 	public void closeDB() {
 		accountService.closeDB();
 		db.close();
